@@ -37,6 +37,7 @@
      BlinkMacSystemFont to system-ui on every platform, so leaving it ahead
      of Inter hands Windows Segoe UI and Android Roboto. */
   --sf:-apple-system,"SF Pro Text",Inter,BlinkMacSystemFont,system-ui,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 
   color-scheme:light dark;
   background:var(--bg);
@@ -167,6 +168,15 @@ a{color:inherit;text-decoration:none}
 /* A quotation inside a text. */
 .bubble blockquote{margin:0 0 20px;padding-left:11px;border-left:2px solid var(--quote-edge);color:var(--quote-text)}
 .bubble h2,.bubble h3{margin:0 0 6px;font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.4px}
+/* Code. A fenced block needs `overflow-x`, or one long line pushes the whole
+   document wider than the viewport -- at a 310px bubble that takes about
+   sixty characters -- and the reader gets a horizontal scrollbar on the page
+   rather than on the block. Inline code keeps the bubble's `overflow-wrap`,
+   so a long attribute breaks instead of doing the same thing. */
+.bubble code{font-family:var(--mono);font-size:13.5px}
+.bubble pre{margin:0 0 20px;padding:10px 12px;border-radius:12px;
+  background:var(--control);overflow-x:auto}
+.bubble pre code{display:block;white-space:pre;font-size:13px;line-height:18px}
 /* A picture or a clip in a message. It fills the bubble and keeps its own
    proportions; give the tag a width and height in the post so the thread
    does not reflow as the file loads. The flat fill behind it covers the
@@ -179,16 +189,34 @@ a{color:inherit;text-decoration:none}
 
    Two shapes to match: markdown-it wraps `![alt](src)` in a paragraph, but
    leaves a hand-written <img> tag as a bare child of the bubble. */
-.bubble:has(> :is(img,video):only-child),
-.bubble:has(> p:only-child > :is(img,video):only-child){padding:0}
-.bubble:has(> :is(img,video):only-child) :is(img,video),
-.bubble:has(> p:only-child > :is(img,video):only-child) :is(img,video){border-radius:18px}
+.bubble:has(> :is(img,video,.attach):only-child),
+.bubble:has(> p:only-child > :is(img,video,.attach):only-child){padding:0}
+.bubble:has(> :is(img,video,.attach):only-child) :is(img,video,.attach),
+.bubble:has(> p:only-child > :is(img,video,.attach):only-child) :is(img,video,.attach){border-radius:18px}
 /* Audio is the exception: it keeps the bubble's padding. A picture has
    proportions of its own and can fill the bubble; a player is a fixed bar
    with its own rounded fill, and flush to the bubble's edge it reads as a
    mistake. The control draws itself in the light or dark style the page's
    `color-scheme` asks for, so it follows the appearance toggle. */
 .bubble audio{display:block;width:100%}
+/* An attachment: a file with no sensible inline rendering at a bubble's
+   width, so it arrives as a row -- icon, name, size -- the way Messages
+   shows a document. Alone in a bubble it fills it, like a picture does.
+   `a.attach` rather than `.attach`, to outrank `.bubble a` above, which
+   would otherwise make it blue and underlined. */
+.bubble a.attach{display:flex;align-items:center;gap:10px;padding:11px 12px;
+  color:var(--text);text-decoration:none}
+.attach-icon{flex:none;color:var(--meta)}
+.attach-body{min-width:0;display:flex;flex-direction:column}
+.attach-name{font-size:15px;line-height:20px;letter-spacing:-.2px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.attach-meta{font-size:13px;line-height:17px;color:var(--meta);
+  font-variant-numeric:tabular-nums}
+.attach-go{flex:none;margin-left:auto;color:var(--meta)}
+.bubble a.attach:hover{background:var(--control-hover)}
+@media (prefers-reduced-motion:no-preference){
+  .bubble a.attach{transition:background-color .12s ease}
+}
 
 .tail{position:absolute;z-index:0;left:0;bottom:-6.4px;width:22px;height:25px;display:block}
 .avatar{position:absolute;left:-39px;bottom:-6.3px;width:32px;height:32px;display:block;border-radius:50%}

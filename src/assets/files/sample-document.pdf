@@ -1,0 +1,66 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 9 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 455 >>
+stream
+BT /F1 22 Tf 72 700 Td (Sample Document) Tj ET
+BT /F1 11 Tf 72 660 Td (This is placeholder content for the Message Hub framework.) Tj ET
+BT /F1 11 Tf 72 642 Td (It exists so a post has a real file to attach, and so the) Tj ET
+BT /F1 11 Tf 72 624 Td (attachment row has something to link to.) Tj ET
+BT /F1 11 Tf 72 588 Td (Nothing in here is meaningful. Replace it with your own file.) Tj ET
+BT /F1 9 Tf 72 90 Td (Page 1 of 3  -  sample-document.pdf) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 9 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 275 >>
+stream
+BT /F1 22 Tf 72 700 Td (Second Page) Tj ET
+BT /F1 11 Tf 72 660 Td (A second page, so the attachment row has a page count worth) Tj ET
+BT /F1 11 Tf 72 642 Td (showing and the build has something to count.) Tj ET
+BT /F1 9 Tf 72 90 Td (Page 2 of 3  -  sample-document.pdf) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 9 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 290 >>
+stream
+BT /F1 22 Tf 72 700 Td (Third Page) Tj ET
+BT /F1 11 Tf 72 660 Td (The last page. The shortcode reads the page count and the file) Tj ET
+BT /F1 11 Tf 72 642 Td (size off this file at build time, so neither can go stale.) Tj ET
+BT /F1 9 Tf 72 90 Td (Page 3 of 3  -  sample-document.pdf) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000133 00000 n 
+0000000259 00000 n 
+0000000765 00000 n 
+0000000891 00000 n 
+0000001217 00000 n 
+0000001343 00000 n 
+0000001684 00000 n 
+trailer
+<< /Size 10 /Root 1 0 R >>
+startxref
+1781
+%%EOF

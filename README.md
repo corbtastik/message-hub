@@ -34,21 +34,23 @@ Body in Markdown.
 ```
 
 A picture or a video sent on its own fills the bubble the way Messages draws
-one; audio keeps the bubble's padding. See `docs/TEMPLATE.md` for the tags.
+one; audio keeps the bubble's padding. Any other file attaches as a document
+row with `{% attachment "/assets/files/x.pdf" %}`. See `docs/TEMPLATE.md`.
 
 ## Sample content
 
-`src/posts/` ships with **23 sample posts**, all invented placeholder text.
+`src/posts/` ships with **24 sample posts**, all invented placeholder text.
 They exist to make the site render and to exercise every feature: headings
 and code spans, flat and nested lists, blockquotes, the curly quotes and
 dashes the build applies, a post split into two bubbles, a picture, a video
-clip, an audio clip, a second author with the fallback avatar, an afternoon post, two posts
+clip, an audio clip, a PDF attachment, a second author with the fallback avatar, an afternoon post, two posts
 on one day, a deliberate gap in the calendar, and an external link. Delete
 them and write your own.
 
 The placeholder media in `src/assets/` goes with them: `sample-photo.jpg`,
-`sample-video.mp4` with its poster frame, and `sample-audio.mp3` are all
-generated -- drawn and synthesised, not recorded or photographed.
+`sample-video.mp4` with its poster frame, `sample-audio.mp3` and
+`sample-document.pdf` are all generated -- drawn, synthesised and typeset by
+the build, not recorded or photographed.
 
 ## Configuring
 

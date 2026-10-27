@@ -43,3 +43,9 @@ Audio keeps the bubble's padding instead of filling it, and needs no
 dimensions -- the control has a fixed height of its own:
 
 <audio src="/assets/audio/sample-audio.mp3" controls preload="metadata"></audio>
+
+Anything else -- a PDF, a zip -- attaches as a document row. The icon, type,
+size and page count come off the file at build time, so there is nothing to
+keep up to date:
+
+{% attachment "/assets/files/sample-document.pdf" %}

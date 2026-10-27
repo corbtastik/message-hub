@@ -20,9 +20,10 @@ src/
   assets/img/          avatar, cluster icon, sample photo
   assets/video/        sample clip and its poster frame
   assets/audio/        sample sound file
+  assets/files/        sample attachment (PDF)
   posts/
     posts.json         layout, tag and permalink for every post
-    *.md               one file per post (23 samples ship with it)
+    *.md               one file per post (24 samples ship with it)
 docs/TEMPLATE.md       starting point for a new post
 docs/FRAMEWORK.md      this file
 firebase.json          hosting config (no site pinned - see Deploying)
@@ -38,7 +39,7 @@ text -- there is no date picker:
 
 | Typed                      | Against the shipped samples             |
 | -------------------------- | --------------------------------------- |
-| `bubble`                   | 11 posts containing the word            |
+| `bubble`                   | 12 posts containing the word            |
 | `bubble quotation`         | the 2 containing *both* words           |
 | `9/21/26`                  | that single day                         |
 | `9/1/26 to 9/15/26`        | that range, inclusive                   |
@@ -56,8 +57,8 @@ returns to the box, Enter opens the post, Escape clears the search.
 
 Each row carries its searchable text in a `data-text` attribute, so the index
 is the page itself -- no extra request, and the list still renders unfiltered
-with JavaScript off. With the 23 short samples that index is about 13 KB of a
-43 KB page; longer posts cost proportionally more, and past roughly 300 posts
+with JavaScript off. With the 24 short samples that index is about 14 KB of a
+45 KB page; longer posts cost proportionally more, and past roughly 300 posts
 it would be worth moving it to a separate fetched `search.json`.
 
 ## Light and dark
@@ -108,7 +109,20 @@ A build-time transform in `eleventy.config.js` gives every off-site link
 is, so a tapped link should open alongside the thread rather than replace it.
 It leaves any link that already carries a `target` alone.
 
-## Pictures, video and audio
+## Code blocks
+
+A fenced block gets `overflow-x:auto`. Without it one long line pushes the
+whole document wider than the viewport -- at a 310px bubble that takes about
+sixty characters -- and the reader gets a horizontal scrollbar on the page
+instead of on the block, which also breaks the thread's centring. Inline
+`code` keeps the bubble's `overflow-wrap`, so a long attribute breaks rather
+than doing the same thing.
+
+The monospace stack is `--mono`, beside `--sf`. Both are exempt in
+`assertDarkThemesMatch()` from needing a dark counterpart, since a font stack
+is not a themed value.
+
+## Pictures, video, audio and attachments
 
 A picture or a clip goes in the post body as an ordinary tag, and the bubble
 does the rest:
@@ -148,12 +162,41 @@ empty until playback starts), `preload="metadata"` (or a thread of clips
 pulls megabytes nobody asked for) and `playsinline` (or iOS goes fullscreen
 on play).
 
-`firebase.json` caches `/assets/img/**`, `/assets/video/**` and
-`/assets/audio/**` for a year as immutable, so changing a file means changing
-its name. The three rules are deliberately separate rather than one
-`@(img|video|audio)` glob: the extglob syntax is used elsewhere in that file
-for extensions, but a path-segment version of it cannot be checked without a
-deploy.
+### Attachments
+
+A file with nothing useful to show inline at 310 points -- a PDF, a zip --
+goes in as a document row instead, through a shortcode:
+
+```njk
+{% attachment "/assets/files/sample-document.pdf" %}
+{% attachment "/assets/files/sample-document.pdf", "Trip notes" %}
+```
+
+It is a shortcode rather than markup to paste because the row carries an
+icon, a name, a type, a page count and a size, and because everything after
+the name is read off the file itself at build time: the type from the
+extension, the size from the bytes, the page count out of the PDF. None of
+it is written into the post, so none of it can drift from the file being
+served. A path that resolves to nothing throws and fails the build, rather
+than shipping a dead link.
+
+Page counting reads the raw PDF bytes -- `/Type /Page` objects, falling back
+to the largest `/Count` -- so it works on a plain file and returns nothing
+for one that keeps its page tree in a compressed object stream. When it
+returns nothing the row leaves the count out instead of guessing.
+
+Like a picture, a row alone in a bubble fills it; it is folded into the same
+`:has()` rule. `a.attach` has to outrank `.bubble a`, or the generic link
+style would make the row blue and underlined.
+
+### Caching
+
+`firebase.json` caches `/assets/img/**`, `/assets/video/**`,
+`/assets/audio/**` and `/assets/files/**` for a year as immutable, so
+changing a file means changing its name. The rules are deliberately separate
+rather than one `@(img|video|audio|files)` glob: the extglob syntax is used
+elsewhere in that file for extensions, but a path-segment version of it
+cannot be checked without a deploy.
 
 ## Activity graph
 
