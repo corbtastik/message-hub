@@ -44,8 +44,11 @@ bodyClass: thread
   <nav class="pager" aria-label="More posts">
     {% set prev = collections.posts | getPreviousCollectionItem %}
     {% set next = collections.posts | getNextCollectionItem %}
-    {# The collection is newest-first, so "next" in list order is the older post. #}
-    {% if next %}<a class="pager-link" href="{{ next.url }}" rel="prev">&larr; {{ next.data.title }}</a>{% endif %}
+    {# The collection is newest-first, so "next" in list order is the older post.
+       They stack the way the conversation list reads: the newer post sits
+       above this one there, so it sits on top here too. rel stays
+       chronological -- it describes the sequence, not the stacking. #}
     {% if prev %}<a class="pager-link pager-newer" href="{{ prev.url }}" rel="next">{{ prev.data.title }} &rarr;</a>{% endif %}
+    {% if next %}<a class="pager-link" href="{{ next.url }}" rel="prev">&larr; {{ next.data.title }}</a>{% endif %}
   </nav>
 </main>
