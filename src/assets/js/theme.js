@@ -59,6 +59,8 @@
 
   if (mq.addEventListener) mq.addEventListener("change", paint);
 
-  btn.hidden = false;
+  // The wrapper holds the palette button too, so reveal the pair.
+  var wrap = btn.closest(".controls");
+  if (wrap) wrap.hidden = false;
   paint();
 })();

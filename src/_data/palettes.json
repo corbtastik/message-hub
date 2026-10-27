@@ -1,0 +1,577 @@
+{
+  "label": "Corbs Themes",
+  "themes": [
+    {
+      "id": "star-lord",
+      "name": "Star Lord",
+      "light": {
+        "bg": "#F7F3FF",
+        "text": "#241A3D",
+        "heading": "#0D6FB8",
+        "link": "#FF3D8E",
+        "primary": "#FF3D8E",
+        "surface": "#FFFFFF",
+        "border": "#D5CCF0"
+      },
+      "dark": {
+        "bg": "#0A0D24",
+        "text": "#F3E9FF",
+        "heading": "#7FD7FF",
+        "link": "#FF5DA2",
+        "primary": "#FF5DA2",
+        "surface": "#15183A",
+        "border": "#2A2E5A"
+      }
+    },
+    {
+      "id": "corbs-cosmic",
+      "name": "Corbs Cosmic",
+      "light": {
+        "bg": "#f1ecff",
+        "text": "#3b0aa4",
+        "heading": "#3389ed",
+        "link": "#4493ef",
+        "primary": "#3389ed",
+        "surface": "#e9e2ff",
+        "border": "#3389ed"
+      },
+      "dark": {
+        "bg": "#14043a",
+        "text": "#f83a90",
+        "heading": "#21daff",
+        "link": "#4493ef",
+        "primary": "#4493ef",
+        "surface": "#190648",
+        "border": "#4493ef"
+      }
+    },
+    {
+      "id": "abyssal",
+      "name": "Abyssal",
+      "light": {
+        "bg": "#f0faff",
+        "text": "#001d3d",
+        "heading": "#6a0dad",
+        "link": "#0077b6",
+        "primary": "#0077b6",
+        "surface": "#ffffff",
+        "border": "#caf0f8"
+      },
+      "dark": {
+        "bg": "#000814",
+        "text": "#bce7fd",
+        "heading": "#9b5de5",
+        "link": "#00f5d4",
+        "primary": "#00f5d4",
+        "surface": "#001d3d",
+        "border": "#003566"
+      }
+    },
+    {
+      "id": "amethyst",
+      "name": "Amethyst",
+      "light": {
+        "bg": "#f7f5fb",
+        "text": "#1a1129",
+        "heading": "#4b0082",
+        "link": "#6a0dad",
+        "primary": "#6a0dad",
+        "surface": "#ffffff",
+        "border": "#e6e0f0"
+      },
+      "dark": {
+        "bg": "#0f0a1a",
+        "text": "#e0d7f2",
+        "heading": "#bf80ff",
+        "link": "#ffd700",
+        "primary": "#bf80ff",
+        "surface": "#1a1129",
+        "border": "#3b2566"
+      }
+    },
+    {
+      "id": "berry",
+      "name": "Berry",
+      "light": {
+        "bg": "#fff0f5",
+        "text": "#800040",
+        "heading": "#c71585",
+        "link": "#663399",
+        "primary": "#663399",
+        "surface": "#ffffff",
+        "border": "#ffb6c1"
+      },
+      "dark": {
+        "bg": "#150024",
+        "text": "#ff4da6",
+        "heading": "#d187ff",
+        "link": "#6a5acd",
+        "primary": "#ff4da6",
+        "surface": "#24003d",
+        "border": "#4b0082"
+      }
+    },
+    {
+      "id": "bluebonnet",
+      "name": "Bluebonnet",
+      "light": {
+        "bg": "#f8fafc",
+        "text": "#1e1b4b",
+        "heading": "#312e81",
+        "link": "#2563eb",
+        "primary": "#2563eb",
+        "surface": "#ffffff",
+        "border": "#bfdbfe"
+      },
+      "dark": {
+        "bg": "#0b1026",
+        "text": "#f0f4f8",
+        "heading": "#818cf8",
+        "link": "#d946ef",
+        "primary": "#d946ef",
+        "surface": "#161b3d",
+        "border": "#4338ca"
+      }
+    },
+    {
+      "id": "cotton-candy",
+      "name": "Cotton Candy",
+      "light": {
+        "bg": "#f0f7f6",
+        "text": "#117e96",
+        "heading": "#22c8e9",
+        "link": "#1abddf",
+        "primary": "#1abddf",
+        "surface": "#e5f1f0",
+        "border": "#22c8e9"
+      },
+      "dark": {
+        "bg": "#1a0a12",
+        "text": "#f2b6d4",
+        "heading": "#ff69b4",
+        "link": "#ff016e",
+        "primary": "#ff016e",
+        "surface": "#2d1520",
+        "border": "#da2f85"
+      }
+    },
+    {
+      "id": "cyan-pulse",
+      "name": "Cyan Pulse",
+      "light": {
+        "bg": "#F2FBFF",
+        "text": "#1B2A36",
+        "heading": "#006B8A",
+        "link": "#0098C8",
+        "primary": "#4FD8FF",
+        "surface": "#FFFFFF",
+        "border": "#C7E3F0"
+      },
+      "dark": {
+        "bg": "#121B22",
+        "text": "#E6F6FF",
+        "heading": "#A6ECFF",
+        "link": "#4FD8FF",
+        "primary": "#4FD8FF",
+        "surface": "#16232C",
+        "border": "#20323D"
+      }
+    },
+    {
+      "id": "glacial",
+      "name": "Glacial",
+      "light": {
+        "bg": "#f0f7f9",
+        "text": "#152028",
+        "heading": "#00334e",
+        "link": "#007ba7",
+        "primary": "#007ba7",
+        "surface": "#ffffff",
+        "border": "#b8ccd6"
+      },
+      "dark": {
+        "bg": "#0b1217",
+        "text": "#d1e1e9",
+        "heading": "#ffffff",
+        "link": "#00d2ff",
+        "primary": "#00d2ff",
+        "surface": "#152028",
+        "border": "#2a3f4d"
+      }
+    },
+    {
+      "id": "graphite-bloom",
+      "name": "Graphite Bloom",
+      "light": {
+        "bg": "#F7F5FA",
+        "text": "#2A2433",
+        "heading": "#5D1F63",
+        "link": "#933F6F",
+        "primary": "#933F6F",
+        "surface": "#FFFFFF",
+        "border": "#D3CCD8"
+      },
+      "dark": {
+        "bg": "#1B1A1F",
+        "text": "#D9D4DE",
+        "heading": "#CAA6D7",
+        "link": "#933F6F",
+        "primary": "#933F6F",
+        "surface": "#26232B",
+        "border": "#535054"
+      }
+    },
+    {
+      "id": "horizon",
+      "name": "Horizon",
+      "light": {
+        "bg": "#FDF0ED",
+        "text": "#1A1C23",
+        "heading": "#DA103F",
+        "link": "#1D8991",
+        "primary": "#DA103F",
+        "surface": "#FFFFFF",
+        "border": "#F9CBBE"
+      },
+      "dark": {
+        "bg": "#1C1E26",
+        "text": "#D5D8DA",
+        "heading": "#E95678",
+        "link": "#25B0BC",
+        "primary": "#E95678",
+        "surface": "#232530",
+        "border": "#2E303E"
+      }
+    },
+    {
+      "id": "mongo",
+      "name": "Mongo",
+      "light": {
+        "bg": "#ffffff",
+        "text": "#001e2b",
+        "heading": "#001e2b",
+        "link": "#00684a",
+        "primary": "#00684a",
+        "surface": "#f5f9fa",
+        "border": "#00ed64"
+      },
+      "dark": {
+        "bg": "#001e2b",
+        "text": "#e8f1f2",
+        "heading": "#ffffff",
+        "link": "#00ed64",
+        "primary": "#00ed64",
+        "surface": "#0b2d3e",
+        "border": "#1e3d4a"
+      }
+    },
+    {
+      "id": "monochrome",
+      "name": "Monochrome",
+      "light": {
+        "bg": "#FFFFFF",
+        "text": "#000000",
+        "heading": "#000000",
+        "link": "#000000",
+        "primary": "#000000",
+        "surface": "#FFFFFF",
+        "border": "#CCCCCC"
+      },
+      "dark": {
+        "bg": "#000000",
+        "text": "#FFFFFF",
+        "heading": "#FFFFFF",
+        "link": "#FFFFFF",
+        "primary": "#FFFFFF",
+        "surface": "#000000",
+        "border": "#333333"
+      }
+    },
+    {
+      "id": "neon-reef",
+      "name": "Neon Reef",
+      "light": {
+        "bg": "#F2FFFC",
+        "text": "#13333A",
+        "heading": "#0B7C6A",
+        "link": "#0CCB9E",
+        "primary": "#0CCB9E",
+        "surface": "#FFFFFF",
+        "border": "#BFEFE3"
+      },
+      "dark": {
+        "bg": "#111E24",
+        "text": "#E5FFFB",
+        "heading": "#9CFFE5",
+        "link": "#32F5B8",
+        "primary": "#32F5B8",
+        "surface": "#152831",
+        "border": "#1F3A44"
+      }
+    },
+    {
+      "id": "news",
+      "name": "News",
+      "light": {
+        "bg": "#e0e0e0",
+        "text": "#0a0a0a",
+        "heading": "#000000",
+        "link": "#d60064",
+        "primary": "#d60064",
+        "surface": "#f5f5f5",
+        "border": "#5c5c5c"
+      },
+      "dark": {
+        "bg": "#141414",
+        "text": "#e0e0e0",
+        "heading": "#ffffff",
+        "link": "#f72685",
+        "primary": "#f72685",
+        "surface": "#1a1a1a",
+        "border": "#5c5c5c"
+      }
+    },
+    {
+      "id": "orbit",
+      "name": "Orbit",
+      "light": {
+        "bg": "#F6F2E0",
+        "text": "#2B1F4A",
+        "heading": "#1E1738",
+        "link": "#8F7476",
+        "primary": "#9A867B",
+        "surface": "#FFFFFF",
+        "border": "#D2C9B3"
+      },
+      "dark": {
+        "bg": "#060B31",
+        "text": "#ECE9C5",
+        "heading": "#F5F2D8",
+        "link": "#9A867B",
+        "primary": "#9A867B",
+        "surface": "#0F163E",
+        "border": "#2B1F4A"
+      }
+    },
+    {
+      "id": "reef",
+      "name": "Reef",
+      "light": {
+        "bg": "#f0fbff",
+        "text": "#004d66",
+        "heading": "#0099cc",
+        "link": "#ff3366",
+        "primary": "#ff3366",
+        "surface": "#ffffff",
+        "border": "#b3e6ff"
+      },
+      "dark": {
+        "bg": "#001e2b",
+        "text": "#00ffe5",
+        "heading": "#00b8ff",
+        "link": "#ff5e7e",
+        "primary": "#00ffe5",
+        "surface": "#002b3d",
+        "border": "#004d6e"
+      }
+    },
+    {
+      "id": "reveal-redux",
+      "name": "Reveal Redux",
+      "light": {
+        "bg": "#fefcfb",
+        "text": "#091129",
+        "heading": "#f72685",
+        "link": "#0077cc",
+        "primary": "#0077cc",
+        "surface": "#ebfaff",
+        "border": "#f72685"
+      },
+      "dark": {
+        "bg": "#091129",
+        "text": "#fefcfb",
+        "heading": "#ec0a6f",
+        "link": "#339ff4",
+        "primary": "#339ff4",
+        "surface": "#033c50",
+        "border": "#ec0a6f"
+      }
+    },
+    {
+      "id": "snazzy",
+      "name": "Snazzy",
+      "light": {
+        "bg": "#fafafa",
+        "text": "#5e5e5e",
+        "heading": "#282a36",
+        "link": "#ff5c57",
+        "primary": "#ff5c57",
+        "surface": "#ffffff",
+        "border": "#e5e5e6"
+      },
+      "dark": {
+        "bg": "#282a36",
+        "text": "#eff0eb",
+        "heading": "#9aedfe",
+        "link": "#ff6ac1",
+        "primary": "#ff6ac1",
+        "surface": "#34353e",
+        "border": "#57c7ff"
+      }
+    },
+    {
+      "id": "solar-pop",
+      "name": "Solar Pop",
+      "light": {
+        "bg": "#FFF8ED",
+        "text": "#3B2A1B",
+        "heading": "#B85A00",
+        "link": "#E98900",
+        "primary": "#FFD36B",
+        "surface": "#FFFFFF",
+        "border": "#F2D3AA"
+      },
+      "dark": {
+        "bg": "#1D1611",
+        "text": "#FFF3D9",
+        "heading": "#FFB84D",
+        "link": "#FFD36B",
+        "primary": "#FFD36B",
+        "surface": "#271B14",
+        "border": "#3B281B"
+      }
+    },
+    {
+      "id": "stock",
+      "name": "Stock",
+      "light": {
+        "bg": "#ffffff",
+        "text": "#333333",
+        "heading": "#000000",
+        "link": "#4A90E2",
+        "primary": "#4A90E2",
+        "surface": "#f8f9fa",
+        "border": "#e0e0e0"
+      },
+      "dark": {
+        "bg": "#121212",
+        "text": "#d4d4d4",
+        "heading": "#ffffff",
+        "link": "#89CFF0",
+        "primary": "#89CFF0",
+        "surface": "#1e1e1e",
+        "border": "#333333"
+      }
+    },
+    {
+      "id": "sunset",
+      "name": "Sunset",
+      "light": {
+        "bg": "#fff9e6",
+        "text": "#993300",
+        "heading": "#e65c00",
+        "link": "#cc0066",
+        "primary": "#cc0066",
+        "surface": "#ffffff",
+        "border": "#ffcc99"
+      },
+      "dark": {
+        "bg": "#2e001f",
+        "text": "#ffbd59",
+        "heading": "#ff5e00",
+        "link": "#ff66c4",
+        "primary": "#ffbd59",
+        "surface": "#45002e",
+        "border": "#70004b"
+      }
+    },
+    {
+      "id": "tideglass",
+      "name": "Tideglass",
+      "light": {
+        "bg": "#F2F7FA",
+        "text": "#1B2A36",
+        "heading": "#2E4A40",
+        "link": "#3B6B59",
+        "primary": "#65A082",
+        "surface": "#FFFFFF",
+        "border": "#C7D6DF"
+      },
+      "dark": {
+        "bg": "#141B24",
+        "text": "#D7E6F0",
+        "heading": "#A8E0C8",
+        "link": "#65A082",
+        "primary": "#65A082",
+        "surface": "#1E2733",
+        "border": "#2F4452"
+      }
+    },
+    {
+      "id": "vice",
+      "name": "Vice",
+      "light": {
+        "bg": "#ffffff",
+        "text": "#8b006d",
+        "heading": "#ff007f",
+        "link": "#00a8cc",
+        "primary": "#00a8cc",
+        "surface": "#fdf2f9",
+        "border": "#ff9ee3"
+      },
+      "dark": {
+        "bg": "#100b29",
+        "text": "#ff7df9",
+        "heading": "#f5ce42",
+        "link": "#23d1fa",
+        "primary": "#23d1fa",
+        "surface": "#1b123d",
+        "border": "#ff7df9"
+      }
+    },
+    {
+      "id": "winter-is-coming",
+      "name": "Winter is Coming",
+      "light": {
+        "bg": "#ffffff",
+        "text": "#235e9a",
+        "heading": "#0444ac",
+        "link": "#005cc5",
+        "primary": "#005cc5",
+        "surface": "#f3f3f3",
+        "border": "#dcdcdc"
+      },
+      "dark": {
+        "bg": "#011627",
+        "text": "#a599e9",
+        "heading": "#7eebff",
+        "link": "#5f7e97",
+        "primary": "#7eebff",
+        "surface": "#0b2942",
+        "border": "#1d3b53"
+      }
+    },
+    {
+      "id": "yolo-flux",
+      "name": "Yolo Flux",
+      "light": {
+        "bg": "#dee1f7",
+        "text": "#060823",
+        "heading": "#1042ff",
+        "link": "#00ce35",
+        "primary": "#00ce35",
+        "surface": "#ebefff",
+        "border": "#bf3efd"
+      },
+      "dark": {
+        "bg": "#060823",
+        "text": "#cacef7",
+        "heading": "#f9246c",
+        "link": "#4ffa7b",
+        "primary": "#4ffa7b",
+        "surface": "#251359",
+        "border": "#bf3efd"
+      }
+    }
+  ]
+}

@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="color-scheme" content="light dark">
 {# Applied before first paint; deferring this would flash the wrong theme. #}
-<script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>try{var r=document.documentElement,t=localStorage.getItem("theme");if(t==="light"||t==="dark")r.setAttribute("data-theme",t);var p=localStorage.getItem("palette");if(p)r.setAttribute("data-palette",p)}catch(e){}</script>
 
 {%- set pageTitle = title if title else site.title %}
 {%- set pageDesc = summary if summary else site.description %}
@@ -34,9 +34,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;1,400;1,600&display=swap">
 <link rel="stylesheet" href="/assets/css/app.css">
+<link rel="stylesheet" href="/assets/css/palettes.css">
 </head>
 <body class="{{ bodyClass }}">
 {{ content | safe }}
 <script src="/assets/js/theme.js" defer></script>
+<script src="/assets/js/palette.js" defer></script>
 </body>
 </html>

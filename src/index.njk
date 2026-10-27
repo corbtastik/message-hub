@@ -9,7 +9,7 @@ eleventyExcludeFromCollections: true
       <h1>{{ site.title }}</h1>
       <p class="list-sub">{{ collections.posts | length }} post{{ "" if collections.posts | length == 1 else "s" }} from {{ site.author }}</p>
     </div>
-    {% include "theme-toggle.njk" %}
+    {% include "controls.njk" %}
   </header>
 
   {# Activity graph: a row per month, a column per day of the month, so it

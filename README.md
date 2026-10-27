@@ -84,6 +84,21 @@ broken image. No sample exercises that path any more, since the post that did
 has been removed -- the code is still there, it is just untested by the
 shipped content.
 
+## Colour palettes
+
+26 palettes ship with it, ported from the "Corbs Themes" group in
+[yolo-11ty](https://github.com/corbtastik/yolo-11ty). The palette button sits
+under the light/dark toggle.
+
+Palette and appearance are separate: each palette has a light and a dark side
+and follows whichever the toggle is on. The choice is remembered and applied
+before first paint, so there is no flash.
+
+Add or remove one by editing `src/_data/palettes.json` -- seven colours per
+mode. `lib/palette.js` maps those onto the stylesheet's tokens, and the build
+fails if the two ever disagree. See
+[`docs/FRAMEWORK.md`](docs/FRAMEWORK.md).
+
 ## Configuring
 
 `src/_data/site.json` holds the title, author, description and public URL.

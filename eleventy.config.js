@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { TOKENS, paletteCss } from "./lib/palette.js";
 
 /* The two dark-theme blocks in app.css have to carry the same tokens: one
  * answers the system preference, the other the manual toggle. They have
@@ -49,8 +50,36 @@ function assertDarkThemesMatch() {
   }
 }
 
+/* A palette overrides every colour token at once. One it does not set stays
+ * at the default -- a white bubble on a dark palette, say -- and nothing
+ * fails, it just looks broken on 26 pages. So check the mapping in
+ * lib/palette.js against :root in both directions. */
+const NOT_COLOUR = ["--sf", "--mono", "--top-inset"];
+function assertPaletteCoversTokens() {
+  const css = fs.readFileSync("src/assets/css/app.css", "utf8");
+  const root = css.match(/:root\{\n([\s\S]*?)\n\}/);
+  if (!root) throw new Error("app.css: could not find :root");
+  const declared = [...root[1].matchAll(/(--[a-z-]+)\s*:/g)]
+    .map((m) => m[1])
+    .filter((n) => !NOT_COLOUR.includes(n));
+  const mapped = TOKENS.map(([n]) => "--" + n);
+
+  const missing = declared.filter((n) => !mapped.includes(n));
+  const extra = mapped.filter((n) => !declared.includes(n));
+  const dupes = mapped.filter((n, i) => mapped.indexOf(n) !== i);
+  if (missing.length || extra.length || dupes.length) {
+    throw new Error(
+      "lib/palette.js and :root in app.css disagree.\n" +
+        "  in :root but no palette value: " + (missing.join(", ") || "-") + "\n" +
+        "  mapped but not a :root token:  " + (extra.join(", ") || "-") + "\n" +
+        "  mapped twice:                  " + (dupes.join(", ") || "-")
+    );
+  }
+}
+
 export default function (eleventyConfig) {
   assertDarkThemesMatch();
+  assertPaletteCoversTokens();
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addWatchTarget("src/assets");
 
@@ -216,6 +245,16 @@ export default function (eleventyConfig) {
       if (/target=/.test(rest)) return m;
       return `<a href="${href}"${rest} target="_blank" rel="noopener">`;
     });
+  });
+
+  /* One rule per palette, written straight into the output rather than kept
+   * in src/. It is generated, so it should not be a file anyone can edit by
+   * hand and expect to survive a build. */
+  eleventyConfig.on("eleventy.after", ({ dir }) => {
+    const palettes = JSON.parse(fs.readFileSync("src/_data/palettes.json", "utf8"));
+    const out = path.join(dir.output, "assets", "css", "palettes.css");
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+    fs.writeFileSync(out, paletteCss(palettes) + "\n");
   });
 
   return {

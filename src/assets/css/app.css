@@ -9,7 +9,7 @@
 
 :root{
   /* Light — iOS Messages light appearance */
-  --bg:#fff;              --bg-rgb:255 255 255;
+  --bg:#fff;
   --bubble:#e9e9eb;
   --text:#000;
   --meta:#8e8e93;
@@ -52,7 +52,7 @@
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     /* Dark — the original design's palette */
-    --bg:#000;            --bg-rgb:0 0 0;
+    --bg:#000;
     --bubble:#262629;
     --text:#fff;
     --meta:#838389;
@@ -77,7 +77,7 @@
 :root[data-theme="dark"]{
   color-scheme:dark;
   /* Dark — the original design's palette */
-  --bg:#000;            --bg-rgb:0 0 0;
+  --bg:#000;
   --bubble:#262629;
   --text:#fff;
   --meta:#838389;
@@ -135,7 +135,10 @@ a{color:inherit;text-decoration:none}
    the bar without moving the padding and the stamp slides up into the opaque
    part and washes out. */
 .top{position:fixed;left:0;right:0;top:var(--top-inset);z-index:5;height:76px;pointer-events:none;
-  background:linear-gradient(to bottom,rgb(var(--bg-rgb)/.92) 0,rgb(var(--bg-rgb)/.80) 55%,rgb(var(--bg-rgb)/0) 100%)}
+  background:linear-gradient(to bottom,
+    color-mix(in srgb,var(--bg) 92%,transparent) 0,
+    color-mix(in srgb,var(--bg) 80%,transparent) 55%,
+    transparent 100%)}
 .top-in{position:relative;max-width:440px;margin:0 auto;height:100%;
   padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
 .back{position:absolute;left:20.5px;top:0;width:43.4px;height:43.4px;border-radius:50%;
@@ -289,17 +292,43 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @keyframes rowFlash{from{background:var(--control-hover)}to{background:transparent}}
 @media (prefers-reduced-motion:reduce){.row-jumped{animation:none;background:var(--control-hover)}}
 
-/* ---------- appearance toggle ---------- */
-/* No ring and no fill: the glyph alone, sized to what the old circle was. */
-.theme-toggle{flex:none;display:grid;place-items:center;width:34px;height:34px;
-  border:0;background:none;color:var(--meta);margin-top:4px}
-.theme-toggle svg{width:100%;height:100%}
-.theme-toggle:hover{color:var(--text)}
-/* On a thread it sits in the fixed bar, opposite the back button, at the same
-   34px as the list header. That button is 43.4px, so nudge down by half the
-   difference to keep the two optically aligned. */
-.top .theme-toggle{position:absolute;right:20.5px;top:4.7px;width:34px;height:34px;margin-top:0;
-  color:var(--text);pointer-events:auto}
+/* ---------- appearance + palette controls ---------- */
+/* The two buttons stack, palette under appearance. No ring and no fill on
+   either: the glyph alone, sized to what the old circle was. */
+.controls{flex:none;position:relative;display:flex;flex-direction:column;
+  align-items:center;gap:1px;margin-top:4px}
+.icon-btn{display:grid;place-items:center;width:34px;height:34px;padding:0;
+  border:0;background:none;color:var(--meta)}
+.icon-btn:hover{color:var(--text)}
+.icon-btn svg{display:block}
+#theme-toggle svg{width:100%;height:100%}
+/* On a thread the pair sits in the fixed bar, opposite the back button, at the
+   same 34px as the list header. That button is 43.4px, so nudge down by half
+   the difference to keep the first glyph optically aligned with it. */
+.top .controls{position:absolute;right:20.5px;top:4.7px;margin-top:0;
+  pointer-events:auto;z-index:7}
+.top .icon-btn{color:var(--text)}
+
+/* The picker. Glass like the other floating chrome, and anchored to the
+   controls rather than the viewport so it lands under the palette button on
+   both the list and a thread. */
+.palette-panel{position:absolute;top:calc(100% + 7px);right:0;z-index:8;
+  width:min(238px,calc(100vw - 34px));padding:9px;border-radius:15px;
+  background:var(--glass);border:1px solid var(--glass-edge);
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  box-shadow:0 8px 26px rgb(0 0 0 / .30)}
+.palette-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+/* Split on the diagonal, because a palette carries a light and a dark side
+   and showing only one of them would misrepresent half of them. */
+.swatch{width:100%;aspect-ratio:1;min-width:0;padding:0;position:relative;
+  border-radius:50%;border:1px solid var(--glass-edge);cursor:pointer;
+  background:linear-gradient(135deg,var(--sw-l) 0 50%,var(--sw-d) 50% 100%)}
+.swatch::after{content:"";position:absolute;left:50%;top:50%;
+  width:38%;height:38%;margin:-19% 0 0 -19%;border-radius:50%;background:var(--sw-p)}
+.swatch.is-default{--sw-l:#fff;--sw-d:#000;--sw-p:#0a84ff}
+.swatch:hover{outline:1.5px solid var(--text);outline-offset:1px}
+.swatch:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.swatch[aria-selected="true"]{outline:2px solid var(--accent);outline-offset:2px}
 
 /* ---------- search / sort toolbar ---------- */
 .tools{display:flex;flex-direction:column;gap:7px;padding:2px 4px 12px}
@@ -352,7 +381,7 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   overflow:hidden;margin-top:1px;font-size:15px;line-height:20px;letter-spacing:-.2px;color:var(--meta)}
 
 @media (prefers-reduced-motion:no-preference){
-  .row-link,.pager-link,.sort-btn,.theme-toggle{transition:background-color .12s ease,color .12s ease}
+  .row-link,.pager-link,.sort-btn,.icon-btn,.swatch{transition:background-color .12s ease,color .12s ease}
 }
 /* Set while the appearance switches, so the whole page changes at once. */
 :root.theme-switching *{transition:none!important}

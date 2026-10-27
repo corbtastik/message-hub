@@ -9,14 +9,16 @@ How the pieces fit together. For getting started, see the
 src/
   index.njk            conversation list (home)
   _data/activity.js    builds the calendar grid for the activity graph
+  _data/palettes.json  the colour palettes, seven source colours each
   _data/site.json      title, author, description, url
   _includes/
     base.njk           <head>, meta and social tags
     post.njk           the Messages thread
-    theme-toggle.njk   the appearance button, used by both
+    controls.njk       appearance + palette buttons, used by both
   assets/css/app.css   all styles
   assets/js/search.js  list filtering, typed dates, sort, arrow keys
   assets/js/theme.js   the appearance toggle
+  assets/js/palette.js the palette picker
   assets/img/          site icon and sample photo
   assets/img/people/   author portraits, one SVG per name
   assets/video/        sample clip and its poster frame
@@ -27,6 +29,7 @@ src/
     *.md               one file per post (50 samples ship with it)
 docs/TEMPLATE.md       starting point for a new post
 docs/FRAMEWORK.md      this file
+lib/palette.js         palette colours -> CSS tokens; used by the build
 tools/make-avatar.js   draws an author portrait; not part of the build
 firebase.json          hosting config (no site pinned - see Deploying)
 ```
@@ -114,6 +117,66 @@ Neither failed visibly, which is the reason the check exists. Keep all light
 tokens in the single `:root` block; a second one would hide from the check. Forcing a theme
 also sets `color-scheme`, without which the browser keeps painting native
 controls and scrollbars for the system appearance.
+
+## Colour palettes
+
+26 palettes, ported from the "Corbs Themes" group of
+[yolo-11ty](https://github.com/corbtastik/yolo-11ty)'s `themes.json`. The
+palette button sits under the appearance toggle and opens a grid of swatches;
+the first clears back to the default.
+
+**Palette and appearance are independent axes.** Each palette carries a light
+and a dark side, and every generated value is a `light-dark()` pair, so the
+browser picks the side matching `color-scheme` -- which app.css already sets
+for both the system preference and the manual toggle. Nothing in the palette
+code knows which mode is showing, and switching appearance needs no
+re-application.
+
+Applying one is setting `data-palette` on `<html>`. That is all `palette.js`
+does. The inline script in `<head>` sets it from `localStorage` before first
+paint, the same way the appearance override is applied, so there is no flash.
+
+### Where the colours come from
+
+`src/_data/palettes.json` holds seven source colours per palette per mode --
+`bg`, `text`, `heading`, `link`, `primary`, `surface`, `border`. The upstream
+data also carries five syntax-highlighting colours; this project has no syntax
+highlighting, so they are dropped on the way in. They are recoverable from
+yolo-11ty if that ever changes.
+
+`lib/palette.js` maps those seven onto the twenty tokens `:root` declares, and
+`eleventy.config.js` writes one rule per palette into
+`assets/css/palettes.css` at build time. The alpha-derived tokens -- `--sep`,
+`--control`, `--hover`, `--day-off` and friends -- are ink over the
+background: app.css hard-codes black-at-low-alpha for light and
+white-at-low-alpha for dark, which generalises to `text` at that alpha and so
+works for any palette.
+
+There is deliberately **one** copy of that mapping. The project it came from
+had two, one in the build and one in the browser, and they drifted: the
+browser's covered 34 of 90 variables, so switching themes left most of the
+page on the compiled-in theme. Here the browser has no copy at all.
+
+### The guard
+
+`assertPaletteCoversTokens()` fails the build when `lib/palette.js` and
+`:root` disagree in either direction, or when a token is mapped twice. A
+palette overrides every colour at once; one it misses stays at the default --
+a white bubble on a dark palette -- and nothing errors, it just looks broken
+on every page. Same reasoning as `assertDarkThemesMatch()`, which is why they
+sit next to each other.
+
+Adding a token to `:root` without adding it to the mapping now fails the
+build, and so does the reverse.
+
+### Cost
+
+`palettes.css` is about 25 KB, under 5 KB gzipped, and is loaded on every page
+whether or not anyone opens the picker. That is the price of having the
+palettes be plain CSS rather than something JavaScript assembles, which is
+what buys the no-flash restore and keeps the browser free of the mapping. If
+that ever looks like a bad trade, the lever is trimming the palette list, not
+moving the work back into JavaScript.
 
 ## Typography
 
