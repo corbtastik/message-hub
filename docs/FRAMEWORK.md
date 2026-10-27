@@ -294,8 +294,14 @@ need absolute URLs.
 - **A thread's top bar is one row**: back button, the conversation pill, and
   the appearance toggle, all centred on the same line. It used to carry a
   group icon above the pill, which is why `.screen` had 99px of top padding;
-  that is now 56px and the bar 106px, keeping the same 12px gap to the first
-  line of content and the same ~63px of gradient below the controls.
+  that is now 68px and the bar 76px.
+- **The bar's height and that padding are a pair.** The gradient is
+  black-on-black, so it is invisible against the background but dims any text
+  under it, and what matters is how far down the gradient the first line of
+  content lands. At 76/68 the date stamp sits under about 0.19 alpha while
+  the bottom of the back button is still under 0.76. Changing one number
+  without the other is how the stamp ends up washed out -- which it was, at
+  0.80, when the bar was first shortened.
 - **The tab icon follows `site.author`**, resolved through the same `avatar`
   filter rather than hard-coded, so renaming the author moves it with no edit
   to `base.njk`.
