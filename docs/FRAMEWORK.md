@@ -24,10 +24,10 @@ src/
   assets/files/        sample attachment (PDF)
   posts/
     posts.json         layout, tag and permalink for every post
-    *.md               one file per post (51 samples ship with it)
+    *.md               one file per post (50 samples ship with it)
 docs/TEMPLATE.md       starting point for a new post
 docs/FRAMEWORK.md      this file
-tools/make-avatar.py   draws an author portrait; not part of the build
+tools/make-avatar.js   draws an author portrait; not part of the build
 firebase.json          hosting config (no site pinned - see Deploying)
 ```
 
@@ -59,8 +59,8 @@ returns to the box, Enter opens the post, Escape clears the search.
 
 Each row carries its searchable text in a `data-text` attribute, so the index
 is the page itself -- no extra request, and the list still renders unfiltered
-with JavaScript off. Across the 51 samples that index is about 23 KB of a
-98 KB page -- roughly 450 bytes a post; longer posts cost proportionally more, and past roughly 300 posts
+with JavaScript off. Across the 50 samples that index is about 23 KB of a
+97 KB page -- roughly 450 bytes a post; longer posts cost proportionally more, and past roughly 300 posts
 it would be worth moving it to a separate fetched `search.json`.
 
 ## Authors and avatars
@@ -73,12 +73,14 @@ used; if not the template falls back to a neutral figure drawn inline.
 
 That means adding a contributor is adding a file named after them. There is
 no register to update, and a name with no portrait degrades to the fallback
-rather than a broken image -- the "A Note From Someone Else" sample is
-deliberately left without one so that path stays exercised.
+rather than a broken image. Nothing in the shipped samples exercises that
+fallback now: the one post that did has been removed, so the branch is live
+but untested by content. Give any post an `author` with no matching file to
+see it.
 
-`tools/make-avatar.py` draws the portraits. It is not part of the build and
-never runs during one; it is a one-off for a new author, and its output is
-committed. Faces are derived from a hash of the name, so a person keeps the
+`tools/make-avatar.js` draws the portraits, wired up as `npm run avatar --
+"Their Name"`. It is not part of the build and never runs during one; it is a
+one-off for a new author, and its output is committed. Faces are derived from a hash of the name, so a person keeps the
 same one across rebuilds, and a given name always produces the same file.
 
 Two constraints shaped the drawing, both from the 32px size on a thread page:
@@ -133,6 +135,27 @@ A build-time transform in `eleventy.config.js` gives every off-site link
 `target="_blank"` and `rel="noopener"`. A post is read the way a text message
 is, so a tapped link should open alongside the thread rather than replace it.
 It leaves any link that already carries a `target` alone.
+
+## Emoji
+
+Posts carry emoji as plain Unicode. There is no image set and no shortcode:
+on an Apple device the system draws them in Apple Color Emoji, which is the
+look these were chosen against, and elsewhere the platform's own set stands
+in. Apple's emoji font cannot be web-embedded any more than SF Pro can, so
+this is the same bargain the typography section describes.
+
+`--sf` names `Apple Color Emoji`, `Segoe UI Emoji` and `Noto Color Emoji`
+ahead of the generic `sans-serif`, because `Inter` carries no emoji glyphs
+and the fallback should be a colour set rather than whatever the generic
+family resolves to.
+
+The conversation-list preview truncates on **grapheme clusters**, not UTF-16
+units. Cutting a string at a fixed length mid-emoji leaves a lone surrogate,
+which draws as a replacement character, and cutting a ZWJ sequence or a
+skin-tone modifier turns one glyph into two. `Intl.Segmenter` in the
+`preview` filter handles both. This only bites a post with no `summary`,
+since a summary is almost always under the limit -- but that is a documented
+way to write a post, so it is reachable.
 
 ## Code blocks
 

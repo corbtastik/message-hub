@@ -99,10 +99,21 @@ export default function (eleventyConfig) {
       .replace(/\s+/g, " ")
       .trim();
 
-  // Plain-text preview for the conversation list.
+  /* Plain-text preview for the conversation list. Truncation walks grapheme
+   * clusters rather than UTF-16 units: slicing an emoji down the middle
+   * leaves a lone surrogate, which the browser draws as a replacement
+   * character, and cutting a ZWJ sequence or a skin-tone modifier turns one
+   * glyph into two. Posts carry emoji, so both are reachable. */
+  const graphemes = new Intl.Segmenter("en", { granularity: "grapheme" });
   eleventyConfig.addFilter("preview", (html, max = 140) => {
     const text = plain(html);
-    return text.length > max ? text.slice(0, max).trimEnd() + "\u2026" : text;
+    if (text.length <= max) return text;
+    let out = "";
+    for (const { segment } of graphemes.segment(text)) {
+      if (out.length + segment.length > max) break;
+      out += segment;
+    }
+    return out.trimEnd() + "\u2026";
   });
 
   // Everything the client-side search matches against, lowercased once at

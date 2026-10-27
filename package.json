@@ -8,7 +8,8 @@
   "scripts": {
     "start": "eleventy --serve",
     "build": "eleventy",
-    "clean": "rm -rf _site"
+    "clean": "rm -rf _site",
+    "avatar": "node tools/make-avatar.js src/assets/img/people"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0"

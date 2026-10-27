@@ -4,7 +4,7 @@ date: 2026-09-30
 time: 8:20 AM
 summary: "Sample content. A picture sent as its own message, the way an image arrives in a thread."
 ---
-Sample body text. A picture is sent the way any other message is -- put it in the post and it arrives as its own bubble.
+Sample body text. A picture is sent the way any other message is -- put it in the post and it arrives as its own bubble. 📷
 
 ***
 

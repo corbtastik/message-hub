@@ -39,23 +39,26 @@ row with `{% attachment "/assets/files/x.pdf" %}`. See `docs/TEMPLATE.md`.
 
 ## Sample content
 
-`src/posts/` ships with **51 sample posts**, all invented. They come in two
+`src/posts/` ships with **50 sample posts**, all invented. They come in two
 kinds.
 
-**24 feature samples**, bylined to the site author, each exercising one thing:
+**23 feature samples**, bylined to the site author, each exercising one thing:
 headings and code spans, flat and nested lists, blockquotes, the curly quotes
 and dashes the build applies, a post split into two bubbles, a picture, a
-video clip, an audio clip, a PDF attachment, a second author with the neutral
-fallback avatar, an afternoon post, two posts on one day, a deliberate gap in
-the calendar, and an external link. Their summaries start "Sample content." so
+video clip, an audio clip, a PDF attachment, an afternoon post, two posts on
+one day, a deliberate gap in the calendar, and an external link. Their summaries start "Sample content." so
 they are easy to find and delete.
 
 **27 posts from ten other people**, three in each month from January to
 August and three more in October, which is what gives the activity graph a
 year to draw and the list enough variety to be worth searching. September is
-left alone: its twenty-one feature samples already fill every weekday, and the
-empty 15th and 16th are load-bearing -- a sample post and the docs both point
-at that gap.
+left alone: its feature samples already fill every weekday, and the empty 15th
+and 16th are load-bearing -- a sample post and the docs both point at that gap.
+
+Thirty of the fifty carry emoji, twenty of them in the title so they show in
+the conversation list. They are plain Unicode, so they render in whatever the
+reader's platform ships -- Apple's on Apple devices, and the stack in
+`--sf` names the common fallbacks for everywhere else.
 
 The placeholder media is generated too: `sample-photo.jpg`,
 `sample-video.mp4` with its poster frame, `sample-audio.mp3` and
@@ -73,8 +76,13 @@ is one, and a neutral figure if there is not -- so adding a person is a file
 named after them, with nothing to register:
 
 ```sh
-python3 tools/make-avatar.py src/assets/img/people "Your Name"
+npm run avatar -- "Your Name"
 ```
+
+A name with no portrait file falls back to a neutral figure rather than a
+broken image. No sample exercises that path any more, since the post that did
+has been removed -- the code is still there, it is just untested by the
+shipped content.
 
 ## Configuring
 

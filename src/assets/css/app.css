@@ -36,7 +36,8 @@
      both system-ui AND BlinkMacSystemFont -- current Chrome normalises
      BlinkMacSystemFont to system-ui on every platform, so leaving it ahead
      of Inter hands Windows Segoe UI and Android Roboto. */
-  --sf:-apple-system,"SF Pro Text",Inter,BlinkMacSystemFont,system-ui,"Helvetica Neue",Arial,sans-serif;
+  --sf:-apple-system,"SF Pro Text",Inter,BlinkMacSystemFont,system-ui,"Helvetica Neue",Arial,
+    "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 
   color-scheme:light dark;
