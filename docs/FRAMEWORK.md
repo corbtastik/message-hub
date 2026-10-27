@@ -18,14 +18,16 @@ src/
   assets/js/search.js  list filtering, typed dates, sort, arrow keys
   assets/js/theme.js   the appearance toggle
   assets/img/          avatar, cluster icon, sample photo
+  assets/img/people/   author portraits, one SVG per name
   assets/video/        sample clip and its poster frame
   assets/audio/        sample sound file
   assets/files/        sample attachment (PDF)
   posts/
     posts.json         layout, tag and permalink for every post
-    *.md               one file per post (24 samples ship with it)
+    *.md               one file per post (51 samples ship with it)
 docs/TEMPLATE.md       starting point for a new post
 docs/FRAMEWORK.md      this file
+tools/make-avatar.py   draws an author portrait; not part of the build
 firebase.json          hosting config (no site pinned - see Deploying)
 ```
 
@@ -57,9 +59,32 @@ returns to the box, Enter opens the post, Escape clears the search.
 
 Each row carries its searchable text in a `data-text` attribute, so the index
 is the page itself -- no extra request, and the list still renders unfiltered
-with JavaScript off. With the 24 short samples that index is about 14 KB of a
-45 KB page; longer posts cost proportionally more, and past roughly 300 posts
+with JavaScript off. Across the 51 samples that index is about 23 KB of a
+98 KB page -- roughly 450 bytes a post; longer posts cost proportionally more, and past roughly 300 posts
 it would be worth moving it to a separate fetched `search.json`.
+
+## Authors and avatars
+
+A post with no `author` is by `site.author` and shows their photograph.
+Any other name resolves through the `avatar` filter, which looks for
+`src/assets/img/people/<slug>.svg`, the slug being the name lowercased with
+runs of non-alphanumerics collapsed to hyphens. If the file is there it is
+used; if not the template falls back to a neutral figure drawn inline.
+
+That means adding a contributor is adding a file named after them. There is
+no register to update, and a name with no portrait degrades to the fallback
+rather than a broken image -- the "A Note From Someone Else" sample is
+deliberately left without one so that path stays exercised.
+
+`tools/make-avatar.py` draws the portraits. It is not part of the build and
+never runs during one; it is a one-off for a new author, and its output is
+committed. Faces are derived from a hash of the name, so a person keeps the
+same one across rebuilds, and a given name always produces the same file.
+
+Two constraints shaped the drawing, both from the 32px size on a thread page:
+hair is clipped above the eyeline so a big style cannot swallow the face, and
+the eyes carry a white sclera so they stay legible on the darker skin tones.
+The first version failed both and had to be redone.
 
 ## Light and dark
 

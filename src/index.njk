@@ -72,8 +72,9 @@ eleventyExcludeFromCollections: true
         data-text="{{ post.data.title | searchText(post.data.summary, post.templateContent) }}">
       <a class="row-link" href="{{ post.url }}">
         {%- set who = post.data.author if post.data.author else site.author %}
-        {%- if who == site.author %}
-        <img class="row-avatar" alt="" src="/assets/img/avatar.jpg" width="52" height="52">
+        {%- set face = who | avatar %}
+        {%- if face %}
+        <img class="row-avatar" alt="" src="{{ face }}" width="52" height="52" loading="lazy">
         {%- else %}
         <svg class="row-avatar avatar-other" viewBox="0 0 32 32" role="img" aria-label="{{ who }}">
           <circle cx="16" cy="16" r="16" fill="currentColor" opacity=".22"/>

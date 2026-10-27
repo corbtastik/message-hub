@@ -111,6 +111,27 @@ export default function (eleventyConfig) {
     plain(parts.filter(Boolean).join(" ")).toLowerCase()
   );
 
+  /* ---------- author avatars ----------
+   *
+   * The site author has a photograph. Anyone else gets the drawn portrait at
+   * assets/img/people/<slug>.svg when one exists, and the neutral figure in
+   * the template when it does not -- so a new author needs no configuration,
+   * just a file named after them, and nothing breaks if there isn't one. */
+  const siteData = JSON.parse(fs.readFileSync("src/_data/site.json", "utf8"));
+  const personSlug = (name) =>
+    String(name)
+      .toLowerCase()
+      .replace(/['\u2019]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+
+  eleventyConfig.addFilter("avatar", (who) => {
+    if (!who) return null;
+    if (who === siteData.author) return "/assets/img/avatar.jpg";
+    const rel = `assets/img/people/${personSlug(who)}.svg`;
+    return fs.existsSync(path.join("src", rel)) ? `/${rel}` : null;
+  });
+
   /* ---------- attachments ----------
    *
    * A file with no sensible inline rendering at a bubble's width -- a PDF,
