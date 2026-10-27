@@ -1,0 +1,8 @@
+node_modules/
+_site/
+.cache/
+.DS_Store
+*.log
+.firebase/
+reference/
+references/

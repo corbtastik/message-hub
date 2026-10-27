@@ -1,0 +1,16 @@
+{
+  "name": "message-hub",
+  "version": "0.1.0",
+  "description": "A blog framework that renders posts as an iOS Messages thread",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy",
+    "clean": "rm -rf _site"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}

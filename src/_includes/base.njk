@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="color-scheme" content="light dark">
+{# Applied before first paint; deferring this would flash the wrong theme. #}
+<script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+
+{%- set pageTitle = title if title else site.title %}
+{%- set pageDesc = summary if summary else site.description %}
+<title>{{ pageTitle }}</title>
+<meta name="description" content="{{ pageDesc }}">
+
+{#- These are shared by text message, so the link preview matters. Set
+    site.url in src/_data/site.json for absolute image URLs. #}
+<meta property="og:type" content="{{ 'article' if layout == 'devo.njk' else 'website' }}">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:title" content="{{ pageTitle }}">
+<meta property="og:description" content="{{ pageDesc }}">
+<meta name="twitter:card" content="summary">
+{%- if site.url %}
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:image" content="{{ site.url }}/assets/img/avatar.svg">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+{%- endif %}
+<link rel="icon" href="/assets/img/avatar.svg">
+<link rel="apple-touch-icon" href="/assets/img/avatar.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;1,400;1,600&display=swap">
+<link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body class="{{ bodyClass }}">
+{{ content | safe }}
+<script src="/assets/js/theme.js" defer></script>
+</body>
+</html>

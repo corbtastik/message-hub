@@ -1,0 +1,51 @@
+---
+layout: base.njk
+bodyClass: thread
+---
+<div class="top"><div class="top-in">
+  <a class="back" href="/" aria-label="All devos">
+    <svg width="13" height="22" viewBox="0 0 13 22" fill="none" aria-hidden="true"><path d="M11 2 2 11l9 9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <img class="cluster" alt="" src="/assets/img/cluster.svg" width="60" height="60">
+  {% include "theme-toggle.njk" %}
+  <div class="pill"><span class="pill-name">{{ site.title }}</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1.2 1 6 6l-4.8 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div></div>
+
+<main class="screen">
+  <h1 class="sr-only">{{ title }}</h1>
+
+  <p class="stamp">
+    <time datetime="{{ page.date | isoDate }}"><b>{{ page.date | longDate }}</b></time>
+    {%- if time %} <span class="clock">{{ time }}</span>{% endif %}
+  </p>
+  <p class="from">{{ author if author else site.author }}</p>
+
+  {% set chunks = content | bubbles %}
+  {% for chunk in chunks %}
+  <div class="msg{% if loop.last %} msg-last{% endif %}">
+    <div class="bubble">{{ chunk | safe }}</div>
+    {% if loop.last %}
+    <svg class="tail" viewBox="0 -18.6 22 25" aria-hidden="true"><path d="M0-18.6V-6.5C0-1.2 2.6 3 8.6 6.2 7 4.5 6.4 3.2 6.6 1.9 10.6 4.4 15.6 2.2 21.8 0V-18.6Z" fill="var(--bubble)"/></svg>
+    {%- set who = author if author else site.author %}
+    {%- if who == site.author %}
+    <img class="avatar" alt="{{ who }}" src="/assets/img/avatar.svg" width="32" height="32">
+    {%- else %}
+    {# Someone else wrote this one, and we have no photo of them. #}
+    <svg class="avatar avatar-other" viewBox="0 0 32 32" role="img" aria-label="{{ who }}">
+      <circle cx="16" cy="16" r="16" fill="currentColor" opacity=".22"/>
+      <circle cx="16" cy="12.6" r="5" fill="currentColor" opacity=".75"/>
+      <path d="M5.6 28.2a10.8 10.8 0 0 1 20.8 0A16 16 0 0 1 5.6 28.2Z" fill="currentColor" opacity=".75"/>
+    </svg>
+    {%- endif %}
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <nav class="pager" aria-label="More devos">
+    {% set prev = collections.devos | getPreviousCollectionItem %}
+    {% set next = collections.devos | getNextCollectionItem %}
+    {# The collection is newest-first, so "next" in list order is the older devo. #}
+    {% if next %}<a class="pager-link" href="{{ next.url }}" rel="prev">&larr; {{ next.data.title }}</a>{% endif %}
+    {% if prev %}<a class="pager-link pager-newer" href="{{ prev.url }}" rel="next">{{ prev.data.title }} &rarr;</a>{% endif %}
+  </nav>
+</main>

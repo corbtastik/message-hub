@@ -1,0 +1,122 @@
+---
+layout: base.njk
+bodyClass: inbox
+eleventyExcludeFromCollections: true
+---
+<main class="screen screen-list">
+  <header class="list-head">
+    <div class="list-head-text">
+      <h1>{{ site.title }}</h1>
+      <p class="list-sub">{{ collections.devos | length }} devo{{ "" if collections.devos | length == 1 else "s" }} from {{ site.author }}</p>
+    </div>
+    {% include "theme-toggle.njk" %}
+  </header>
+
+  {# Activity graph: a row per month, a column per day of the month, so it
+     fits the column at any width without scrolling. Hidden until the script
+     runs, since clicking a day only does something with JavaScript. #}
+  <div class="activity" id="activity" hidden>
+    <div class="activity-months" role="group"
+         aria-label="Devos by day. Select a day to jump to it.">
+      {%- for m in activity.months %}
+      <div class="amonth">
+        <span class="amonth-name" aria-hidden="true">{{ m.name }}</span>
+        <div class="amonth-days" style="--cols:{{ activity.maxDays }}">
+          {%- for d in m.days %}
+          {%- if d.count %}
+          <button type="button" class="day day-on" data-day="{{ d.iso }}"
+                  title="{{ d.label }}" aria-label="{{ d.label }}"></button>
+          {%- else %}
+          <span class="day" title="{{ d.label }}"></span>
+          {%- endif %}
+          {%- endfor %}
+        </div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+
+  <a class="index-link" href="/scripture/">
+    {# SF Symbols book.closed #}
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M3.4 2.2h7.3a1.9 1.9 0 0 1 1.9 1.9v9.7H5.3a1.9 1.9 0 0 1-1.9-1.9V2.2Z"
+            stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M3.4 11.9a1.9 1.9 0 0 1 1.9-1.9h7.3" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+    Scripture index
+    <span class="index-link-sub">{{ scripture.refCount }} verses</span>
+  </a>
+
+  {# Hidden until the script takes over: without JS none of it would do anything. #}
+  <div class="tools" id="tools" hidden>
+    <div class="tools-row">
+      <div class="search">
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="7" cy="7" r="5.2" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M11 11l4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <input type="search" id="q" placeholder="Search"
+               aria-label="Search devos, or type a date like 5/21/26 or a range like 5/1/26 to 5/15/26"
+               aria-describedby="result-count"
+               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      </div>
+
+      {# SF Symbols arrow.up.arrow.down #}
+      <button type="button" id="sort" class="sort-btn" aria-label="Sort by date, newest first. Activate to reverse.">
+        <svg width="15" height="16" viewBox="0 0 15 16" fill="none" aria-hidden="true">
+          <path d="M4 13.2V3.4M1.6 5.8 4 3.2l2.4 2.6" stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M11 2.8v9.8M8.6 10.2l2.4 2.6 2.4-2.6" stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="sort-label">Newest</span>
+      </button>
+    </div>
+
+    <p class="result-count" id="result-count" role="status" aria-live="polite"></p>
+  </div>
+
+  <ul class="rows" id="devo-list">
+    {% for devo in collections.devos %}
+    <li class="row"
+        data-date="{{ devo.date | isoDate }}"
+        data-text="{{ devo.data.title | searchText(devo.data.scripture, devo.data.summary, devo.templateContent) }}">
+      <a class="row-link" href="{{ devo.url }}">
+        {%- set who = devo.data.author if devo.data.author else site.author %}
+        {%- if who == site.author %}
+        <img class="row-avatar" alt="" src="/assets/img/avatar.svg" width="52" height="52">
+        {%- else %}
+        <svg class="row-avatar avatar-other" viewBox="0 0 32 32" role="img" aria-label="{{ who }}">
+          <circle cx="16" cy="16" r="16" fill="currentColor" opacity=".22"/>
+          <circle cx="16" cy="12.6" r="5" fill="currentColor" opacity=".75"/>
+          <path d="M5.6 28.2a10.8 10.8 0 0 1 20.8 0A16 16 0 0 1 5.6 28.2Z" fill="currentColor" opacity=".75"/>
+        </svg>
+        {%- endif %}
+        <span class="row-body">
+          <span class="row-top">
+            <span class="row-title">{{ devo.data.title }}</span>
+            <span class="row-date">{{ devo.date | shortDate }}<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1.2 1 6 6l-4.8 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </span>
+          {# Prefer the hand-written summary: every devo opens with its scripture,
+             so a content preview reads much the same from one row to the next. #}
+          <span class="row-preview">{{ devo.data.summary | preview if devo.data.summary else devo.templateContent | preview }}</span>
+        </span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <p class="no-match" id="no-match" hidden>No devos match.</p>
+</main>
+
+{# Appears once the reader has scrolled; hidden by default so no-JS visitors
+   never see a control that does nothing. #}
+<button type="button" id="to-top" class="to-top" hidden aria-label="Back to top">
+  {# SF Symbols chevron.up #}
+  <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+    <path d="M4 10.5 8.5 6l4.5 4.5" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script src="/assets/js/search.js" defer></script>

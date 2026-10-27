@@ -1,0 +1,331 @@
+/* Message Hub — an iOS Messages thread at 440pt (iPhone Pro Max), centered on
+   wider screens. Thread styles are carried over from the original design file;
+   the list and toolbar styles extend the same system.
+
+   Light is the default here and dark comes in under prefers-color-scheme, the
+   way Messages follows the system appearance. The toggle in the header can pin
+   either one via data-theme on <html>, which outranks the media query. Every
+   colour is a token so the two themes stay in step. */
+
+:root{
+  /* Light — iOS Messages light appearance */
+  --bg:#fff;              --bg-rgb:255 255 255;
+  --bubble:#e9e9eb;
+  --text:#000;
+  --meta:#8e8e93;
+  --name:#8e8e93;
+  --sep:rgb(0 0 0 / .09);
+  --glass:rgb(249 249 249 / .80);
+  --glass-edge:rgb(0 0 0 / .10);
+  --accent:#007aff;
+  --link:#0066cc;
+  --quote-edge:rgb(0 0 0 / .20);
+  --quote-text:#3a3a3c;
+  --field:#e8e8ed;        /* iOS search field */
+  --control:rgb(0 0 0 / .05);
+  --control-hover:rgb(0 0 0 / .09);
+  --hover:rgb(0 0 0 / .045);
+  --clear-ring:#a8a8ae;
+  --day-off:rgb(0 0 0 / .07);
+  --day-on:#3987e5;
+
+  /* iOS Messages renders in SF Pro. On Apple devices -apple-system IS SF Pro,
+     so the thread matches the original screenshots exactly. SF Pro cannot be
+     web-embedded (Apple's licence forbids it), so elsewhere we fall back to
+     Inter, which was drawn as an open stand-in for it. Inter must outrank
+     both system-ui AND BlinkMacSystemFont -- current Chrome normalises
+     BlinkMacSystemFont to system-ui on every platform, so leaving it ahead
+     of Inter hands Windows Segoe UI and Android Roboto. */
+  --sf:-apple-system,"SF Pro Text",Inter,BlinkMacSystemFont,system-ui,"Helvetica Neue",Arial,sans-serif;
+
+  color-scheme:light dark;
+  background:var(--bg);
+  box-sizing:border-box;
+  --top-inset:env(safe-area-inset-top,0px);
+}
+
+/* Dark, two ways: automatically when the system asks for it, and explicitly
+   when the toggle pins it. :not([data-theme="light"]) lets an explicit light
+   choice win on a dark system. The two blocks must stay identical. */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    /* Dark — the original design's palette */
+    --bg:#000;            --bg-rgb:0 0 0;
+    --bubble:#262629;
+    --text:#fff;
+    --meta:#838389;
+    --name:#8c8c92;
+    --sep:rgb(255 255 255 / .10);
+    --glass:rgb(30 30 32 / .78);
+    --glass-edge:rgb(255 255 255 / .13);
+    --accent:#0a84ff;
+    --link:#54a8ff;
+    --quote-edge:rgb(255 255 255 / .22);
+    --quote-text:#e6e6ea;
+    --field:#1c1c1e;
+    --control:rgb(255 255 255 / .055);
+    --control-hover:rgb(255 255 255 / .10);
+    --hover:rgb(255 255 255 / .05);
+    --clear-ring:#636366;
+    --day-off:rgb(255 255 255 / .08);
+    --day-on:#2a78d6;
+  }
+}
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  /* Dark — the original design's palette */
+  --bg:#000;            --bg-rgb:0 0 0;
+  --bubble:#262629;
+  --text:#fff;
+  --meta:#838389;
+  --name:#8c8c92;
+  --sep:rgb(255 255 255 / .10);
+  --glass:rgb(30 30 32 / .78);
+  --glass-edge:rgb(255 255 255 / .13);
+  --accent:#0a84ff;
+  --link:#54a8ff;
+  --quote-edge:rgb(255 255 255 / .22);
+  --quote-text:#e6e6ea;
+  --field:#1c1c1e;
+  --control:rgb(255 255 255 / .055);
+  --control-hover:rgb(255 255 255 / .10);
+  --hover:rgb(255 255 255 / .05);
+  --clear-ring:#636366;
+  --day-off:rgb(255 255 255 / .08);
+  --day-on:#2a78d6;
+}
+
+*,*::before,*::after{box-sizing:inherit}
+/* Author display rules below (.tools, .sort-btn, button) outrank the UA
+   default for [hidden], so state it explicitly or hiding silently fails. */
+[hidden]{display:none!important}
+
+html,body{background:var(--bg);color:var(--text)}
+/* The thread was drawn against an iPhone, where the safe-area inset leaves
+   room above the avatar cluster. A desktop browser reports no inset, which
+   pins the cluster to the top edge of the window, so give it a floor. The
+   body padding, the cover strip and the bar all have to move together. */
+body.thread{--top-inset:max(20px,env(safe-area-inset-top,0px))}
+body{
+  margin:0;font-family:var(--sf);-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;
+  padding-top:var(--top-inset);padding-bottom:env(safe-area-inset-bottom,0px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:var(--top-inset);z-index:10;background:var(--bg)}
+img{max-width:100%}
+button{all:unset;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+.screen{max-width:408px;margin:0 auto;position:relative;
+  padding-top:99px;padding-bottom:calc(48px + env(safe-area-inset-bottom,0px))}
+
+/* ---------- top bar (thread) ---------- */
+.top{position:fixed;left:0;right:0;top:var(--top-inset);z-index:5;height:150px;pointer-events:none;
+  background:linear-gradient(to bottom,rgb(var(--bg-rgb)/.92) 0,rgb(var(--bg-rgb)/.80) 55%,rgb(var(--bg-rgb)/0) 100%)}
+.top-in{position:relative;max-width:440px;margin:0 auto;height:100%;
+  padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.back{position:absolute;left:20.5px;top:0;width:43.4px;height:43.4px;border-radius:50%;
+  background:var(--glass);border:1px solid var(--glass-edge);display:grid;place-items:center;
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);pointer-events:auto;color:var(--text)}
+.cluster{position:absolute;left:50%;top:0;width:60px;height:60px;margin-left:-30px;display:block}
+.pill{position:absolute;left:50%;top:55px;transform:translateX(-50%);height:31.7px;padding:0 13px 0 14px;
+  border-radius:16px;background:var(--glass);border:1px solid var(--glass-edge);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  display:flex;align-items:center;gap:5px;font-size:17px;font-weight:600;letter-spacing:-.2px;
+  white-space:nowrap;color:var(--text)}
+.pill svg{opacity:.45;flex:none}
+/* The back button and the appearance toggle sit at the edges of this bar, so
+   cap the pill short of them and let a long name truncate, as Messages does
+   with a long conversation name. Without this the pill collides with the back
+   button around 320px. */
+.pill{max-width:calc(100% - 148px)}
+.pill-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---------- thread ---------- */
+.stamp{margin:0;text-align:center;font-size:12px;line-height:16px;color:var(--meta);font-variant-numeric:tabular-nums}
+.stamp b{font-weight:600}
+.stamp .clock{margin-left:.15em}
+.from{margin:4px 0 0 58px;font-size:12px;line-height:16px;color:var(--name)}
+
+.msg{position:relative;margin:3px 0 0 43px;width:min(310px,calc(100% - 43px))}
+.bubble{position:relative;z-index:1;background:var(--bubble);border-radius:18px;padding:10.3px 14px 10.3px 14.3px;
+  font-size:17px;line-height:22px;letter-spacing:-.4px;color:var(--text);overflow-wrap:anywhere}
+.bubble > :first-child{margin-top:0}
+.bubble > :last-child{margin-bottom:0}
+.bubble p{margin:0 0 20px}
+.bubble ul,.bubble ol{margin:0 0 20px;padding-left:1.15em}
+.bubble li{margin:0 0 4px}
+.bubble li::marker{color:var(--meta)}
+.bubble strong{font-weight:600}
+.bubble em{font-style:italic}
+.bubble a{color:var(--link);text-decoration:underline;text-underline-offset:2px}
+/* Scripture quoted inside a text. */
+.bubble blockquote{margin:0 0 20px;padding-left:11px;border-left:2px solid var(--quote-edge);color:var(--quote-text)}
+.bubble h2,.bubble h3{margin:0 0 6px;font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.4px}
+
+.tail{position:absolute;z-index:0;left:0;bottom:-6.4px;width:22px;height:25px;display:block}
+.avatar{position:absolute;left:-39px;bottom:-6.3px;width:32px;height:32px;display:block;border-radius:50%}
+/* Stand-in for a sender we have no photo of. */
+.avatar-other{color:var(--meta);background:var(--bubble);overflow:hidden}
+
+/* ---------- prev / next ---------- */
+.pager{display:flex;flex-direction:column;gap:8px;margin:34px 0 0 43px;width:min(310px,calc(100% - 43px))}
+.pager-link{font-size:13px;line-height:18px;color:var(--meta);padding:9px 13px;border-radius:14px;
+  border:1px solid var(--glass-edge);background:var(--control)}
+.pager-link:hover{color:var(--text);background:var(--control-hover)}
+.pager-newer{text-align:right}
+
+/* ---------- conversation list (home) ---------- */
+.screen-list{padding-top:18px;padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
+.list-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:22px 4px 14px}
+.list-head-text{min-width:0}
+.list-head h1{margin:0;font-size:34px;line-height:41px;font-weight:700;letter-spacing:-.9px}
+.list-sub{margin:3px 0 0;font-size:15px;line-height:20px;color:var(--meta)}
+
+/* ---------- back to top ---------- */
+.to-top{position:fixed;z-index:6;right:max(16px,env(safe-area-inset-right,0px));
+  bottom:max(16px,calc(env(safe-area-inset-bottom,0px) + 8px));
+  width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  color:var(--text);background:var(--glass);border:1px solid var(--glass-edge);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  box-shadow:0 2px 10px rgb(0 0 0 / .18);
+  opacity:0;transform:translateY(6px);pointer-events:none}
+.to-top.is-shown{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{background:var(--control-hover)}
+@media (prefers-reduced-motion:no-preference){
+  .to-top{transition:opacity .16s ease,transform .16s ease}
+}
+
+/* ---------- activity graph ----------
+   A row per month, a column per day of the month. 31 columns of 1fr, so the
+   squares size themselves to the container and the graph fits the list
+   column at any width -- no horizontal scrolling.
+
+   One fill for every day he sent a devo, whatever the count. The blue is
+   checked against both surfaces with the data-viz validator; what matters
+   with a single fill is contrast against the background, and both steps
+   clear it. */
+.activity{margin:0 0 10px;padding:0 4px}
+.activity-months{display:flex;flex-direction:column;gap:3px}
+.amonth{display:flex;align-items:center;gap:7px}
+.amonth-name{flex:0 0 24px;font-size:10px;line-height:12px;color:var(--meta);
+  text-align:right;font-variant-numeric:tabular-nums}
+.amonth-days{flex:1;min-width:0;display:grid;grid-template-columns:repeat(var(--cols),1fr);gap:2px}
+/* aspect-ratio keeps them square whatever width the column is. */
+.day{aspect-ratio:1;min-width:0;border:0;border-radius:2.5px;padding:0;
+  background-color:var(--day-off)}
+.day-on{background-color:var(--day-on)}
+button.day{cursor:pointer}
+button.day:hover{outline:1.5px solid var(--text);outline-offset:1px}
+button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* The row the reader jumped to, so the eye lands in the right place. */
+.row-jumped{animation:rowFlash 1.4s ease-out}
+@keyframes rowFlash{from{background:var(--control-hover)}to{background:transparent}}
+@media (prefers-reduced-motion:reduce){.row-jumped{animation:none;background:var(--control-hover)}}
+
+/* ---------- scripture index ---------- */
+.crumb{margin:0 0 6px;font-size:15px;line-height:20px;color:var(--accent)}
+.crumb a:hover{text-decoration:underline}
+.index-link{display:flex;align-items:center;gap:8px;margin:0 4px 6px;padding:11px 12px;
+  border-radius:12px;border:1px solid var(--glass-edge);background:var(--control);
+  font-size:15px;line-height:20px;letter-spacing:-.2px}
+.index-link:hover{background:var(--control-hover)}
+.index-link svg{flex:none;color:var(--meta)}
+.index-link .index-link-sub{margin-left:auto;color:var(--meta);font-size:13px}
+
+.book{margin:0 0 18px}
+.book-name{position:sticky;top:0;z-index:1;margin:0;padding:8px 4px 6px;
+  background:var(--bg);font-size:13px;line-height:18px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--meta)}
+.refs{list-style:none;margin:0;padding:0}
+.ref + .ref{border-top:1px solid var(--sep)}
+.ref-row{display:flex;align-items:baseline;gap:10px;padding:9px 4px;border-radius:10px}
+a.ref-row:hover{background:var(--hover)}
+.ref-label{flex:0 0 76px;font-size:15px;line-height:21px;font-weight:600;
+  letter-spacing:-.2px;font-variant-numeric:tabular-nums;color:var(--accent)}
+.ref-devo{flex:1;min-width:0;font-size:15px;line-height:21px;letter-spacing:-.2px;
+  color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ref-date{flex:none;font-size:13px;line-height:21px;color:var(--meta);
+  font-variant-numeric:tabular-nums}
+.ref-many{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ref-devo-link{display:flex;gap:10px;align-items:baseline;font-size:15px;line-height:21px;
+  letter-spacing:-.2px;color:var(--text);padding:2px 6px;margin:0 -6px;border-radius:8px}
+.ref-devo-link:hover{background:var(--hover)}
+.ref-devo-link .ref-date{margin-left:auto}
+
+@media (prefers-reduced-motion:no-preference){
+  .index-link,a.ref-row,.ref-devo-link{transition:background-color .12s ease}
+}
+
+/* ---------- appearance toggle ---------- */
+/* No ring and no fill: the glyph alone, sized to what the old circle was. */
+.theme-toggle{flex:none;display:grid;place-items:center;width:34px;height:34px;
+  border:0;background:none;color:var(--meta);margin-top:4px}
+.theme-toggle svg{width:100%;height:100%}
+.theme-toggle:hover{color:var(--text)}
+/* On a thread it sits in the fixed bar, opposite the back button, at the same
+   34px as the list header. That button is 43.4px, so nudge down by half the
+   difference to keep the two optically aligned. */
+.top .theme-toggle{position:absolute;right:20.5px;top:4.7px;width:34px;height:34px;margin-top:0;
+  color:var(--text);pointer-events:auto}
+
+/* ---------- search / sort toolbar ---------- */
+.tools{display:flex;flex-direction:column;gap:7px;padding:2px 4px 12px}
+.tools-row{display:flex;align-items:center;gap:8px}
+
+.search{position:relative;display:flex;align-items:center;flex:1;min-width:0}
+.search-icon{position:absolute;left:11px;color:var(--meta);pointer-events:none}
+.search input{width:100%;height:37px;border-radius:10px;border:1px solid transparent;
+  background:var(--field);color:var(--text);font:inherit;font-size:17px;letter-spacing:-.4px;
+  padding:0 10px 0 33px;-webkit-appearance:none;appearance:none}
+.search input::placeholder{color:var(--meta)}
+.search input:focus{border-color:var(--glass-edge);outline:none}
+.search input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+/* SF Symbols xmark.circle.fill — WebKit's own glyph is invisible on dark. */
+.search input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none;
+  width:17px;height:17px;cursor:pointer;background:no-repeat center/contain;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23a8a8ae'/%3E%3Cpath d='M5.4 5.4l5.2 5.2M10.6 5.4l-5.2 5.2' stroke='%23fff' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E")}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .search input::-webkit-search-cancel-button{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23636366'/%3E%3Cpath d='M5.4 5.4l5.2 5.2M10.6 5.4l-5.2 5.2' stroke='%231c1c1e' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E")}
+}
+:root[data-theme="dark"] .search input::-webkit-search-cancel-button{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23636366'/%3E%3Cpath d='M5.4 5.4l5.2 5.2M10.6 5.4l-5.2 5.2' stroke='%231c1c1e' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E")}
+
+.sort-btn{flex:none;display:inline-flex;align-items:center;gap:5px;height:37px;padding:0 11px;
+  border-radius:10px;border:1px solid var(--glass-edge);background:var(--control);
+  color:var(--text);font-size:14px;line-height:1;letter-spacing:-.2px;white-space:nowrap}
+.sort-btn:hover{background:var(--control-hover)}
+.sort-btn svg{color:var(--meta);flex:none}
+
+.result-count{margin:0;min-height:18px;font-size:13px;line-height:18px;color:var(--meta)}
+.no-match{margin:26px 0;text-align:center;font-size:15px;color:var(--meta)}
+
+.rows{list-style:none;margin:0;padding:0}
+.row + .row{border-top:1px solid var(--sep)}
+.row.row-first{border-top:none}
+.row-link{display:flex;gap:12px;align-items:flex-start;padding:11px 4px 12px;border-radius:12px}
+.row-link:hover{background:var(--hover)}
+/* Arrow-key navigation lands focus here, so make the current match obvious. */
+.row-link:focus-visible{background:var(--hover);outline:2px solid var(--accent);outline-offset:-2px}
+.row-avatar{flex:0 0 52px;width:52px;height:52px;border-radius:50%;display:block}
+.row-body{flex:1;min-width:0}
+.row-top{display:flex;align-items:baseline;gap:8px}
+.row-title{flex:1;min-width:0;font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.4px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row-date{flex:none;display:flex;align-items:center;gap:4px;font-size:15px;line-height:22px;
+  color:var(--meta);font-variant-numeric:tabular-nums}
+.row-date svg{opacity:.55}
+.row-preview{display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;margin-top:1px;font-size:15px;line-height:20px;letter-spacing:-.2px;color:var(--meta)}
+
+@media (prefers-reduced-motion:no-preference){
+  .row-link,.pager-link,.sort-btn,.theme-toggle{transition:background-color .12s ease,color .12s ease}
+}
+/* Set while the appearance switches, so the whole page changes at once. */
+:root.theme-switching *{transition:none!important}
