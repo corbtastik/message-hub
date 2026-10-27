@@ -300,8 +300,7 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .icon-btn{display:grid;place-items:center;width:34px;height:34px;padding:0;
   border:0;background:none;color:var(--meta)}
 .icon-btn:hover{color:var(--text)}
-.icon-btn svg{display:block}
-#theme-toggle svg{width:100%;height:100%}
+.icon-btn svg{display:block;width:100%;height:100%}
 /* On a thread the pair sits in the fixed bar, opposite the back button, at the
    same 34px as the list header. That button is 43.4px, so nudge down by half
    the difference to keep the first glyph optically aligned with it. */
