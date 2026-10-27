@@ -6,16 +6,16 @@
  * Months-as-rows is at most 31 columns, so it fits the column at any width
  * and the squares come out larger.
  *
- * Reads the devo filenames rather than their contents: the date prefix is
+ * Reads the post filenames rather than their contents: the date prefix is
  * all this needs, so it stays cheap as the archive grows. */
 
 import fs from "node:fs";
 
-const DEVOS = "src/devos";
+const POSTS = "src/posts";
 
 export default function () {
   const counts = new Map();
-  for (const f of fs.readdirSync(DEVOS)) {
+  for (const f of fs.readdirSync(POSTS)) {
     const m = f.match(/^(\d{4}-\d{2}-\d{2})-.*\.md$/);
     if (m) counts.set(m[1], (counts.get(m[1]) || 0) + 1);
   }
@@ -42,10 +42,10 @@ export default function () {
         iso,
         day: d,
         count,
-        // 0 none, 1 one devo, 2 more than one. Only three days have two.
+        // 0 none, 1 one post, 2 more than one.
         level: count === 0 ? 0 : count === 1 ? 1 : 2,
         label: count
-          ? `${fmtFull.format(date)} — ${count} devo${count > 1 ? "s" : ""}`
+          ? `${fmtFull.format(date)} — ${count} post${count > 1 ? "s" : ""}`
           : `${fmtFull.format(date)} — none`,
       });
     }

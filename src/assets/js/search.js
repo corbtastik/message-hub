@@ -1,4 +1,4 @@
-/* Client-side filtering for the devo list.
+/* Client-side filtering for the post list.
  *
  * Dates are typed straight into the search box rather than picked from a
  * widget: "5/21/26" filters to that day, "5/1/26 to 5/15/26" to that range
@@ -13,7 +13,7 @@
 (function () {
   "use strict";
 
-  var list = document.getElementById("devo-list");
+  var list = document.getElementById("post-list");
   var tools = document.getElementById("tools");
   if (!list || !tools) return;
 

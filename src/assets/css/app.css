@@ -164,7 +164,7 @@ a{color:inherit;text-decoration:none}
 .bubble strong{font-weight:600}
 .bubble em{font-style:italic}
 .bubble a{color:var(--link);text-decoration:underline;text-underline-offset:2px}
-/* Scripture quoted inside a text. */
+/* A quotation inside a text. */
 .bubble blockquote{margin:0 0 20px;padding-left:11px;border-left:2px solid var(--quote-edge);color:var(--quote-text)}
 .bubble h2,.bubble h3{margin:0 0 6px;font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.4px}
 
@@ -206,7 +206,7 @@ a{color:inherit;text-decoration:none}
    squares size themselves to the container and the graph fits the list
    column at any width -- no horizontal scrolling.
 
-   One fill for every day he sent a devo, whatever the count. The blue is
+   One fill for every day that has a post, whatever the count. The blue is
    checked against both surfaces with the data-viz validator; what matters
    with a single fill is contrast against the background, and both steps
    clear it. */
@@ -227,40 +227,6 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .row-jumped{animation:rowFlash 1.4s ease-out}
 @keyframes rowFlash{from{background:var(--control-hover)}to{background:transparent}}
 @media (prefers-reduced-motion:reduce){.row-jumped{animation:none;background:var(--control-hover)}}
-
-/* ---------- scripture index ---------- */
-.crumb{margin:0 0 6px;font-size:15px;line-height:20px;color:var(--accent)}
-.crumb a:hover{text-decoration:underline}
-.index-link{display:flex;align-items:center;gap:8px;margin:0 4px 6px;padding:11px 12px;
-  border-radius:12px;border:1px solid var(--glass-edge);background:var(--control);
-  font-size:15px;line-height:20px;letter-spacing:-.2px}
-.index-link:hover{background:var(--control-hover)}
-.index-link svg{flex:none;color:var(--meta)}
-.index-link .index-link-sub{margin-left:auto;color:var(--meta);font-size:13px}
-
-.book{margin:0 0 18px}
-.book-name{position:sticky;top:0;z-index:1;margin:0;padding:8px 4px 6px;
-  background:var(--bg);font-size:13px;line-height:18px;font-weight:600;
-  letter-spacing:.06em;text-transform:uppercase;color:var(--meta)}
-.refs{list-style:none;margin:0;padding:0}
-.ref + .ref{border-top:1px solid var(--sep)}
-.ref-row{display:flex;align-items:baseline;gap:10px;padding:9px 4px;border-radius:10px}
-a.ref-row:hover{background:var(--hover)}
-.ref-label{flex:0 0 76px;font-size:15px;line-height:21px;font-weight:600;
-  letter-spacing:-.2px;font-variant-numeric:tabular-nums;color:var(--accent)}
-.ref-devo{flex:1;min-width:0;font-size:15px;line-height:21px;letter-spacing:-.2px;
-  color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ref-date{flex:none;font-size:13px;line-height:21px;color:var(--meta);
-  font-variant-numeric:tabular-nums}
-.ref-many{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.ref-devo-link{display:flex;gap:10px;align-items:baseline;font-size:15px;line-height:21px;
-  letter-spacing:-.2px;color:var(--text);padding:2px 6px;margin:0 -6px;border-radius:8px}
-.ref-devo-link:hover{background:var(--hover)}
-.ref-devo-link .ref-date{margin-left:auto}
-
-@media (prefers-reduced-motion:no-preference){
-  .index-link,a.ref-row,.ref-devo-link{transition:background-color .12s ease}
-}
 
 /* ---------- appearance toggle ---------- */
 /* No ring and no fill: the glyph alone, sized to what the old circle was. */

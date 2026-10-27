@@ -3,7 +3,7 @@ layout: base.njk
 bodyClass: thread
 ---
 <div class="top"><div class="top-in">
-  <a class="back" href="/" aria-label="All devos">
+  <a class="back" href="/" aria-label="All posts">
     <svg width="13" height="22" viewBox="0 0 13 22" fill="none" aria-hidden="true"><path d="M11 2 2 11l9 9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
   <img class="cluster" alt="" src="/assets/img/cluster.svg" width="60" height="60">
@@ -41,10 +41,10 @@ bodyClass: thread
   </div>
   {% endfor %}
 
-  <nav class="pager" aria-label="More devos">
-    {% set prev = collections.devos | getPreviousCollectionItem %}
-    {% set next = collections.devos | getNextCollectionItem %}
-    {# The collection is newest-first, so "next" in list order is the older devo. #}
+  <nav class="pager" aria-label="More posts">
+    {% set prev = collections.posts | getPreviousCollectionItem %}
+    {% set next = collections.posts | getNextCollectionItem %}
+    {# The collection is newest-first, so "next" in list order is the older post. #}
     {% if next %}<a class="pager-link" href="{{ next.url }}" rel="prev">&larr; {{ next.data.title }}</a>{% endif %}
     {% if prev %}<a class="pager-link pager-newer" href="{{ prev.url }}" rel="next">{{ prev.data.title }} &rarr;</a>{% endif %}
   </nav>

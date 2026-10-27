@@ -3,8 +3,8 @@
 A small blog framework that renders posts as an iOS Messages thread.
 
 Each post is a message in a conversation: a bubble with a timestamp, a sender
-and an avatar. The home page is the conversation list, with search, a calendar
-of posting activity, and an index of every scripture reference cited.
+and an avatar. The home page is the conversation list, with search and a
+calendar of posting activity.
 
 Built with [Eleventy](https://www.11ty.dev/). Posts are Markdown files with
 front matter; everything else is generated.
@@ -19,7 +19,7 @@ npm run build # writes the static site to _site/
 
 ## Adding a post
 
-Copy [`docs/TEMPLATE.md`](docs/TEMPLATE.md) into `src/devos/` and name it
+Copy [`docs/TEMPLATE.md`](docs/TEMPLATE.md) into `src/posts/` and name it
 `YYYY-MM-DD-short-slug.md`. The date prefix is stripped from the URL.
 
 ```
@@ -28,7 +28,6 @@ title: "Short Title"
 date: 2026-09-01
 time: 6:40 AM
 author: "Sample Author"   # optional, defaults to site.author
-scripture: "Psalm 19:1"   # optional
 summary: "One line, used for the list preview."
 ---
 Body in Markdown.
@@ -36,11 +35,11 @@ Body in Markdown.
 
 ## Sample content
 
-`src/devos/` ships with **20 sample posts**, all invented. They exist to make
-the site render and to exercise the features: scripture links, lists, a post
-split into two bubbles, a second author, an afternoon post, two posts on one
-day, a deliberate gap in the calendar, and an external link. Delete them and
-write your own.
+`src/posts/` ships with **20 sample posts**, all invented. They exist to make
+the site render and to exercise the features: lists, a post split into two
+bubbles, a second author, an afternoon post, two posts on one day, a
+deliberate gap in the calendar, and an external link. Delete them and write
+your own.
 
 ## Configuring
 
@@ -50,5 +49,5 @@ once it has a value.
 
 ## More
 
-[`docs/FRAMEWORK.md`](docs/FRAMEWORK.md) covers the layout, searching, the
-scripture linking, theming and deployment.
+[`docs/FRAMEWORK.md`](docs/FRAMEWORK.md) covers the layout, searching,
+theming and deployment.

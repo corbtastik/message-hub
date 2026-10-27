@@ -2,7 +2,6 @@
 title: "Two Posts in One Day"
 date: 2026-09-29
 time: 6:15 AM
-scripture: "Psalm 118:24"
 summary: "Sample content. The first of two posts on the same date."
 ---
 > **Psalm 118:24** This is the day the LORD has made; we will rejoice and be glad in it.

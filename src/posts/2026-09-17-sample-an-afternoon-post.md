@@ -2,7 +2,6 @@
 title: "An Afternoon Post"
 date: 2026-09-17
 time: 2:15 PM
-scripture: "Matthew 6:34"
 summary: "Sample content. Sent in the afternoon, since the time is recorded as given."
 ---
 > **Matthew 6:34** Therefore do not worry about tomorrow, for tomorrow will worry about its own things.

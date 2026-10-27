@@ -2,7 +2,6 @@
 title: "Abbreviated References"
 date: 2026-09-22
 time: 6:44 AM
-scripture: "1 Cor. 13:4-7"
 summary: "Sample content. Uses shortened book names, which still link correctly."
 ---
 > **1 Cor. 13:4-7** Love suffers long and is kind; love does not envy; love does not parade itself, is not puffed up.

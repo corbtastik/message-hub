@@ -2,7 +2,6 @@
 title: "Two References"
 date: 2026-09-09
 time: 6:48 AM
-scripture: "Romans 12:1-2"
 summary: "Sample content. Several scripture references in one post, including one mid-sentence."
 ---
 > **Romans 12:1-2** I beseech you therefore, brethren, by the mercies of God, that you present your bodies a living sacrifice, holy, acceptable to God, which is your reasonable service.

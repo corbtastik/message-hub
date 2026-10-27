@@ -2,7 +2,6 @@
 title: "The First Post"
 date: 2026-09-01
 time: 6:40 AM
-scripture: "Psalm 19:1"
 summary: "Sample content. The opening post, used to check that the newest-first ordering works."
 ---
 > **Psalm 19:1** The heavens declare the glory of God; and the firmament shows His handiwork.

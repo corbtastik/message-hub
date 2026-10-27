@@ -2,7 +2,6 @@
 title: "A Longer Reflection"
 date: 2026-09-04
 time: 8:05 AM
-scripture: "Ecclesiastes 3:1"
 summary: "Sample content. A longer post, to show how a tall bubble scrolls under the header."
 ---
 > **Ecclesiastes 3:1** To everything there is a season, a time for every purpose under heaven.

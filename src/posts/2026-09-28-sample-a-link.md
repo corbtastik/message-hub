@@ -2,7 +2,6 @@
 title: "A Link"
 date: 2026-09-28
 time: 6:52 AM
-scripture: "Acts 17:11"
 summary: "Sample content. Includes an external link, which opens in a new tab."
 ---
 > **Acts 17:11** These were more fair-minded than those in Thessalonica, in that they received the word with all readiness, and searched the Scriptures daily.

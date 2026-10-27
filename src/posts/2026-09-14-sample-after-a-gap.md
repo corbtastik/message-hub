@@ -2,7 +2,6 @@
 title: "After a Gap"
 date: 2026-09-14
 time: 7:45 AM
-scripture: "Psalm 46:1"
 summary: "Sample content. Follows a deliberate gap, so the graph shows days with nothing."
 ---
 > **Psalm 46:1** God is our refuge and strength, a very present help in trouble.

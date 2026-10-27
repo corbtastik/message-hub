@@ -7,7 +7,7 @@ eleventyExcludeFromCollections: true
   <header class="list-head">
     <div class="list-head-text">
       <h1>{{ site.title }}</h1>
-      <p class="list-sub">{{ collections.devos | length }} devo{{ "" if collections.devos | length == 1 else "s" }} from {{ site.author }}</p>
+      <p class="list-sub">{{ collections.posts | length }} post{{ "" if collections.posts | length == 1 else "s" }} from {{ site.author }}</p>
     </div>
     {% include "theme-toggle.njk" %}
   </header>
@@ -17,7 +17,7 @@ eleventyExcludeFromCollections: true
      runs, since clicking a day only does something with JavaScript. #}
   <div class="activity" id="activity" hidden>
     <div class="activity-months" role="group"
-         aria-label="Devos by day. Select a day to jump to it.">
+         aria-label="Posts by day. Select a day to jump to it.">
       {%- for m in activity.months %}
       <div class="amonth">
         <span class="amonth-name" aria-hidden="true">{{ m.name }}</span>
@@ -36,17 +36,6 @@ eleventyExcludeFromCollections: true
     </div>
   </div>
 
-  <a class="index-link" href="/scripture/">
-    {# SF Symbols book.closed #}
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M3.4 2.2h7.3a1.9 1.9 0 0 1 1.9 1.9v9.7H5.3a1.9 1.9 0 0 1-1.9-1.9V2.2Z"
-            stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-      <path d="M3.4 11.9a1.9 1.9 0 0 1 1.9-1.9h7.3" stroke="currentColor" stroke-width="1.5"/>
-    </svg>
-    Scripture index
-    <span class="index-link-sub">{{ scripture.refCount }} verses</span>
-  </a>
-
   {# Hidden until the script takes over: without JS none of it would do anything. #}
   <div class="tools" id="tools" hidden>
     <div class="tools-row">
@@ -56,7 +45,7 @@ eleventyExcludeFromCollections: true
           <path d="M11 11l4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
         </svg>
         <input type="search" id="q" placeholder="Search"
-               aria-label="Search devos, or type a date like 5/21/26 or a range like 5/1/26 to 5/15/26"
+               aria-label="Search posts, or type a date like 5/21/26 or a range like 5/1/26 to 5/15/26"
                aria-describedby="result-count"
                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
       </div>
@@ -76,13 +65,13 @@ eleventyExcludeFromCollections: true
     <p class="result-count" id="result-count" role="status" aria-live="polite"></p>
   </div>
 
-  <ul class="rows" id="devo-list">
-    {% for devo in collections.devos %}
+  <ul class="rows" id="post-list">
+    {% for post in collections.posts %}
     <li class="row"
-        data-date="{{ devo.date | isoDate }}"
-        data-text="{{ devo.data.title | searchText(devo.data.scripture, devo.data.summary, devo.templateContent) }}">
-      <a class="row-link" href="{{ devo.url }}">
-        {%- set who = devo.data.author if devo.data.author else site.author %}
+        data-date="{{ post.date | isoDate }}"
+        data-text="{{ post.data.title | searchText(post.data.summary, post.templateContent) }}">
+      <a class="row-link" href="{{ post.url }}">
+        {%- set who = post.data.author if post.data.author else site.author %}
         {%- if who == site.author %}
         <img class="row-avatar" alt="" src="/assets/img/avatar.svg" width="52" height="52">
         {%- else %}
@@ -94,19 +83,19 @@ eleventyExcludeFromCollections: true
         {%- endif %}
         <span class="row-body">
           <span class="row-top">
-            <span class="row-title">{{ devo.data.title }}</span>
-            <span class="row-date">{{ devo.date | shortDate }}<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1.2 1 6 6l-4.8 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="row-title">{{ post.data.title }}</span>
+            <span class="row-date">{{ post.date | shortDate }}<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1.2 1 6 6l-4.8 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </span>
-          {# Prefer the hand-written summary: every devo opens with its scripture,
-             so a content preview reads much the same from one row to the next. #}
-          <span class="row-preview">{{ devo.data.summary | preview if devo.data.summary else devo.templateContent | preview }}</span>
+          {# Prefer the hand-written summary when there is one; it says what the
+             post is about rather than just showing its opening words. #}
+          <span class="row-preview">{{ post.data.summary | preview if post.data.summary else post.templateContent | preview }}</span>
         </span>
       </a>
     </li>
     {% endfor %}
   </ul>
 
-  <p class="no-match" id="no-match" hidden>No devos match.</p>
+  <p class="no-match" id="no-match" hidden>No posts match.</p>
 </main>
 
 {# Appears once the reader has scrolled; hidden by default so no-JS visitors

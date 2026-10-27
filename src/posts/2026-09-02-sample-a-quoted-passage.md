@@ -2,7 +2,6 @@
 title: "A Quoted Passage"
 date: 2026-09-02
 time: 7:12 AM
-scripture: "Proverbs 3:5-6"
 summary: "Sample content. Shows a scripture blockquote opening a post and another closing it."
 ---
 > **Proverbs 3:5-6** Trust in the LORD with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He shall direct your paths.

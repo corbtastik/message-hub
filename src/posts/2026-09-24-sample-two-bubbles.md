@@ -2,7 +2,6 @@
 title: "Two Bubbles"
 date: 2026-09-24
 time: 6:30 AM
-scripture: "Psalm 100:1-2"
 summary: "Sample content. Split into two bubbles with a thematic break."
 ---
 > **Psalm 100:1-2** Make a joyful shout to the LORD, all you lands! Serve the LORD with gladness; come before His presence with singing.

@@ -15,7 +15,7 @@
 
 {#- These are shared by text message, so the link preview matters. Set
     site.url in src/_data/site.json for absolute image URLs. #}
-<meta property="og:type" content="{{ 'article' if layout == 'devo.njk' else 'website' }}">
+<meta property="og:type" content="{{ 'article' if layout == 'post.njk' else 'website' }}">
 <meta property="og:site_name" content="{{ site.title }}">
 <meta property="og:title" content="{{ pageTitle }}">
 <meta property="og:description" content="{{ pageDesc }}">

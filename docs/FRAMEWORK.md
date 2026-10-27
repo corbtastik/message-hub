@@ -8,26 +8,26 @@ How the pieces fit together. For getting started, see the
 ```
 src/
   index.njk            conversation list (home)
-  scripture.njk        the scripture index at /scripture/
-  _data/scripture.js   builds that index from the devo Markdown
   _data/activity.js    builds the calendar grid for the activity graph
   _data/site.json      title, author, description, url
   _includes/
     base.njk           <head>, meta and social tags
-    devo.njk           the Messages thread
+    post.njk           the Messages thread
     theme-toggle.njk   the appearance button, used by both
   assets/css/app.css   all styles
   assets/js/search.js  list filtering, typed dates, sort, arrow keys
   assets/js/theme.js   the appearance toggle
   assets/img/          placeholder avatar and cluster (SVG)
-  devos/
-    devos.json         layout, tag and permalink for every devo
+  posts/
+    posts.json         layout, tag and permalink for every post
     *.md               one file per post (20 samples ship with it)
-lib/scripture.js       reference parsing, shared by the linker and the index
-docs/TEMPLATE.md       starting point for a new devo
+docs/TEMPLATE.md       starting point for a new post
 docs/FRAMEWORK.md      this file
 firebase.json          hosting config (no site pinned - see Deploying)
 ```
+
+`posts.json` is Eleventy's directory data file, so **its name has to match
+the folder's**. Renaming `src/posts/` means renaming that file too.
 
 ## Searching the list
 
@@ -36,11 +36,11 @@ text -- there is no date picker:
 
 | Typed                      | Effect                                  |
 | -------------------------- | --------------------------------------- |
-| `humility`                 | devos containing the word               |
-| `haman humility`           | devos containing *both* words           |
+| `bubbles`                  | posts containing the word               |
+| `bubbles list`             | posts containing *both* words           |
 | `5/21/26`                  | that single day                         |
 | `5/1/26 to 5/15/26`        | that range, inclusive                   |
-| `love 5/1/26 to 5/15/26`   | text and range together                 |
+| `list 5/1/26 to 5/15/26`   | text and range together                 |
 
 `to`, `-`, `–`, `..` and `through` all work as range separators, as does
 writing two dates side by side. A reversed range is read the same as a forward
@@ -50,13 +50,13 @@ understood, so a mistyped filter is visible. The one button reverses the sort.
 
 From the search box, Down jumps to the top match and Down/Up walk the
 matches in the order shown (so it follows the sort); Up from the top match
-returns to the box, Enter opens the devo, Escape clears the search.
+returns to the box, Enter opens the post, Escape clears the search.
 
 Each row carries its searchable text in a `data-text` attribute, so the index
 is the page itself -- no extra request, and the list still renders unfiltered
-with JavaScript off. At 45 devos that index is about 64 KB of a 104 KB page;
-past roughly 300 devos it would be worth moving it to a separate fetched
-`search.json`.
+with JavaScript off. With the 20 short samples that index is about 9 KB of a
+34 KB page; longer posts cost proportionally more, and past roughly 300 posts
+it would be worth moving it to a separate fetched `search.json`.
 
 ## Light and dark
 
@@ -99,41 +99,20 @@ it, Windows would get Segoe UI and Android would get Roboto. Drop the Google
 Fonts `<link>` in `src/_includes/base.njk` if you would rather have no
 external dependency; Apple devices are unaffected either way.
 
-## Scripture
+## External links
 
-Every reference on a devo page links to that passage on BibleGateway in
-NKJV, the translation the posts quote. Nothing is marked up by hand: a build-time
-transform in `eleventy.config.js` finds references in the rendered HTML,
-skipping anything already inside a link, a script or a style. A second
-transform gives every off-site link `target="_blank"` and `rel="noopener"`.
-
-His text is never changed. Where his wording and the URL have to differ the
-link text keeps what he wrote and only the URL is normalised -- `Lk.` to
-Luke, `Psalm` to Psalms, and his `ff` or trailing verse letters dropped,
-since BibleGateway cannot parse them.
-
-Two kinds of reference are deliberately left as plain text rather than
-guessed at: `Peter 1:6-7` on 2026-07-07, which is missing its book number,
-and `Psalms 119: (18)`, whose shape is too irregular to parse.
-
-`/scripture/` lists all every reference in canonical order, Genesis to
-Revelation, each linking to the devo that quotes it -- or to each of them,
-for the 40 verses cited more than once. It is linked from the home page
-only. The page is built by `src/_data/scripture.js`, which reads the
-Markdown directly rather than going through collections so it does not
-depend on every devo having rendered first.
-
-Both the linker and the index import their parsing rules from
-`lib/scripture.js`. That is the whole reason the file exists: if they
-drifted, the index would list verses the pages do not link, or the reverse.
+A build-time transform in `eleventy.config.js` gives every off-site link
+`target="_blank"` and `rel="noopener"`. A post is read the way a text message
+is, so a tapped link should open alongside the thread rather than replace it.
+It leaves any link that already carries a `target` alone.
 
 ## Activity graph
 
-The home page opens with a calendar of the days he sent a devo: a row per
+The home page opens with a calendar of the days a post went out: a row per
 month, a column per day of the month. Selecting a day clears any active
 filter and scrolls the list to that day, flashing the row so the eye lands
-in the right place. Empty days are not interactive, and every day he sent
-one is the same blue whatever the count -- the date and count are in each
+in the right place. Empty days are not interactive, and every day with a
+post is the same blue whatever the count -- the date and count are in each
 square's tooltip and accessible name.
 
 The first version copied GitHub's layout, a column per week across the
@@ -141,6 +120,10 @@ year. That shape assumes a wide page: 43 columns did not fit this site's
 408px list column, so it needed horizontal scrolling and pinned day labels.
 Months-as-rows is at most 31 columns, so `grid-template-columns:
 repeat(31, 1fr)` makes it fit by construction at any width.
+
+`src/_data/activity.js` reads the post *filenames* rather than their
+contents -- the `YYYY-MM-DD` prefix is all it needs -- so it stays cheap as
+the archive grows.
 
 A back-to-top button appears bottom right once the page is scrolled past
 320px, on the home page only.
@@ -165,14 +148,10 @@ need absolute URLs.
 
 ## Things worth knowing
 
-- **`devos` is still the internal name** for posts -- the directory, the
-  collection and the layout. Renaming it to `posts` touches
-  `src/devos/`, `devos.json`, the `collections.devos` references in
-  `index.njk` and `scripture.njk`, and the permalink.
-- **Scripture linking is specific to devotional writing.** If this becomes a
-  general blog, `lib/scripture.js`, `src/_data/scripture.js`,
-  `src/scripture.njk` and the `scriptureLinks` transform can all come out
-  without touching anything else.
 - **The avatars are placeholders.** `src/assets/img/avatar.svg` and
   `cluster.svg` are neutral figures, not pictures of anyone. Replace them
   with real images when the site has an actual author.
+- **`time` is free text**, shown exactly as written. It is not parsed, so
+  `6:40 AM`, `14:15` or `just after lunch` all render.
+- **Two posts can share a date.** The list shows them together, the pager
+  walks both, and the activity graph counts the day twice.

@@ -2,7 +2,6 @@
 title: "A Short One"
 date: 2026-09-07
 time: 6:20 AM
-scripture: "John 11:35"
 summary: "Sample content. The shortest post in the set."
 ---
 > **John 11:35** Jesus wept.

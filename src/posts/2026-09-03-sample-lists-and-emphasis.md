@@ -2,7 +2,6 @@
 title: "Lists and Emphasis"
 date: 2026-09-03
 time: 6:55 AM
-scripture: "James 1:22"
 summary: "Sample content. Exercises bullet lists, bold and italic inside a bubble."
 ---
 > **James 1:22** But be doers of the word, and not hearers only, deceiving yourselves.
