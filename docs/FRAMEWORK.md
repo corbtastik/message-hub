@@ -17,7 +17,7 @@ src/
   assets/css/app.css   all styles
   assets/js/search.js  list filtering, typed dates, sort, arrow keys
   assets/js/theme.js   the appearance toggle
-  assets/img/          avatar, cluster icon, sample photo
+  assets/img/          site icon and sample photo
   assets/img/people/   author portraits, one SVG per name
   assets/video/        sample clip and its poster frame
   assets/audio/        sample sound file
@@ -290,8 +290,12 @@ need absolute URLs.
 ## Things worth knowing
 
 - **Nothing here is a photograph of anyone.** Every face is a drawing,
-  including the site author's, and `cluster.svg` -- the group icon at the top
-  of a thread -- is a neutral figure.
+  the site author's included.
+- **A thread's top bar is one row**: back button, the conversation pill, and
+  the appearance toggle, all centred on the same line. It used to carry a
+  group icon above the pill, which is why `.screen` had 99px of top padding;
+  that is now 56px and the bar 106px, keeping the same 12px gap to the first
+  line of content and the same ~63px of gradient below the controls.
 - **The tab icon follows `site.author`**, resolved through the same `avatar`
   filter rather than hard-coded, so renaming the author moves it with no edit
   to `base.njk`.
