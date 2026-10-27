@@ -167,6 +167,22 @@ a{color:inherit;text-decoration:none}
 /* A quotation inside a text. */
 .bubble blockquote{margin:0 0 20px;padding-left:11px;border-left:2px solid var(--quote-edge);color:var(--quote-text)}
 .bubble h2,.bubble h3{margin:0 0 6px;font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.4px}
+/* A picture or a clip in a message. It fills the bubble and keeps its own
+   proportions; give the tag a width and height in the post so the thread
+   does not reflow as the file loads. The flat fill behind it covers the
+   gap before a poster frame or an image has arrived. */
+.bubble img,.bubble video{display:block;width:100%;height:auto;border-radius:13px;background:var(--quote-edge)}
+/* Sent on its own, the picture or clip *is* the bubble, the way Messages
+   draws one: the padding goes so it reaches the edges, and the tail keeps
+   its shape behind it. A browser with no :has() keeps the ordinary padded
+   bubble, which is only a little different -- nothing breaks.
+
+   Two shapes to match: markdown-it wraps `![alt](src)` in a paragraph, but
+   leaves a hand-written <img> tag as a bare child of the bubble. */
+.bubble:has(> :is(img,video):only-child),
+.bubble:has(> p:only-child > :is(img,video):only-child){padding:0}
+.bubble:has(> :is(img,video):only-child) :is(img,video),
+.bubble:has(> p:only-child > :is(img,video):only-child) :is(img,video){border-radius:18px}
 
 .tail{position:absolute;z-index:0;left:0;bottom:-6.4px;width:22px;height:25px;display:block}
 .avatar{position:absolute;left:-39px;bottom:-6.3px;width:32px;height:32px;display:block;border-radius:50%}

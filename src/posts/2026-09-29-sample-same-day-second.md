@@ -6,4 +6,4 @@ summary: "Sample content. The second post on the same date, later in the day."
 ---
 Sample body text. The second post on the 29th, sent that afternoon. Because both carry the same date, the list shows them together and the day counts twice.
 
-This is the newest post in the set, so it sits at the top of the list by default.
+Their order within the day comes from the filename, so this one follows the morning post rather than preceding it.
