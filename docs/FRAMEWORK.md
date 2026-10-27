@@ -148,9 +148,15 @@ need absolute URLs.
 
 ## Things worth knowing
 
-- **The avatars are placeholders.** `src/assets/img/avatar.svg` and
-  `cluster.svg` are neutral figures, not pictures of anyone. Replace them
-  with real images when the site has an actual author.
+- **`cluster.svg` is still a placeholder.** It is the group icon at the top
+  of a thread -- a neutral figure, not a picture of anyone. `avatar.jpg` is
+  a real photo, used for the author in the list and the thread and also as
+  the favicon, the apple-touch icon and the `og:image`.
+- **The avatar is a 180px JPEG**, which covers its largest use (the
+  apple-touch icon) and the 52px list row at 3x. It is a photograph, so JPEG
+  rather than PNG: the same image as a 180px PNG is 55 KB against 8 KB here.
+  Swapping it for another photo means matching that, not dropping in a
+  full-size original.
 - **`time` is free text**, shown exactly as written. It is not parsed, so
   `6:40 AM`, `14:15` or `just after lunch` all render.
 - **Two posts can share a date.** The list shows them together, the pager
