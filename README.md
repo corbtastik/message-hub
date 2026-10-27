@@ -86,9 +86,10 @@ shipped content.
 
 ## Colour palettes
 
-26 palettes ship with it, ported from the "Corbs Themes" group in
-[yolo-11ty](https://github.com/corbtastik/yolo-11ty). The palette button sits
-under the light/dark toggle.
+29 palettes ship with it, ported from
+[yolo-11ty](https://github.com/corbtastik/yolo-11ty) -- its whole "Corbs
+Themes" group plus three Material ones. The palette button sits under the
+light/dark toggle.
 
 Palette and appearance are separate: each palette has a light and a dark side
 and follows whichever the toggle is on. The choice is remembered and applied

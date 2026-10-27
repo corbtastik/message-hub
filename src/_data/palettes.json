@@ -1,5 +1,5 @@
 {
-  "label": "Corbs Themes",
+  "label": "Ported from yolo-11ty: the Corbs Themes group, plus three from Material Themes",
   "themes": [
     {
       "id": "star-lord",
@@ -571,6 +571,72 @@
         "primary": "#4ffa7b",
         "surface": "#251359",
         "border": "#bf3efd"
+      }
+    },
+    {
+      "id": "material-gray",
+      "name": "Material Gray",
+      "light": {
+        "bg": "#FAFAFA",
+        "text": "#212121",
+        "heading": "#424242",
+        "link": "#616161",
+        "primary": "#9E9E9E",
+        "surface": "#ffffff",
+        "border": "#F5F5F5"
+      },
+      "dark": {
+        "bg": "#212121",
+        "text": "#FAFAFA",
+        "heading": "#F5F5F5",
+        "link": "#EEEEEE",
+        "primary": "#E0E0E0",
+        "surface": "#424242",
+        "border": "#616161"
+      }
+    },
+    {
+      "id": "material-blue-gray",
+      "name": "Material Blue Gray",
+      "light": {
+        "bg": "#ECEFF1",
+        "text": "#263238",
+        "heading": "#37474F",
+        "link": "#455A64",
+        "primary": "#607D8B",
+        "surface": "#ffffff",
+        "border": "#CFD8DC"
+      },
+      "dark": {
+        "bg": "#263238",
+        "text": "#ECEFF1",
+        "heading": "#CFD8DC",
+        "link": "#B0BEC5",
+        "primary": "#90A4AE",
+        "surface": "#37474F",
+        "border": "#455A64"
+      }
+    },
+    {
+      "id": "material-light-blue",
+      "name": "Material Light Blue",
+      "light": {
+        "bg": "#E1F5FE",
+        "text": "#01579B",
+        "heading": "#0277BD",
+        "link": "#0288D1",
+        "primary": "#03A9F4",
+        "surface": "#ffffff",
+        "border": "#B3E5FC"
+      },
+      "dark": {
+        "bg": "#01579B",
+        "text": "#E1F5FE",
+        "heading": "#B3E5FC",
+        "link": "#80D8FF",
+        "primary": "#4FC3F7",
+        "surface": "#0277BD",
+        "border": "#0288D1"
       }
     }
   ]

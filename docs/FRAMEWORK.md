@@ -120,10 +120,16 @@ controls and scrollbars for the system appearance.
 
 ## Colour palettes
 
-26 palettes, ported from the "Corbs Themes" group of
-[yolo-11ty](https://github.com/corbtastik/yolo-11ty)'s `themes.json`. The
-palette button sits under the appearance toggle and opens a grid of swatches;
-the first clears back to the default.
+29 palettes, ported from
+[yolo-11ty](https://github.com/corbtastik/yolo-11ty)'s `themes.json`: the
+whole "Corbs Themes" group, plus Material Gray, Material Blue Gray and
+Material Light Blue from "Material Themes". The palette button sits under the
+appearance toggle and opens a grid of swatches; the first clears back to the
+default.
+
+Those last three are there to square off the grid. 29 palettes plus the
+default is 30 swatches, which is exactly five rows of six -- 26 left a row
+three short.
 
 **Palette and appearance are independent axes.** Each palette carries a light
 and a dark side, and every generated value is a `light-dark()` pair, so the
@@ -157,6 +163,19 @@ had two, one in the build and one in the browser, and they drifted: the
 browser's covered 34 of 90 variables, so switching themes left most of the
 page on the compiled-in theme. Here the browser has no copy at all.
 
+### A note on contrast
+
+`--meta` -- timestamps, list previews, the sender name -- is muted by design,
+the way iOS mutes secondary text, and it is derived by mixing `text` 45% of
+the way toward `bg`. Across the 29 palettes that lands most light modes
+somewhere between 2.5 and 4.0 against the background.
+
+That is not something the palettes introduced: the default theme's own light
+mode is 3.26, and 34 of the 52 existing palette/mode pairs were already under
+4.5 before the Material three were added. If secondary text ever needs to
+clear 4.5 everywhere, the lever is the 0.45 mix factor in `lib/palette.js`
+and the hard-coded `--meta` in app.css -- both, or they will disagree.
+
 ### The guard
 
 `assertPaletteCoversTokens()` fails the build when `lib/palette.js` and
@@ -171,7 +190,7 @@ build, and so does the reverse.
 
 ### Cost
 
-`palettes.css` is about 25 KB, under 5 KB gzipped, and is loaded on every page
+`palettes.css` is about 28 KB, around 5 KB gzipped, and is loaded on every page
 whether or not anyone opens the picker. That is the price of having the
 palettes be plain CSS rather than something JavaScript assembles, which is
 what buys the no-flash restore and keeps the browser free of the mapping. If
