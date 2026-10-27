@@ -4,7 +4,7 @@
 title: Short Title Shown In The List
 date: 2025-10-27
 time: 9:08 AM
-author: Sample Author
+# author: Someone Else      # optional; omit it and site.author is used
 summary: >                     # optional; used for the link preview when texted
   One or two sentences describing this post.
 ---
@@ -26,3 +26,15 @@ own line:
 
 This paragraph lands in a second bubble. Only the last bubble gets the
 tail and the avatar, which is how iOS renders a run of messages.
+
+***
+
+<img src="/assets/img/sample-photo.jpg" alt="Describe the picture" width="900" height="600">
+
+***
+
+A picture or a clip alone in a bubble fills it edge to edge. Give the tag a
+`width` and `height` so the thread does not jump as the file loads, and a
+real `alt`. For video, add `poster`, `preload="metadata"` and `playsinline`:
+
+<video src="/assets/video/sample-video.mp4" poster="/assets/video/sample-video-poster.jpg" width="600" height="400" controls preload="metadata" playsinline></video>

@@ -27,20 +27,28 @@ Copy [`docs/TEMPLATE.md`](docs/TEMPLATE.md) into `src/posts/` and name it
 title: "Short Title"
 date: 2026-09-01
 time: 6:40 AM
-author: "Sample Author"   # optional, defaults to site.author
+author: "Someone Else"    # optional; omit it and site.author is used
 summary: "One line, used for the list preview."
 ---
 Body in Markdown.
 ```
 
+A picture or a clip sent on its own fills the bubble the way Messages draws
+one. See `docs/TEMPLATE.md` for the tags.
+
 ## Sample content
 
-`src/posts/` ships with **20 sample posts**, all invented placeholder text.
+`src/posts/` ships with **22 sample posts**, all invented placeholder text.
 They exist to make the site render and to exercise every feature: headings
 and code spans, flat and nested lists, blockquotes, the curly quotes and
-dashes the build applies, a post split into two bubbles, a second author with
-the fallback avatar, an afternoon post, two posts on one day, a deliberate
-gap in the calendar, and an external link. Delete them and write your own.
+dashes the build applies, a post split into two bubbles, a picture, a video
+clip, a second author with the fallback avatar, an afternoon post, two posts
+on one day, a deliberate gap in the calendar, and an external link. Delete
+them and write your own.
+
+The placeholder media in `src/assets/` goes with them: `sample-photo.jpg`,
+`sample-video.mp4` and its poster frame are generated images, not photographs
+of anywhere.
 
 ## Configuring
 
