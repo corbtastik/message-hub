@@ -254,8 +254,8 @@ a{color:inherit;text-decoration:none}
 
 /* ---------- activity graph ----------
    A row per month, a column per day of the month. 31 columns of 1fr, so the
-   squares size themselves to the container and the graph fits the list
-   column at any width -- no horizontal scrolling.
+   dots size themselves to the container and the graph fits the list column
+   at any width -- no horizontal scrolling.
 
    One fill for every day that has a post, whatever the count. The blue is
    checked against both surfaces with the data-viz validator; what matters
@@ -267,8 +267,11 @@ a{color:inherit;text-decoration:none}
 .amonth-name{flex:0 0 24px;font-size:10px;line-height:12px;color:var(--meta);
   text-align:right;font-variant-numeric:tabular-nums}
 .amonth-days{flex:1;min-width:0;display:grid;grid-template-columns:repeat(var(--cols),1fr);gap:2px}
-/* aspect-ratio keeps them square whatever width the column is. */
-.day{aspect-ratio:1;min-width:0;border:0;border-radius:2.5px;padding:0;
+/* aspect-ratio keeps the cell square whatever width the column is, so the
+   circle stays a circle rather than going oval. The hover and focus rings
+   are `outline`, which follows border-radius in every browser this already
+   needs for `:has()`, so they come out round too. */
+.day{aspect-ratio:1;min-width:0;border:0;border-radius:50%;padding:0;
   background-color:var(--day-off)}
 .day-on{background-color:var(--day-on)}
 button.day{cursor:pointer}

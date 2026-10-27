@@ -2,9 +2,9 @@
  *
  * One row per month, one column per day of the month. GitHub's layout -- a
  * column per week across a year -- assumes a wide page; inside this site's
- * 408px column it needed horizontal scrolling and squares too small to tap.
+ * 408px column it needed horizontal scrolling and dots too small to tap.
  * Months-as-rows is at most 31 columns, so it fits the column at any width
- * and the squares come out larger.
+ * and the dots come out larger.
  *
  * Reads the post filenames rather than their contents: the date prefix is
  * all this needs, so it stays cheap as the archive grows. */

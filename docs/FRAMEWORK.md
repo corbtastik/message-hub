@@ -105,7 +105,7 @@ while building the activity graph:
 
 - the two dark blocks must match each other -- the graph's colours once
   landed in the media query only, so forcing dark through the toggle showed
-  light-mode squares on black;
+  light-mode dots on black;
 - they must declare the same token *names* as `:root` -- renaming a token in
   `:root` while both dark blocks kept the old name left them agreeing with
   each other and silently falling back to the light value.
@@ -253,7 +253,7 @@ month, a column per day of the month. Selecting a day clears any active
 filter and scrolls the list to that day, flashing the row so the eye lands
 in the right place. Empty days are not interactive, and every day with a
 post is the same blue whatever the count -- the date and count are in each
-square's tooltip and accessible name.
+dot's tooltip and accessible name.
 
 The first version copied GitHub's layout, a column per week across the
 year. That shape assumes a wide page: 43 columns did not fit this site's
