@@ -63,17 +63,17 @@ reader's platform ships -- Apple's on Apple devices, and the stack in
 The placeholder media is generated too: `sample-photo.jpg`,
 `sample-video.mp4` with its poster frame, `sample-audio.mp3` and
 `sample-document.pdf` are drawn, synthesised and typeset rather than recorded,
-and the ten author portraits in `src/assets/img/people/` are vector drawings,
-not photographs of anyone.
+and the eleven author portraits in `src/assets/img/people/` are vector
+drawings, not photographs of anyone.
 
 Delete the lot and write your own.
 
 ## Authors
 
-A post with no `author` is the site author and gets their photograph. Any
-other name gets the portrait at `src/assets/img/people/<slug>.svg` if there
-is one, and a neutral figure if there is not -- so adding a person is a file
-named after them, with nothing to register:
+Every author, the site author included, gets the portrait at
+`src/assets/img/people/<slug>.svg` if there is one, and a neutral figure if
+there is not -- so adding a person is a file named after them, with nothing
+to register:
 
 ```sh
 npm run avatar -- "Your Name"

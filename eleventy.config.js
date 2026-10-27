@@ -124,11 +124,11 @@ export default function (eleventyConfig) {
 
   /* ---------- author avatars ----------
    *
-   * The site author has a photograph. Anyone else gets the drawn portrait at
-   * assets/img/people/<slug>.svg when one exists, and the neutral figure in
-   * the template when it does not -- so a new author needs no configuration,
-   * just a file named after them, and nothing breaks if there isn't one. */
-  const siteData = JSON.parse(fs.readFileSync("src/_data/site.json", "utf8"));
+   * Every name resolves the same way, the site author included: the drawn
+   * portrait at assets/img/people/<slug>.svg when one exists, and the neutral
+   * figure in the template when it does not. A new author needs no
+   * configuration, just a file named after them, and nothing breaks if there
+   * isn't one. */
   const personSlug = (name) =>
     String(name)
       .toLowerCase()
@@ -138,7 +138,6 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter("avatar", (who) => {
     if (!who) return null;
-    if (who === siteData.author) return "/assets/img/avatar.jpg";
     const rel = `assets/img/people/${personSlug(who)}.svg`;
     return fs.existsSync(path.join("src", rel)) ? `/${rel}` : null;
   });

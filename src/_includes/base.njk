@@ -22,11 +22,14 @@
 <meta name="twitter:card" content="summary">
 {%- if site.url %}
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
-<meta property="og:image" content="{{ site.url }}/assets/img/avatar.jpg">
+<meta property="og:image" content="{{ site.url }}/assets/img/icon.png">
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
 {%- endif %}
-<link rel="icon" href="/assets/img/avatar.jpg">
-<link rel="apple-touch-icon" href="/assets/img/avatar.jpg">
+{#- The tab icon follows whoever site.author is, with no name hard-coded here.
+    apple-touch-icon and og:image need a raster, so they take icon.png. #}
+{%- set authorFace = site.author | avatar %}
+<link rel="icon" href="{{ authorFace if authorFace else '/assets/img/icon.png' }}">
+<link rel="apple-touch-icon" href="/assets/img/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;1,400;1,600&display=swap">

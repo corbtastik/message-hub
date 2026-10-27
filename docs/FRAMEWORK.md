@@ -65,8 +65,8 @@ it would be worth moving it to a separate fetched `search.json`.
 
 ## Authors and avatars
 
-A post with no `author` is by `site.author` and shows their photograph.
-Any other name resolves through the `avatar` filter, which looks for
+Every name resolves the same way, the site author included, through the
+`avatar` filter, which looks for
 `src/assets/img/people/<slug>.svg`, the slug being the name lowercased with
 runs of non-alphanumerics collapsed to hyphens. If the file is there it is
 used; if not the template falls back to a neutral figure drawn inline.
@@ -288,15 +288,20 @@ need absolute URLs.
 
 ## Things worth knowing
 
-- **`cluster.svg` is still a placeholder.** It is the group icon at the top
-  of a thread -- a neutral figure, not a picture of anyone. `avatar.jpg` is
-  a real photo, used for the author in the list and the thread and also as
-  the favicon, the apple-touch icon and the `og:image`.
-- **The avatar is a 180px JPEG**, which covers its largest use (the
-  apple-touch icon) and the 52px list row at 3x. It is a photograph, so JPEG
-  rather than PNG: the same image as a 180px PNG is 55 KB against 8 KB here.
-  Swapping it for another photo means matching that, not dropping in a
-  full-size original.
+- **Nothing here is a photograph of anyone.** Every face is a drawing,
+  including the site author's, and `cluster.svg` -- the group icon at the top
+  of a thread -- is a neutral figure.
+- **The tab icon follows `site.author`**, resolved through the same `avatar`
+  filter rather than hard-coded, so renaming the author moves it with no edit
+  to `base.njk`.
+- **`icon.png` is the one raster.** `apple-touch-icon` has to be a PNG and
+  `og:image` has to be something social scrapers will render, so neither can
+  take the SVG. It is a 512px square rasterised from the author's portrait,
+  with the portrait's own background filling the corners -- a transparent PNG
+  would be composited onto black by iOS. Regenerate it after changing the
+  portrait: render `people/<slug>.svg` at 512px over that background and save
+  it as `src/assets/img/icon.png`. It is the only thing in here that has to
+  be kept in step by hand.
 - **`time` is free text**, shown exactly as written. It is not parsed, so
   `6:40 AM`, `14:15` or `just after lunch` all render.
 - **Two posts can share a date.** The list shows them together, the pager
