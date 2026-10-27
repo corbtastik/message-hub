@@ -2,12 +2,12 @@
 title: "A Quoted Passage"
 date: 2026-09-02
 time: 7:12 AM
-summary: "Sample content. Shows a scripture blockquote opening a post and another closing it."
+summary: "Sample content. Shows a blockquote opening a post and another closing it."
 ---
-> **Proverbs 3:5-6** Trust in the LORD with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He shall direct your paths.
+> I went to the woods because I wished to live deliberately, to front only the essential facts of life, and see if I could not learn what it had to teach.
 
-Sample body text. A post will often open with a passage, work through it in a few paragraphs, and close with a second passage that answers the first.
+Sample body text. A post will often open with a quotation, work through it in a few paragraphs, and close with a second one that answers the first.
 
-The reference above and the one below are both linked automatically at build time -- nothing in this file marks them up.
+Blockquotes get a left rule and a slightly muted colour, so a quotation reads as borrowed rather than written. Nothing in this file styles them -- a `>` at the start of the line is all it takes.
 
-> **Isaiah 40:31** But those who wait on the LORD shall renew their strength; they shall mount up with wings like eagles.
+> Very little is needed to make a happy life; it is all within yourself, in your way of thinking.

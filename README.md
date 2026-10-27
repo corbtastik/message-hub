@@ -35,11 +35,12 @@ Body in Markdown.
 
 ## Sample content
 
-`src/posts/` ships with **20 sample posts**, all invented. They exist to make
-the site render and to exercise the features: lists, a post split into two
-bubbles, a second author, an afternoon post, two posts on one day, a
-deliberate gap in the calendar, and an external link. Delete them and write
-your own.
+`src/posts/` ships with **20 sample posts**, all invented placeholder text.
+They exist to make the site render and to exercise every feature: headings
+and code spans, flat and nested lists, blockquotes, the curly quotes and
+dashes the build applies, a post split into two bubbles, a second author with
+the fallback avatar, an afternoon post, two posts on one day, a deliberate
+gap in the calendar, and an external link. Delete them and write your own.
 
 ## Configuring
 

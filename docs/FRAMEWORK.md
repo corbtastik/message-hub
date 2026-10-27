@@ -34,13 +34,13 @@ the folder's**. Renaming `src/posts/` means renaming that file too.
 The home page filters client-side as you type. Dates go in the same box as the
 text -- there is no date picker:
 
-| Typed                      | Effect                                  |
+| Typed                      | Against the shipped samples             |
 | -------------------------- | --------------------------------------- |
-| `bubbles`                  | posts containing the word               |
-| `bubbles list`             | posts containing *both* words           |
-| `5/21/26`                  | that single day                         |
-| `5/1/26 to 5/15/26`        | that range, inclusive                   |
-| `list 5/1/26 to 5/15/26`   | text and range together                 |
+| `bubble`                   | 8 posts containing the word             |
+| `bubble quotation`         | the 2 containing *both* words           |
+| `9/21/26`                  | that single day                         |
+| `9/1/26 to 9/15/26`        | that range, inclusive                   |
+| `list 9/1/26 to 9/15/26`   | text and range together                 |
 
 `to`, `-`, `–`, `..` and `through` all work as range separators, as does
 writing two dates side by side. A reversed range is read the same as a forward
@@ -54,8 +54,8 @@ returns to the box, Enter opens the post, Escape clears the search.
 
 Each row carries its searchable text in a `data-text` attribute, so the index
 is the page itself -- no extra request, and the list still renders unfiltered
-with JavaScript off. With the 20 short samples that index is about 9 KB of a
-34 KB page; longer posts cost proportionally more, and past roughly 300 posts
+with JavaScript off. With the 20 short samples that index is about 10 KB of a
+35 KB page; longer posts cost proportionally more, and past roughly 300 posts
 it would be worth moving it to a separate fetched `search.json`.
 
 ## Light and dark

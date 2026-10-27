@@ -4,7 +4,7 @@
  * widget: "5/21/26" filters to that day, "5/1/26 to 5/15/26" to that range
  * (also "-", "–" or ".." as the separator, or just two dates side by side).
  * Whatever is left over after the dates are pulled out is the text query, so
- * "love 5/1/26 to 5/15/26" works.
+ * "list 9/1/26 to 9/15/26" works.
  *
  * Every row carries its own lowercased searchable text in data-text and its
  * date in data-date (YYYY-MM-DD, which compares correctly as a string). The
