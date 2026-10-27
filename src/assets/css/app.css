@@ -310,10 +310,11 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* The picker. Glass like the other floating chrome, and anchored to the
    controls rather than the viewport so it lands under the palette button on
-   both the list and a thread. */
+   both the list and a thread. No outline -- the blur and the drop shadow
+   separate it from the page on their own. */
 .palette-panel{position:absolute;top:calc(100% + 7px);right:0;z-index:8;
   width:min(238px,calc(100vw - 34px));padding:9px;border-radius:15px;
-  background:var(--glass);border:1px solid var(--glass-edge);
+  background:var(--glass);
   -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
   box-shadow:0 8px 26px rgb(0 0 0 / .30)}
 .palette-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
