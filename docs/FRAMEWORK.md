@@ -19,9 +19,10 @@ src/
   assets/js/theme.js   the appearance toggle
   assets/img/          avatar, cluster icon, sample photo
   assets/video/        sample clip and its poster frame
+  assets/audio/        sample sound file
   posts/
     posts.json         layout, tag and permalink for every post
-    *.md               one file per post (22 samples ship with it)
+    *.md               one file per post (23 samples ship with it)
 docs/TEMPLATE.md       starting point for a new post
 docs/FRAMEWORK.md      this file
 firebase.json          hosting config (no site pinned - see Deploying)
@@ -37,7 +38,7 @@ text -- there is no date picker:
 
 | Typed                      | Against the shipped samples             |
 | -------------------------- | --------------------------------------- |
-| `bubble`                   | 10 posts containing the word            |
+| `bubble`                   | 11 posts containing the word            |
 | `bubble quotation`         | the 2 containing *both* words           |
 | `9/21/26`                  | that single day                         |
 | `9/1/26 to 9/15/26`        | that range, inclusive                   |
@@ -55,8 +56,8 @@ returns to the box, Enter opens the post, Escape clears the search.
 
 Each row carries its searchable text in a `data-text` attribute, so the index
 is the page itself -- no extra request, and the list still renders unfiltered
-with JavaScript off. With the 22 short samples that index is about 12 KB of a
-41 KB page; longer posts cost proportionally more, and past roughly 300 posts
+with JavaScript off. With the 23 short samples that index is about 13 KB of a
+43 KB page; longer posts cost proportionally more, and past roughly 300 posts
 it would be worth moving it to a separate fetched `search.json`.
 
 ## Light and dark
@@ -107,7 +108,7 @@ A build-time transform in `eleventy.config.js` gives every off-site link
 is, so a tapped link should open alongside the thread rather than replace it.
 It leaves any link that already carries a `target` alone.
 
-## Pictures and video
+## Pictures, video and audio
 
 A picture or a clip goes in the post body as an ordinary tag, and the bubble
 does the rest:
@@ -116,13 +117,24 @@ does the rest:
 <img src="/assets/img/sample-photo.jpg" alt="..." width="900" height="600">
 <video src="/assets/video/sample-video.mp4" poster="..." width="600"
        height="400" controls preload="metadata" playsinline></video>
+<audio src="/assets/audio/sample-audio.mp3" controls preload="metadata"></audio>
 ```
 
-Sent on its own in a bubble, the file fills it edge to edge with the bubble's
-own corner radius -- the picture *is* the bubble, the way Messages draws one.
-Sharing a bubble with text, it keeps the usual padding and a smaller radius.
-The rule that tells them apart is a `:has()` test for a lone `img` or `video`;
-a browser without `:has()` just keeps the padded bubble, so nothing breaks.
+A picture or a video sent on its own fills the bubble edge to edge with the
+bubble's own corner radius -- the media *is* the bubble, the way Messages
+draws one. Sharing a bubble with text, it keeps the usual padding and a
+smaller radius. The rule that tells them apart is a `:has()` test for a lone
+`img` or `video`; a browser without `:has()` just keeps the padded bubble, so
+nothing breaks.
+
+**Audio is deliberately left out of that rule** and always keeps the padding.
+A picture has proportions of its own, so filling the bubble looks intended; a
+player is a fixed-height bar carrying its own rounded fill, and flush to the
+bubble's edge it reads as a bug. The control also draws itself in the light
+or dark style `color-scheme` asks for, which the theme sets in both the
+forced blocks -- so it flips with the appearance toggle rather than sitting
+light on a dark thread. A scrubbable waveform like the one iOS draws for a
+voice message is a custom player, not this tag.
 
 Two shapes have to be matched, because markdown-it treats the two tags
 differently: `![alt](src)` and a hand-written `<video>` both come out wrapped
@@ -136,8 +148,12 @@ empty until playback starts), `preload="metadata"` (or a thread of clips
 pulls megabytes nobody asked for) and `playsinline` (or iOS goes fullscreen
 on play).
 
-`firebase.json` caches `/assets/img/**` and `/assets/video/**` for a year as
-immutable, so changing a file means changing its name.
+`firebase.json` caches `/assets/img/**`, `/assets/video/**` and
+`/assets/audio/**` for a year as immutable, so changing a file means changing
+its name. The three rules are deliberately separate rather than one
+`@(img|video|audio)` glob: the extglob syntax is used elsewhere in that file
+for extensions, but a path-segment version of it cannot be checked without a
+deploy.
 
 ## Activity graph
 

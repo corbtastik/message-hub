@@ -38,3 +38,8 @@ A picture or a clip alone in a bubble fills it edge to edge. Give the tag a
 real `alt`. For video, add `poster`, `preload="metadata"` and `playsinline`:
 
 <video src="/assets/video/sample-video.mp4" poster="/assets/video/sample-video-poster.jpg" width="600" height="400" controls preload="metadata" playsinline></video>
+
+Audio keeps the bubble's padding instead of filling it, and needs no
+dimensions -- the control has a fixed height of its own:
+
+<audio src="/assets/audio/sample-audio.mp3" controls preload="metadata"></audio>
