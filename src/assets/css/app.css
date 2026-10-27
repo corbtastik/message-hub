@@ -239,7 +239,8 @@ a{color:inherit;text-decoration:none}
 .pager-link{font-size:13px;line-height:18px;color:var(--meta);padding:9px 13px;border-radius:14px;
   border:1px solid var(--glass-edge);background:var(--control)}
 .pager-link:hover{color:var(--text);background:var(--control-hover)}
-.pager-newer{text-align:right}
+/* Purely positional: the bottom row, whichever post is in it. */
+.pager-right{text-align:right}
 
 /* ---------- conversation list (home) ---------- */
 .screen-list{padding-top:18px;padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
