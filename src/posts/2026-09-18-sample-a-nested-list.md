@@ -14,4 +14,4 @@ Sample body text. Lists can nest, which is worth checking at a bubble's width be
   2. a second numbered child
 - a final first-level item
 
-Two levels read comfortably. Three starts to look cramped at 310px, so a post that wants a deeper structure is usually better off with headings -- see the sample post from September 9th.
+Two levels read comfortably. Three starts to look cramped at 334px, so a post that wants a deeper structure is usually better off with headings -- see the sample post from September 9th.

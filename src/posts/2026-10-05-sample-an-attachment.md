@@ -4,7 +4,7 @@ date: 2026-10-05
 time: 10:40 AM
 summary: "Sample content. A PDF attached to a message, shown as a document row."
 ---
-Sample body text. Some files have no sensible way to be shown inline at a bubble's width. A PDF is the obvious one: there is nothing useful to render in 310 points, so it arrives as a row instead.
+Sample body text. Some files have no sensible way to be shown inline at a bubble's width. A PDF is the obvious one: there is nothing useful to render in 334 points, so it arrives as a row instead.
 
 ***
 

@@ -160,9 +160,10 @@ way to write a post, so it is reachable.
 ## Code blocks
 
 A fenced block gets `overflow-x:auto`. Without it one long line pushes the
-whole document wider than the viewport -- at a 310px bubble that takes about
-sixty characters -- and the reader gets a horizontal scrollbar on the page
-instead of on the block, which also breaks the thread's centring. Inline
+whole document wider than the viewport, and the reader gets a horizontal
+scrollbar on the page instead of on the block, which also breaks the thread's
+centring. There is not much room to play with: a 334px bubble leaves 282px
+inside the block, which is about thirty-six monospace characters. Inline
 `code` keeps the bubble's `overflow-wrap`, so a long attribute breaks rather
 than doing the same thing.
 
@@ -212,7 +213,7 @@ on play).
 
 ### Attachments
 
-A file with nothing useful to show inline at 310 points -- a PDF, a zip --
+A file with nothing useful to show inline at 334 points -- a PDF, a zip --
 goes in as a document row instead, through a shortcode:
 
 ```njk
@@ -257,7 +258,7 @@ dot's tooltip and accessible name.
 
 The first version copied GitHub's layout, a column per week across the
 year. That shape assumes a wide page: 43 columns did not fit this site's
-408px list column, so it needed horizontal scrolling and pinned day labels.
+440px list column, so it needed horizontal scrolling and pinned day labels.
 Months-as-rows is at most 31 columns, so `grid-template-columns:
 repeat(31, 1fr)` makes it fit by construction at any width.
 

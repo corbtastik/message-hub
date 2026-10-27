@@ -123,7 +123,7 @@ a{color:inherit;text-decoration:none}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
   clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 
-.screen{max-width:408px;margin:0 auto;position:relative;
+.screen{max-width:440px;margin:0 auto;position:relative;
   padding-top:99px;padding-bottom:calc(48px + env(safe-area-inset-bottom,0px))}
 
 /* ---------- top bar (thread) ---------- */
@@ -154,7 +154,7 @@ a{color:inherit;text-decoration:none}
 .stamp .clock{margin-left:.15em}
 .from{margin:4px 0 0 58px;font-size:12px;line-height:16px;color:var(--name)}
 
-.msg{position:relative;margin:3px 0 0 43px;width:min(310px,calc(100% - 43px))}
+.msg{position:relative;margin:3px 0 0 43px;width:min(334px,calc(100% - 43px))}
 .bubble{position:relative;z-index:1;background:var(--bubble);border-radius:18px;padding:10.3px 14px 10.3px 14.3px;
   font-size:17px;line-height:22px;letter-spacing:-.4px;color:var(--text);overflow-wrap:anywhere}
 .bubble > :first-child{margin-top:0}
@@ -170,10 +170,11 @@ a{color:inherit;text-decoration:none}
 .bubble blockquote{margin:0 0 20px;padding-left:11px;border-left:2px solid var(--quote-edge);color:var(--quote-text)}
 .bubble h2,.bubble h3{margin:0 0 6px;font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.4px}
 /* Code. A fenced block needs `overflow-x`, or one long line pushes the whole
-   document wider than the viewport -- at a 310px bubble that takes about
-   sixty characters -- and the reader gets a horizontal scrollbar on the page
-   rather than on the block. Inline code keeps the bubble's `overflow-wrap`,
-   so a long attribute breaks instead of doing the same thing. */
+   document wider than the viewport -- a 334px bubble leaves 282px inside the
+   block, which is about thirty-six monospace characters -- and the reader
+   gets a horizontal scrollbar on the page rather than on the block. Inline
+   code keeps the bubble's `overflow-wrap`, so a long attribute breaks
+   instead of doing the same thing. */
 .bubble code{font-family:var(--mono);font-size:13.5px}
 .bubble pre{margin:0 0 20px;padding:10px 12px;border-radius:12px;
   background:var(--control);overflow-x:auto}
@@ -225,7 +226,7 @@ a{color:inherit;text-decoration:none}
 .avatar-other{color:var(--meta);background:var(--bubble);overflow:hidden}
 
 /* ---------- prev / next ---------- */
-.pager{display:flex;flex-direction:column;gap:8px;margin:34px 0 0 43px;width:min(310px,calc(100% - 43px))}
+.pager{display:flex;flex-direction:column;gap:8px;margin:34px 0 0 43px;width:min(334px,calc(100% - 43px))}
 .pager-link{font-size:13px;line-height:18px;color:var(--meta);padding:9px 13px;border-radius:14px;
   border:1px solid var(--glass-edge);background:var(--control)}
 .pager-link:hover{color:var(--text);background:var(--control-hover)}

@@ -2,7 +2,7 @@
  *
  * One row per month, one column per day of the month. GitHub's layout -- a
  * column per week across a year -- assumes a wide page; inside this site's
- * 408px column it needed horizontal scrolling and dots too small to tap.
+ * 440px column it needed horizontal scrolling and dots too small to tap.
  * Months-as-rows is at most 31 columns, so it fits the column at any width
  * and the dots come out larger.
  *
