@@ -413,6 +413,35 @@ cannot be checked without a deploy.
 
 ## Activity graph
 
+**Experimental on this branch.** There are two components over the same data,
+chosen by `site.activityStyle`:
+
+| | `calendar` | `pulse` |
+| --- | --- | --- |
+| shape | a row per month, a column per day | one bar per month |
+| answers | did anything happen on the 14th | which months were busy |
+| height | ten rows, ~145px | one band, ~58px |
+| jumps to | that day | that month's first post |
+
+They are `_includes/activity-calendar.njk` and `_includes/activity-pulse.njk`,
+and both render as `#activity` with `data-day` on each target, so `search.js`
+wires up jumping without knowing which is on -- it matches the attribute
+rather than a class.
+
+The calendar deliberately uses one fill whatever the count, which means it
+cannot show that September holds twenty posts and April three. The pulse is
+the opposite trade: volume at a glance, no day-level detail. Neither is
+strictly better; the pulse is here to be looked at.
+
+Two things the pulse needed that are not obvious. Its bars sit on a baseline
+rather than in filled tracks, because with tracks nine quiet months read as
+nine empty boxes instead of nine short bars. And a month with no posts has to
+be excluded explicitly -- the minimum height that keeps a one-post month
+visible would otherwise draw a bar for an empty one, which was verified by
+emptying February and rebuilding.
+
+### The calendar
+
 The home page opens with a calendar of the days a post went out: a row per
 month, a column per day of the month. Selecting a day clears any active
 filter and scrolls the list to that day, flashing the row so the eye lands

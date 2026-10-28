@@ -26,6 +26,9 @@ export default function () {
   const [ly, lm] = keys[keys.length - 1].split("-").map(Number);
 
   const fmtMonth = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", month: "short" });
+  const fmtLong = new Intl.DateTimeFormat("en-US", {
+    timeZone: "UTC", month: "long", year: "numeric",
+  });
   const fmtFull = new Intl.DateTimeFormat("en-US", {
     timeZone: "UTC", weekday: "long", month: "long", day: "numeric", year: "numeric",
   });
@@ -49,15 +52,24 @@ export default function () {
           : `${fmtFull.format(date)} — none`,
       });
     }
+    // Per-month totals, so a component can show volume rather than only
+    // presence. firstIso is where a click on the month should land.
+    const withPosts = days.filter((d) => d.count);
     months.push({
       name: fmtMonth.format(new Date(Date.UTC(y, mo - 1, 1))),
       year: y,
       days,
+      count: withPosts.reduce((n, d) => n + d.count, 0),
+      firstIso: withPosts.length ? withPosts[0].iso : "",
+      label: `${fmtLong.format(new Date(Date.UTC(y, mo - 1, 1)))} — ${
+        withPosts.reduce((n, d) => n + d.count, 0)
+      } post${withPosts.reduce((n, d) => n + d.count, 0) === 1 ? "" : "s"}`,
     });
   }
 
   return {
     months,
+    busiest: months.reduce((m, x) => Math.max(m, x.count), 0),
     total: [...counts.values()].reduce((a, b) => a + b, 0),
     days: counts.size,
     maxDays: Math.max(...months.map((m) => m.days.length)),

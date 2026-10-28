@@ -1,0 +1,28 @@
+{#- "Pulse": one bar per month, height by post count.
+
+    A different trade from the calendar it replaces. That one shows every day
+    and deliberately uses one fill whatever the count, so it answers "did
+    anything happen on the 14th?" but cannot show that September had twenty
+    posts and April had three. This answers the opposite question, and does it
+    in one band instead of ten rows.
+
+    Hidden until the script runs: without JavaScript a bar does nothing. -#}
+<div class="pulse" id="activity" hidden>
+  <div class="pulse-bars" role="group"
+       aria-label="Posts by month. Select a month to jump to it.">
+    {%- for m in activity.months %}
+    <button type="button" class="pmonth{% if not m.count %} is-empty{% endif %}" data-day="{{ m.firstIso }}"
+            data-page="{{ collections.posts | pageForDate(m.firstIso, site.perPage) }}"
+            style="--v:{{ (m.count / activity.busiest) if activity.busiest else 0 }}"
+            title="{{ m.label }}" aria-label="{{ m.label }}">
+      <span class="pmonth-track"><span class="pmonth-fill"></span></span>
+      <span class="pmonth-name" aria-hidden="true">{{ m.name }}</span>
+    </button>
+    {%- endfor %}
+  </div>
+  <p class="pulse-legend">
+    <span>{{ activity.total }} posts</span>
+    <span>{{ activity.days }} days</span>
+    <span>busiest {{ activity.busiest }}</span>
+  </p>
+</div>

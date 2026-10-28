@@ -3,5 +3,6 @@
   "author": "Corbett Martin",
   "description": "A thread of short posts.",
   "url": "https://message-hub.web.app",
-  "perPage": 50
+  "perPage": 50,
+  "activityStyle": "pulse"
 }
