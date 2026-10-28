@@ -1,0 +1,49 @@
+{#- "Pulse": a row per month, newest at the top, bar length by post count.
+
+    A different trade from the day calendar it alternates with. That one shows
+    every day and deliberately uses one fill whatever the count, so it answers
+    "did anything happen on the 14th?" but cannot show that September holds
+    twenty posts and April three. This answers the opposite question.
+
+    Twelve rows are shown and the rest scroll, so the component is the same
+    height whether the archive is one year old or ten -- the only thing a long
+    archive adds is scrolling, never width. The top row is the current month,
+    not the last month with a post, so a quiet stretch reads as empty rows
+    rather than as the chart stopping early.
+
+    Hidden until the script runs: without JavaScript a bar does nothing. -#}
+<div class="pulse" id="activity" hidden>
+  {#- Whether there is more below is known here, so the fade that says so
+      needs no JavaScript and cannot be wrong. #}
+  <div class="pulse-window{% if activity.recent | length > 12 %} has-more{% endif %}">
+    <div class="pulse-scroll" tabindex="0" role="group"
+         aria-label="Posts by month, most recent first. Select a month to jump to it.">
+      {%- for m in activity.recent %}
+      {%- if m.count %}
+      <button type="button" class="pmonth" data-day="{{ m.firstIso }}"
+            data-page="{{ collections.posts | pageForDate(m.firstIso, site.perPage) }}"
+            style="--v:{{ (m.count / activity.busiest) if activity.busiest else 0 }}"
+            title="{{ m.label }}" aria-label="{{ m.label }}">
+      <span class="pmonth-when">{%- if m.showYear %}<b>{{ m.year }}</b>{% endif %}{{ m.name }}</span>
+      <span class="pmonth-track"><span class="pmonth-fill"></span></span>
+      <span class="pmonth-count">{{ m.count }}</span>
+    </button>
+      {%- else %}
+      {#- Nothing to jump to, so not a button -- the rule the calendar uses for
+        empty days. #}
+      <span class="pmonth is-empty" title="{{ m.label }}">
+      <span class="pmonth-when">{%- if m.showYear %}<b>{{ m.year }}</b>{% endif %}{{ m.name }}</span>
+      <span class="pmonth-track"></span>
+      <span class="pmonth-count"></span>
+    </span>
+      {%- endif %}
+    {%- endfor %}
+    </div>
+  </div>
+
+  <p class="pulse-legend">
+    <span>{{ activity.total }} posts</span>
+    <span>{{ activity.days }} days</span>
+    <span>busiest {{ activity.busiest }}</span>
+  </p>
+</div>

@@ -30,7 +30,7 @@ src/
   assets/files/        sample attachment (PDF)
   posts/
     posts.json         layout, tag and permalink for every post
-    *.md               one file per post (50 samples ship with it)
+    *.md               one file per post (78 samples ship with it)
 docs/TEMPLATE.md       starting point for a new post
 docs/FRAMEWORK.md      this file
 lib/palette.js         palette colours -> CSS tokens; used by the build
@@ -66,14 +66,16 @@ returns to the box, Enter opens the post, Escape clears the search.
 
 Each row carries its searchable text in a `data-text` attribute, so the index
 is the page itself -- no extra request, and the list still renders unfiltered
-with JavaScript off. Across the 50 samples that index is about 23 KB of a
-97 KB page, roughly 450 bytes a post; longer posts cost proportionally more.
+with JavaScript off. For the 50 rows on a page that index is about 23 KB of
+an 81 KB page, roughly 450 bytes a post; longer posts cost proportionally
+more.
 
 **Searching and sorting only see the current page.** They work on the rows in
 the document, and pagination is what decides which rows those are. With the
-default 50 a post at 51 is on page two and a search from page one will not
-find it. At the shipped 50 posts there is exactly one page, so this does not
-bite yet -- it starts the day the archive outgrows a page.
+default 50 a post at 51 is on page two, and a search from page one will not
+find it. The 78 shipped samples are past that line, so it bites today: the
+2025 posts are on page two and invisible to a search run from page one.
+Making search whole-archive means the separate `search.json` floated above.
 
 ## Pagination
 
@@ -412,6 +414,57 @@ elsewhere in that file for extensions, but a path-segment version of it
 cannot be checked without a deploy.
 
 ## Activity graph
+
+**Experimental on this branch.** There are two components over the same data,
+chosen by `site.activityStyle`:
+
+| | `calendar` | `pulse` |
+| --- | --- | --- |
+| shape | a row per month, a column per day | a row per month, twelve shown |
+| answers | did anything happen on the 14th | which months were busy |
+| height | grows a row per month | fixed: 154px, 180px once it scrolls |
+| jumps to | that day | that month's first post |
+| older than that | more rows | scroll |
+
+They are `_includes/activity-calendar.njk` and `_includes/activity-pulse.njk`,
+and both render as `#activity` with `data-day` on each target, so `search.js`
+wires up jumping without knowing which is on -- it matches the attribute
+rather than a class.
+
+The calendar deliberately uses one fill whatever the count, which means it
+cannot show that September holds twenty posts and April three. The pulse is
+the opposite trade: volume at a glance, no day-level detail. Neither is
+strictly better; the pulse is here to be looked at.
+
+The pulse is a row per month, newest at the top, bar length by post count.
+**Twelve rows are shown and the rest scroll**, so the component is the same
+height whether the archive is one year old or ten -- 154px here, and 180px
+once it overflows. The calendar grows a row per month; this one does not grow
+at all.
+
+The top row is the **current** month rather than the last month with a post,
+so a quiet stretch reads as empty rows at the top instead of the chart
+stopping early. `activity.recent` is that list, running from today back to
+the first post. The year is printed only where it changes going down.
+
+Bars share one scale across the whole archive, so a bar in 2024 means what it
+means in 2026.
+
+Three things it needed that are not obvious. A month with no posts is an
+inert `span` with no fill element, the same rule the calendar uses for empty
+days, which also stops the minimum bar width from drawing a bar for a month
+that has none. The bottom fade is driven by the row count at build time
+rather than by JavaScript, because on macOS the scrollbar is an overlay that
+only appears while scrolling and row twelve sits flush with the edge -- with
+nothing there, an archive with more below looks like one without. And the
+fade is painted over the scroll area rather than masked onto it, which would
+fade the scrollbar with it.
+
+Earlier takes on this are in the branch history: a single strip of months,
+which collapsed into `JaFebrApMajunuAu` at three years, and a grid with a row
+per year, which was legible but grew taller every year.
+
+### The calendar
 
 The home page opens with a calendar of the days a post went out: a row per
 month, a column per day of the month. Selecting a day clears any active

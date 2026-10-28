@@ -244,7 +244,11 @@
 
   /* The graph covers the whole archive while this page holds one slice of it,
      so a day may belong to another page. Each cell carries the page its posts
-     landed on; a different one is a navigation, not a scroll. */
+     landed on; a different one is a navigation, not a scroll.
+
+     Matched on [data-day] rather than a class, because the two activity
+     components -- the day calendar and the month pulse -- both emit it and
+     neither should need this file to know about it. */
   function jumpTo(day) {
     var row = list.querySelector('.row[data-date="' + day + '"]');
     if (!row) return false;
@@ -268,7 +272,7 @@
     activity.hidden = false;
 
     activity.addEventListener("click", function (e) {
-      var cell = e.target.closest ? e.target.closest(".day[data-day]") : null;
+      var cell = e.target.closest ? e.target.closest("[data-day]") : null;
       if (!cell) return;
       var day = cell.getAttribute("data-day");
       var want = Number(cell.getAttribute("data-page")) || 1;

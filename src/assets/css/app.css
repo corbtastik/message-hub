@@ -365,6 +365,52 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .swatch:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .swatch[aria-selected="true"]{outline:2px solid var(--accent);outline-offset:2px}
 
+/* ---------- activity: pulse ----------
+   A row per month, newest first, bar length by post count. Twelve rows are
+   shown and the rest scroll, so the component keeps one height however long
+   the archive runs -- the calendar grows a row per month, this one does not.
+   Same tokens as the calendar, so palettes and dark themes carry over. */
+.pulse{--prow:13px;margin:0 0 18px;padding:0 4px}
+/* On macOS the scrollbar is an overlay that only appears while scrolling, and
+   row twelve sits flush with the edge, so without this nothing says there is
+   more below. Painted over the scroll area rather than masked onto it, which
+   would fade the scrollbar too. */
+.pulse-window{position:relative}
+.pulse-window.has-more::after{content:"";position:absolute;left:0;right:0;bottom:0;
+  height:17px;pointer-events:none;
+  background:linear-gradient(to bottom,transparent,var(--bg))}
+.pulse-scroll{max-height:calc(12 * var(--prow));overflow-y:auto;overscroll-behavior:contain}
+.pulse-scroll:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+/* A thin scrollbar is the only thing saying there is more below, so it is
+   left visible rather than hidden for tidiness. */
+.pulse-scroll{scrollbar-width:thin;scrollbar-color:var(--day-off) transparent}
+.pulse-scroll::-webkit-scrollbar{width:4px}
+.pulse-scroll::-webkit-scrollbar-thumb{background:var(--day-off);border-radius:2px}
+
+.pmonth{display:flex;align-items:center;gap:7px;width:100%;height:var(--prow);
+  padding:0;border:0;background:none;text-align:left}
+button.pmonth{cursor:pointer}
+.pmonth-when{flex:0 0 44px;font-size:9.5px;line-height:var(--prow);color:var(--meta);
+  text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pmonth-when b{font-weight:600;color:var(--text);margin-right:4px}
+.pmonth-track{flex:1;min-width:0;height:7px;border-radius:4px;background:var(--day-off)}
+.pmonth-fill{display:block;height:100%;border-radius:4px;background:var(--day-on);
+  width:max(4px, calc(var(--v) * 100%))}
+.pmonth-count{flex:0 0 16px;font-size:9.5px;line-height:var(--prow);color:var(--meta);
+  text-align:right;font-variant-numeric:tabular-nums}
+/* A month with nothing in it has no fill element at all, so the minimum width
+   above cannot draw a bar for it. */
+.pmonth.is-empty .pmonth-when{opacity:.5}
+.pmonth:hover .pmonth-fill{filter:brightness(1.15)}
+.pmonth:hover .pmonth-when{color:var(--text)}
+.pmonth:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-radius:4px}
+
+.pulse-legend{display:flex;gap:14px;margin:10px 0 0;font-size:11px;line-height:14px;
+  color:var(--meta);font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:no-preference){
+  .pmonth-fill{transition:filter .12s ease}
+}
+
 /* ---------- index link ----------
    A single row between the activity graph and the toolbar: icon, label, and
    a count pushed to the right. */

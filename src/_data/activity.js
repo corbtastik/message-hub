@@ -26,6 +26,9 @@ export default function () {
   const [ly, lm] = keys[keys.length - 1].split("-").map(Number);
 
   const fmtMonth = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", month: "short" });
+  const fmtLong = new Intl.DateTimeFormat("en-US", {
+    timeZone: "UTC", month: "long", year: "numeric",
+  });
   const fmtFull = new Intl.DateTimeFormat("en-US", {
     timeZone: "UTC", weekday: "long", month: "long", day: "numeric", year: "numeric",
   });
@@ -49,15 +52,90 @@ export default function () {
           : `${fmtFull.format(date)} — none`,
       });
     }
+    // Per-month totals, so a component can show volume rather than only
+    // presence. firstIso is where a click on the month should land.
+    const withPosts = days.filter((d) => d.count);
     months.push({
       name: fmtMonth.format(new Date(Date.UTC(y, mo - 1, 1))),
       year: y,
+      monthNo: mo,
       days,
+      count: withPosts.reduce((n, d) => n + d.count, 0),
+      firstIso: withPosts.length ? withPosts[0].iso : "",
+      label: `${fmtLong.format(new Date(Date.UTC(y, mo - 1, 1)))} — ${
+        withPosts.reduce((n, d) => n + d.count, 0)
+      } post${withPosts.reduce((n, d) => n + d.count, 0) === 1 ? "" : "s"}`,
     });
+  }
+
+  /* The same months padded out to whole calendar years, so a year chart has
+   * twelve bars whatever the archive covers and January does not move as the
+   * year fills in. The calendar keeps the unpadded list -- there, an empty
+   * month is a wasted row rather than a meaningful gap. */
+  const yearMonths = [];
+  for (let y = fy; y <= ly; y++) {
+    for (let mo = 1; mo <= 12; mo++) {
+      const found = months.find((m) => m.year === y && m.monthNo === mo);
+      yearMonths.push(
+        found || {
+          name: fmtMonth.format(new Date(Date.UTC(y, mo - 1, 1))),
+          year: y,
+          monthNo: mo,
+          days: [],
+          count: 0,
+          firstIso: "",
+          label: `${fmtLong.format(new Date(Date.UTC(y, mo - 1, 1)))} — no posts`,
+        }
+      );
+    }
+  }
+
+  /* Grouped into years, which is what a chart with a row per year needs. The
+   * number of columns is then always twelve however long the archive runs --
+   * the same reasoning that made the calendar months-as-rows: a layout that
+   * fits by construction instead of one that needs scrolling. */
+  const years = [];
+  for (let y = fy; y <= ly; y++) {
+    years.push({ year: y, months: yearMonths.filter((m) => m.year === y) });
+  }
+
+  /* Newest-first, running from THIS month back to the first post -- anchored
+   * to the calendar rather than to the last post, so a quiet stretch shows as
+   * empty rows at the top instead of the chart ending early. A row per month
+   * means the column count never grows, so the only thing a long archive adds
+   * is scroll. */
+  const now = new Date();
+  const recent = [];
+  let ry = now.getUTCFullYear();
+  let rm = now.getUTCMonth() + 1;
+  // Guard against an archive whose newest post is somehow ahead of today.
+  if (ry < ly || (ry === ly && rm < lm)) { ry = ly; rm = lm; }
+  let prevYear = null;
+  while (ry > fy || (ry === fy && rm >= fm)) {
+    const found = months.find((m) => m.year === ry && m.monthNo === rm);
+    const at = new Date(Date.UTC(ry, rm - 1, 1));
+    recent.push({
+      name: fmtMonth.format(at),
+      year: ry,
+      monthNo: rm,
+      count: found ? found.count : 0,
+      firstIso: found ? found.firstIso : "",
+      label: found
+        ? found.label
+        : `${fmtLong.format(at)} — no posts`,
+      // The year is printed only when it changes going down the list.
+      showYear: ry !== prevYear,
+    });
+    prevYear = ry;
+    rm === 1 ? ((rm = 12), ry--) : rm--;
   }
 
   return {
     months,
+    yearMonths,
+    years,
+    recent,
+    busiest: months.reduce((m, x) => Math.max(m, x.count), 0),
     total: [...counts.values()].reduce((a, b) => a + b, 0),
     days: counts.size,
     maxDays: Math.max(...months.map((m) => m.days.length)),

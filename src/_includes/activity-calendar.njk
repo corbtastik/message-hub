@@ -1,0 +1,24 @@
+{#- The original: a row per month, a column per day of the month, so it
+    fits the column at any width without scrolling. One fill for every day
+    that has a post, whatever the count. -#}
+<div class="activity" id="activity" hidden>
+  <div class="activity-months" role="group"
+       aria-label="Posts by day. Select a day to jump to it.">
+    {%- for m in activity.months %}
+    <div class="amonth">
+      <span class="amonth-name" aria-hidden="true">{{ m.name }}</span>
+      <div class="amonth-days" style="--cols:{{ activity.maxDays }}">
+        {%- for d in m.days %}
+        {%- if d.count %}
+        <button type="button" class="day day-on" data-day="{{ d.iso }}"
+                data-page="{{ collections.posts | pageForDate(d.iso, site.perPage) }}"
+                title="{{ d.label }}" aria-label="{{ d.label }}"></button>
+        {%- else %}
+        <span class="day" title="{{ d.label }}"></span>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+    </div>
+    {%- endfor %}
+  </div>
+</div>
