@@ -1,34 +1,56 @@
-{#- "Pulse": one bar per month, height by post count.
+{#- "Pulse": one bar per month, height by post count, a row per year.
 
-    A different trade from the calendar it replaces. That one shows every day
-    and deliberately uses one fill whatever the count, so it answers "did
-    anything happen on the 14th?" but cannot show that September had twenty
-    posts and April had three. This answers the opposite question, and does it
-    in one band instead of ten rows.
+    A different trade from the day calendar it alternates with. That one shows
+    every day and deliberately uses one fill whatever the count, so it answers
+    "did anything happen on the 14th?" but cannot show that September holds
+    twenty posts and April three. This answers the opposite question.
+
+    Always twelve columns however many years the archive runs, so it fits by
+    construction at any width -- the same reason the calendar is months-as-rows
+    rather than GitHub's weeks-across. Rows get shorter as years accumulate so
+    a long archive does not push the list off the screen.
 
     Hidden until the script runs: without JavaScript a bar does nothing. -#}
-<div class="pulse" id="activity" hidden>
-  <div class="pulse-bars" role="group"
+{%- set rows = activity.years | length %}
+<div class="pulse" id="activity" hidden
+     style="--row:{{ 56 if rows == 1 else (46 if rows == 2 else 38) }}px">
+  <div class="pulse-years" role="group"
        aria-label="Posts by month. Select a month to jump to it.">
-    {%- for m in activity.yearMonths %}
-    {%- if m.count %}
-    <button type="button" class="pmonth" data-day="{{ m.firstIso }}"
-            data-page="{{ collections.posts | pageForDate(m.firstIso, site.perPage) }}"
-            style="--v:{{ (m.count / activity.busiest) if activity.busiest else 0 }}"
-            title="{{ m.label }}" aria-label="{{ m.label }}">
-      <span class="pmonth-track"><span class="pmonth-fill"></span></span>
-      <span class="pmonth-name" aria-hidden="true">{{ m.name }}</span>
-    </button>
-    {%- else %}
-    {#- Nothing to jump to, so not a button -- the same rule the calendar uses
-        for empty days. #}
-    <span class="pmonth is-empty" title="{{ m.label }}">
-      <span class="pmonth-track"></span>
-      <span class="pmonth-name" aria-hidden="true">{{ m.name }}</span>
-    </span>
-    {%- endif %}
+    {%- for y in activity.years %}
+    <div class="pyear">
+      <span class="pyear-label" aria-hidden="true">{{ y.year }}</span>
+      <div class="pulse-bars">
+        {%- for m in y.months %}
+        {%- if m.count %}
+        <button type="button" class="pmonth" data-day="{{ m.firstIso }}"
+                data-page="{{ collections.posts | pageForDate(m.firstIso, site.perPage) }}"
+                style="--v:{{ (m.count / activity.busiest) if activity.busiest else 0 }}"
+                title="{{ m.label }}" aria-label="{{ m.label }}">
+          <span class="pmonth-track"><span class="pmonth-fill"></span></span>
+        </button>
+        {%- else %}
+        {#- Nothing to jump to, so not a button -- the rule the calendar uses
+            for empty days. #}
+        <span class="pmonth is-empty" title="{{ m.label }}">
+          <span class="pmonth-track"></span>
+        </span>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+    </div>
     {%- endfor %}
+
+    {#- Month names once, under every year, rather than repeated per row. #}
+    <div class="pyear pyear-axis">
+      <span class="pyear-label" aria-hidden="true"></span>
+      <div class="pulse-bars">
+        {%- for m in activity.years[0].months %}
+        <span class="pmonth-name" aria-hidden="true">{{ m.name }}</span>
+        {%- endfor %}
+      </div>
+    </div>
   </div>
+
   <p class="pulse-legend">
     <span>{{ activity.total }} posts</span>
     <span>{{ activity.days }} days</span>

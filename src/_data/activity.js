@@ -90,9 +90,19 @@ export default function () {
     }
   }
 
+  /* Grouped into years, which is what a chart with a row per year needs. The
+   * number of columns is then always twelve however long the archive runs --
+   * the same reasoning that made the calendar months-as-rows: a layout that
+   * fits by construction instead of one that needs scrolling. */
+  const years = [];
+  for (let y = fy; y <= ly; y++) {
+    years.push({ year: y, months: yearMonths.filter((m) => m.year === y) });
+  }
+
   return {
     months,
     yearMonths,
+    years,
     busiest: months.reduce((m, x) => Math.max(m, x.count), 0),
     total: [...counts.values()].reduce((a, b) => a + b, 0),
     days: counts.size,
