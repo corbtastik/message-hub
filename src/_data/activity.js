@@ -99,10 +99,42 @@ export default function () {
     years.push({ year: y, months: yearMonths.filter((m) => m.year === y) });
   }
 
+  /* Newest-first, running from THIS month back to the first post -- anchored
+   * to the calendar rather than to the last post, so a quiet stretch shows as
+   * empty rows at the top instead of the chart ending early. A row per month
+   * means the column count never grows, so the only thing a long archive adds
+   * is scroll. */
+  const now = new Date();
+  const recent = [];
+  let ry = now.getUTCFullYear();
+  let rm = now.getUTCMonth() + 1;
+  // Guard against an archive whose newest post is somehow ahead of today.
+  if (ry < ly || (ry === ly && rm < lm)) { ry = ly; rm = lm; }
+  let prevYear = null;
+  while (ry > fy || (ry === fy && rm >= fm)) {
+    const found = months.find((m) => m.year === ry && m.monthNo === rm);
+    const at = new Date(Date.UTC(ry, rm - 1, 1));
+    recent.push({
+      name: fmtMonth.format(at),
+      year: ry,
+      monthNo: rm,
+      count: found ? found.count : 0,
+      firstIso: found ? found.firstIso : "",
+      label: found
+        ? found.label
+        : `${fmtLong.format(at)} — no posts`,
+      // The year is printed only when it changes going down the list.
+      showYear: ry !== prevYear,
+    });
+    prevYear = ry;
+    rm === 1 ? ((rm = 12), ry--) : rm--;
+  }
+
   return {
     months,
     yearMonths,
     years,
+    recent,
     busiest: months.reduce((m, x) => Math.max(m, x.count), 0),
     total: [...counts.values()].reduce((a, b) => a + b, 0),
     days: counts.size,

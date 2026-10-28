@@ -418,10 +418,11 @@ chosen by `site.activityStyle`:
 
 | | `calendar` | `pulse` |
 | --- | --- | --- |
-| shape | a row per month, a column per day | one bar per month, twelve a year |
+| shape | a row per month, a column per day | a row per month, twelve shown |
 | answers | did anything happen on the 14th | which months were busy |
-| height | ten rows, ~145px | ~70px for one year, ~150px for three |
+| height | grows a row per month | fixed: 154px, 180px once it scrolls |
 | jumps to | that day | that month's first post |
+| older than that | more rows | scroll |
 
 They are `_includes/activity-calendar.njk` and `_includes/activity-pulse.njk`,
 and both render as `#activity` with `data-day` on each target, so `search.js`
@@ -433,30 +434,33 @@ cannot show that September holds twenty posts and April three. The pulse is
 the opposite trade: volume at a glance, no day-level detail. Neither is
 strictly better; the pulse is here to be looked at.
 
-The pulse draws whole calendar years, not just the months with posts, and a
-row per year: **always twelve columns**, however long the archive runs. That
-is the same reasoning that made the calendar months-as-rows -- a layout that
-fits by construction rather than one that needs scrolling. Laid out as a
-single strip instead, three years came to 36 bars of 11px with the month
-names overlapping into `JaFebrApMajunuAu`, which is what prompted the rows.
+The pulse is a row per month, newest at the top, bar length by post count.
+**Twelve rows are shown and the rest scroll**, so the component is the same
+height whether the archive is one year old or ten -- 154px here, and 180px
+once it overflows. The calendar grows a row per month; this one does not grow
+at all.
 
-The row height comes down as years accumulate -- 56px for one year, 46 for
-two, 38 beyond that -- so a long archive does not push the list off screen.
-Bars share one scale across every year, so a tall bar in 2024 means what it
+The top row is the **current** month rather than the last month with a post,
+so a quiet stretch reads as empty rows at the top instead of the chart
+stopping early. `activity.recent` is that list, running from today back to
+the first post. The year is printed only where it changes going down.
+
+Bars share one scale across the whole archive, so a bar in 2024 means what it
 means in 2026.
 
-`activity.years` is the grouped form; `activity.yearMonths` is the flat
-padded one; `activity.months` is unpadded and is what the calendar uses,
-where an empty month would only be a wasted row.
+Three things it needed that are not obvious. A month with no posts is an
+inert `span` with no fill element, the same rule the calendar uses for empty
+days, which also stops the minimum bar width from drawing a bar for a month
+that has none. The bottom fade is driven by the row count at build time
+rather than by JavaScript, because on macOS the scrollbar is an overlay that
+only appears while scrolling and row twelve sits flush with the edge -- with
+nothing there, an archive with more below looks like one without. And the
+fade is painted over the scroll area rather than masked onto it, which would
+fade the scrollbar with it.
 
-Three things it needed that are not obvious. Its bars sit on a baseline
-rather than in filled tracks, because with tracks the quiet months read as
-empty boxes instead of short bars. A month with no posts is rendered as an
-inert `span` with no fill element rather than a button -- the same rule the
-calendar uses for empty days, and it also stops the minimum bar height, which
-keeps a one-post month visible, from drawing a bar for an empty one. And the
-month labels use the full short name: truncating to two characters made
-Mar/May and Jun/Jul identical.
+Earlier takes on this are in the branch history: a single strip of months,
+which collapsed into `JaFebrApMajunuAu` at three years, and a grid with a row
+per year, which was legible but grew taller every year.
 
 ### The calendar
 
