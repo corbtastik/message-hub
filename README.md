@@ -5,6 +5,8 @@ is a message in a conversation; the home page is the conversation list.
 
 Built with [Eleventy](https://www.11ty.dev/).
 
+**Demo:** <https://message-hub.web.app>
+
 ## Running it
 
 ```sh
