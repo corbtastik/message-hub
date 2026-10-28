@@ -1,6 +1,7 @@
 {
-  "_comment": "No `site` is pinned on purpose. Add one before deploying, or firebase will ask which site to target. Leaving another project's site id here would let a deploy overwrite it.",
+  "_comment": "The site is pinned so a deploy cannot land on another site in the same project -- corbs-cloud holds several, including one this repo must never touch.",
   "hosting": {
+    "site": "message-hub",
     "public": "_site",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "trailingSlash": true,

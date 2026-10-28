@@ -392,21 +392,30 @@ A back-to-top button appears bottom right once the page is scrolled past
 
 ## Deploying
 
-`_site/` is a plain static directory, so any static host will serve it --
-Netlify, Cloudflare Pages, GitHub Pages or Firebase.
+It is on Firebase at **https://message-hub.web.app**, in the `corbs-cloud`
+project:
 
-`firebase.json` ships with **no `site` pinned**, deliberately. Firebase
-projects can hold several hosting sites, and a stale site id in this file
-would let a deploy overwrite the wrong one. Add yours before the first
-deploy:
-
-```json
-{ "hosting": { "site": "your-site-id", "public": "_site" } }
+```sh
+npm run build
+firebase deploy --only hosting
 ```
 
-Set `url` in `src/_data/site.json` to the live origin at the same time; the
-canonical and `og:` tags stay off until it has a value, since link previews
-need absolute URLs.
+Both the project and the site are pinned -- the project in `.firebaserc`, the
+site as `hosting.site` in `firebase.json` -- and that is not tidiness. That
+project holds several hosting sites, and with nothing pinned a deploy falls
+back to the site named after the project, so `firebase deploy` would have
+published this over `corbs-cloud`. Pinning both makes the target explicit
+rather than inherited.
+
+`url` in `src/_data/site.json` is the live origin. The canonical and `og:`
+tags stay off until it has a value, since link previews need absolute URLs,
+so it has to match wherever the site actually lands.
+
+Moving it elsewhere means changing all three together: the site id, the
+project, and that url. `_site/` is a plain static directory, so any static
+host will serve it -- Netlify, Cloudflare Pages and GitHub Pages all work the
+same way, minus the `firebase.json` cache headers, which would need
+re-expressing in whatever that host uses.
 
 ## Things worth knowing
 
