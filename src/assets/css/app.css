@@ -373,7 +373,8 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .pulse{margin:0 0 18px;padding:0 4px}
 .pulse-bars{display:flex;align-items:flex-end;gap:4px;height:58px}
 .pmonth{flex:1;min-width:0;height:100%;padding:0;border:0;background:none;
-  display:flex;flex-direction:column;justify-content:flex-end;gap:5px;cursor:pointer}
+  display:flex;flex-direction:column;justify-content:flex-end;gap:5px}
+button.pmonth{cursor:pointer}
 /* The track is full height so every month is a target, not just a tall one --
    a three-post month would otherwise be a 9px sliver to hit -- but it is drawn
    as a baseline rather than a filled box. Filled, nine quiet months read as
@@ -382,8 +383,10 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   border-bottom:1px solid var(--day-off)}
 .pmonth-fill{display:block;width:100%;border-radius:4px 4px 0 0;
   background:var(--day-on);height:max(3px, calc(var(--v) * 100%))}
-/* A month with nothing in it gets no bar; the minimum above would draw one. */
+/* A month with nothing in it renders no fill at all and is not interactive,
+   so an empty month cannot be mistaken for a one-post month. */
 .pmonth.is-empty .pmonth-fill{display:none}
+.pmonth.is-empty .pmonth-name{opacity:.45}
 .pmonth-name{font-size:10px;line-height:12px;color:var(--meta);text-align:center}
 .pmonth:hover .pmonth-fill{filter:brightness(1.15)}
 .pmonth:hover .pmonth-name{color:var(--text)}

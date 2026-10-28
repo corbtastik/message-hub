@@ -418,7 +418,7 @@ chosen by `site.activityStyle`:
 
 | | `calendar` | `pulse` |
 | --- | --- | --- |
-| shape | a row per month, a column per day | one bar per month |
+| shape | a row per month, a column per day | one bar per month, twelve a year |
 | answers | did anything happen on the 14th | which months were busy |
 | height | ten rows, ~145px | one band, ~58px |
 | jumps to | that day | that month's first post |
@@ -433,12 +433,21 @@ cannot show that September holds twenty posts and April three. The pulse is
 the opposite trade: volume at a glance, no day-level detail. Neither is
 strictly better; the pulse is here to be looked at.
 
-Two things the pulse needed that are not obvious. Its bars sit on a baseline
-rather than in filled tracks, because with tracks nine quiet months read as
-nine empty boxes instead of nine short bars. And a month with no posts has to
-be excluded explicitly -- the minimum height that keeps a one-post month
-visible would otherwise draw a bar for an empty one, which was verified by
-emptying February and rebuilding.
+The pulse draws whole calendar years, not just the months with posts, so it
+is always twelve bars wide and January does not shift along as the year fills
+in. That is `activity.yearMonths`, padded from the same data; the calendar
+keeps the unpadded `activity.months`, where an empty month would only be a
+wasted row. A multi-year archive gives it twelve bars per year, which gets
+tight past two.
+
+Three things it needed that are not obvious. Its bars sit on a baseline
+rather than in filled tracks, because with tracks the quiet months read as
+empty boxes instead of short bars. A month with no posts is rendered as an
+inert `span` with no fill element rather than a button -- the same rule the
+calendar uses for empty days, and it also stops the minimum bar height, which
+keeps a one-post month visible, from drawing a bar for an empty one. And the
+month labels use the full short name: truncating to two characters made
+Mar/May and Jun/Jul identical.
 
 ### The calendar
 

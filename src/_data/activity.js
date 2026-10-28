@@ -58,6 +58,7 @@ export default function () {
     months.push({
       name: fmtMonth.format(new Date(Date.UTC(y, mo - 1, 1))),
       year: y,
+      monthNo: mo,
       days,
       count: withPosts.reduce((n, d) => n + d.count, 0),
       firstIso: withPosts.length ? withPosts[0].iso : "",
@@ -67,8 +68,31 @@ export default function () {
     });
   }
 
+  /* The same months padded out to whole calendar years, so a year chart has
+   * twelve bars whatever the archive covers and January does not move as the
+   * year fills in. The calendar keeps the unpadded list -- there, an empty
+   * month is a wasted row rather than a meaningful gap. */
+  const yearMonths = [];
+  for (let y = fy; y <= ly; y++) {
+    for (let mo = 1; mo <= 12; mo++) {
+      const found = months.find((m) => m.year === y && m.monthNo === mo);
+      yearMonths.push(
+        found || {
+          name: fmtMonth.format(new Date(Date.UTC(y, mo - 1, 1))),
+          year: y,
+          monthNo: mo,
+          days: [],
+          count: 0,
+          firstIso: "",
+          label: `${fmtLong.format(new Date(Date.UTC(y, mo - 1, 1)))} — no posts`,
+        }
+      );
+    }
+  }
+
   return {
     months,
+    yearMonths,
     busiest: months.reduce((m, x) => Math.max(m, x.count), 0),
     total: [...counts.values()].reduce((a, b) => a + b, 0),
     days: counts.size,
