@@ -4,6 +4,7 @@ date: 2026-07-15
 time: 9:05 AM
 author: "Omar Diallo"
 summary: "A summer list."
+tags: [reading, summer]
 ---
 The reading has gone well this month, mostly because it is too hot to do anything else between one and four.
 

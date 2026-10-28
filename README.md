@@ -23,6 +23,7 @@ prefix is stripped from the URL.
 title: "Short Title"
 date: 2026-09-01
 time: 6:40 AM
+tags: [cooking, winter]
 summary: "One line, used for the list preview."
 ---
 Body in Markdown.

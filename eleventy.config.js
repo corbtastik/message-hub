@@ -160,6 +160,35 @@ export default function (eleventyConfig) {
     return i === -1 ? 1 : Math.floor(i / (perPage > 0 ? perPage : 50)) + 1;
   });
 
+  /* ---------- tags ----------
+   *
+   * Eleventy's `tags` is also how a post joins a collection, and posts.json
+   * already uses it to put every post in `collections.posts`. A post that
+   * adds its own tags does not lose that -- Eleventy 3 deep-merges the two,
+   * so front matter `tags: [garden]` comes out as [posts, garden] -- but it
+   * does mean "posts" rides along in the list and has to be filtered out of
+   * anything the reader sees. */
+  const STRUCTURAL_TAGS = ["posts", "all"];
+  const userTags = (tags) =>
+    (Array.isArray(tags) ? tags : tags ? [tags] : []).filter(
+      (t) => !STRUCTURAL_TAGS.includes(t)
+    );
+
+  eleventyConfig.addFilter("userTags", userTags);
+
+  // Every tag in use, with its count, for the tag pages and the tag index.
+  eleventyConfig.addCollection("tagList", (collection) => {
+    const counts = new Map();
+    for (const item of collection.getFilteredByTag("posts")) {
+      for (const tag of userTags(item.data.tags)) {
+        counts.set(tag, (counts.get(tag) || 0) + 1);
+      }
+    }
+    return [...counts.entries()]
+      .map(([tag, count]) => ({ tag, count }))
+      .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+  });
+
   /* ---------- author avatars ----------
    *
    * Every name resolves the same way, the site author included: the drawn

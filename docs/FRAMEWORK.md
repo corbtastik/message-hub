@@ -9,12 +9,15 @@ How the pieces fit together. For getting started, see the
 src/
   index.njk            conversation list (home)
   index.11tydata.js    pagination settings for it
+  tags.njk             one page per tag
+  tags-index.njk       /tags/, every tag with its count
   _data/activity.js    builds the calendar grid for the activity graph
   _data/palettes.json  the colour palettes, seven source colours each
   _data/site.json      title, author, description, url
   _includes/
     base.njk           <head>, meta and social tags
     post.njk           the Messages thread
+    row.njk            one conversation-list row, shared by both lists
     controls.njk       appearance + palette buttons, used by both
   assets/css/app.css   all styles
   assets/js/search.js  list filtering, typed dates, sort, arrow keys
@@ -104,6 +107,40 @@ load-bearing, not decoration.
 
 **The result count says "on this page"** once there is more than one, since
 "Showing 3 of 50" would otherwise read as 3 of the archive.
+
+## Tags
+
+A post takes them in front matter:
+
+```yaml
+tags: [cooking, winter]
+```
+
+They render as chips under the last bubble, each linking to `/tags/<tag>/`,
+and `/tags/` lists every tag with its count, commonest first. They also join
+the row's searchable text, so typing a tag in the list box filters by it even
+though the rows themselves do not show tags -- a chip on every row would
+crowd out the preview.
+
+### The thing to know
+
+**`tags` is also how a post joins a collection.** `src/posts/posts.json` sets
+`tags: "posts"` on the whole directory, which is what builds
+`collections.posts` -- the thing the index, the pagination and the pager all
+read. A post that declares its own `tags` therefore looks like it should
+replace that and drop itself out of the site.
+
+It does not. Eleventy 3 deep-merges the two, so front matter `tags: [garden]`
+comes out as `[posts, garden]`: the post stays in `collections.posts` and
+also gets a `garden` collection for free. That was verified rather than
+assumed -- it is the kind of thing that would quietly remove posts from the
+list.
+
+The cost is that `posts` rides along in every post's tag list, so anything a
+reader sees has to filter it out. That is the `userTags` filter, and
+`STRUCTURAL_TAGS` in `eleventy.config.js` is the list it strips. Add another
+directory-level tag and it belongs in that list too, or it will show up as a
+chip and get a page of its own.
 
 ## Authors and avatars
 

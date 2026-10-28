@@ -4,6 +4,7 @@ date: 2026-10-23
 time: 3:20 PM
 author: "Nadia Haddad"
 summary: "Putting the garden to bed."
+tags: [garden, seasons]
 ---
 Spent the afternoon cutting things back and pulling out what did not work this year. ✂️
 

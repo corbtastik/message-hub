@@ -4,6 +4,7 @@ date: 2026-06-19
 time: 7:25 AM
 author: "Felix Moreau"
 summary: "Three weeks into an early habit."
+tags: [swimming, habits]
 ---
 Three weeks of swimming before work. The water is still cold enough to be a decision every single morning. 🥶
 

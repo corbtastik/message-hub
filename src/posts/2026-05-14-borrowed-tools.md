@@ -4,6 +4,7 @@ date: 2026-05-14
 time: 5:15 PM
 author: "Theo Vance"
 summary: "On the shed at the end of the road."
+tags: [making, neighbours]
 ---
 Our street has an informal arrangement where the good ladder lives in one shed and everyone knows whose it is. 🪜
 

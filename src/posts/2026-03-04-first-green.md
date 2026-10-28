@@ -4,6 +4,7 @@ date: 2026-03-04
 time: 10:05 AM
 author: "Nadia Haddad"
 summary: "The turn of the season, a week early."
+tags: [garden, spring]
 ---
 Something is coming up along the south wall that I did not plant and cannot identify. It has been there a week and survived two frosts. ❄️
 

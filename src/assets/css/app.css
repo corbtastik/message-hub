@@ -234,6 +234,23 @@ a{color:inherit;text-decoration:none}
 /* Stand-in for a sender we have no photo of. */
 .avatar-other{color:var(--meta);background:var(--bubble);overflow:hidden}
 
+/* ---------- tags ---------- */
+/* Lined up with the bubbles, not the page, so they read as belonging to the
+   message rather than to the layout. */
+.tags{list-style:none;display:flex;flex-wrap:wrap;gap:6px;
+  margin:18px 0 0 43px;padding:0;width:min(334px,calc(100% - 43px))}
+.tag{display:inline-block;font-size:13px;line-height:18px;letter-spacing:-.1px;
+  color:var(--meta);padding:5px 11px;border-radius:13px;
+  border:1px solid var(--glass-edge);background:var(--control)}
+.tag:hover{color:var(--text);background:var(--control-hover)}
+.tag-count{margin-left:7px;color:var(--meta);font-variant-numeric:tabular-nums}
+.tag:hover .tag-count{color:var(--meta)}
+/* The index is a page of its own, so it is not tied to the bubble column. */
+.tags-index{margin:6px 4px 0;width:auto}
+.tags-index .tag{font-size:15px;line-height:20px;padding:7px 13px;border-radius:15px}
+.tags-all{margin:26px 4px 0;font-size:13px;line-height:18px;color:var(--accent)}
+.tags-all a:hover{text-decoration:underline}
+
 /* ---------- prev / next ---------- */
 .pager{display:flex;flex-direction:column;gap:8px;margin:34px 0 0 43px;width:min(334px,calc(100% - 43px))}
 .pager-link{font-size:13px;line-height:18px;color:var(--meta);padding:9px 13px;border-radius:14px;
@@ -399,7 +416,7 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   overflow:hidden;margin-top:1px;font-size:15px;line-height:20px;letter-spacing:-.2px;color:var(--meta)}
 
 @media (prefers-reduced-motion:no-preference){
-  .row-link,.pager-link,.pagenav-link,.sort-btn,.icon-btn,.swatch{transition:background-color .12s ease,color .12s ease}
+  .row-link,.pager-link,.pagenav-link,.sort-btn,.icon-btn,.swatch,.tag{transition:background-color .12s ease,color .12s ease}
 }
 /* Set while the appearance switches, so the whole page changes at once. */
 :root.theme-switching *{transition:none!important}

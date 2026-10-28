@@ -4,6 +4,7 @@ date: 2026-03-20
 time: 8:00 AM
 author: "Ingrid Solberg"
 summary: "The first morning it is bright on the way out."
+tags: [seasons, walking]
 ---
 Walked out at ten to seven today and it was properly light. First time since October. 🙌
 

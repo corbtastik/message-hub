@@ -4,6 +4,7 @@ date: 2026-10-08
 time: 9:40 AM
 author: "Priya Raman"
 summary: "The clocks have not changed yet and it is already dim."
+tags: [walking, seasons]
 ---
 Left the house in proper half light this morning for the first time since spring. 🚶
 

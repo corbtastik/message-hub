@@ -4,6 +4,7 @@ date: 2026-01-22
 time: 9:15 AM
 author: "Mei Lin Chow"
 summary: "Working through the stretch when nobody else is in yet."
+tags: [work]
 ---
 The building is half empty until the end of the month, which means the good desk by the window is free ☕ and nobody schedules anything before ten.
 

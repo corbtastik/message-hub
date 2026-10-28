@@ -4,6 +4,7 @@ date: 2026-02-04
 time: 8:20 AM
 author: "Theo Vance"
 summary: "Twenty minutes outside, whatever the weather."
+tags: [walking, habits]
 ---
 I committed to twenty minutes outside every day this month regardless of the forecast, and I am four days in.
 

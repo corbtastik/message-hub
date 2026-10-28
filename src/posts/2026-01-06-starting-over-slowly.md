@@ -4,6 +4,7 @@ date: 2026-01-06
 time: 7:40 AM
 author: "Ada Okafor"
 summary: "On easing into a new year rather than sprinting at it."
+tags: [work, habits]
 ---
 The first week back is always slower than I plan for, and I have stopped treating that as a failure. 🐌
 

@@ -4,6 +4,7 @@ date: 2026-02-24
 time: 7:05 PM
 author: "Jonas Brandt"
 summary: "On taking the slower route home."
+tags: [walking]
 ---
 There is a path along the water that adds eleven minutes to my walk home. I take it most evenings now. 🌊
 

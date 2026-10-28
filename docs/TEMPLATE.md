@@ -5,6 +5,7 @@ title: Short Title Shown In The List
 date: 2025-10-27
 time: 9:08 AM
 # author: Someone Else      # optional; omit it and site.author is used
+tags: [one, two]               # optional; chips on the post, and a page each
 summary: >                     # optional; used for the link preview when texted
   One or two sentences describing this post.
 ---

@@ -41,6 +41,18 @@ bodyClass: thread
   </div>
   {% endfor %}
 
+  {%- set shown = tags | userTags %}
+  {%- if shown | length %}
+  {# Aligned with the bubbles rather than the page, so they read as belonging
+     to the message above them. "posts" is filtered out: it is how a post
+     joins collections.posts, not something the author wrote. #}
+  <ul class="tags" aria-label="Tags">
+    {%- for t in shown %}
+    <li><a class="tag" href="/tags/{{ t | slugify }}/">{{ t }}</a></li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+
   <nav class="pager" aria-label="More posts">
     {% set prev = collections.posts | getPreviousCollectionItem %}
     {% set next = collections.posts | getNextCollectionItem %}

@@ -4,6 +4,7 @@ date: 2026-02-12
 time: 1:30 PM
 author: "Priya Raman"
 summary: "Books worth a second pass."
+tags: [reading]
 ---
 Every so often I go back to something rather than starting something new. Three that reward it:
 

@@ -4,6 +4,7 @@ date: 2026-08-13
 time: 11:45 AM
 author: "Mei Lin Chow"
 summary: "Working through the quiet month."
+tags: [work, summer]
 ---
 Half the team is away, which has turned out to be the best time of year 🏖️ for the work that needs a long run at it.
 

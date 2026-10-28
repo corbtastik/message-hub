@@ -1,0 +1,25 @@
+---
+layout: base.njk
+bodyClass: inbox
+title: Tags
+summary: Every tag used across the posts.
+permalink: /tags/
+eleventyExcludeFromCollections: true
+---
+<main class="screen screen-list">
+  <header class="list-head">
+    <div class="list-head-text">
+      <p class="crumb"><a href="/">&larr; All posts</a></p>
+      <h1>Tags</h1>
+      <p class="list-sub">{{ collections.tagList | length }} tag{{ "" if collections.tagList | length == 1 else "s" }}</p>
+    </div>
+    {% include "controls.njk" %}
+  </header>
+
+  {# Ordered by how often each is used, so the shape of the archive shows. #}
+  <ul class="tags tags-index" aria-label="All tags">
+    {%- for e in collections.tagList %}
+    <li><a class="tag" href="/tags/{{ e.tag | slugify }}/">{{ e.tag }}<span class="tag-count">{{ e.count }}</span></a></li>
+    {%- endfor %}
+  </ul>
+</main>

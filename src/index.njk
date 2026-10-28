@@ -68,32 +68,7 @@ eleventyExcludeFromCollections: true
 
   <ul class="rows" id="post-list" data-page="{{ pagination.pageNumber + 1 }}" data-pages="{{ pagination.pages | length }}">
     {% for post in pagePosts %}
-    <li class="row"
-        data-date="{{ post.date | isoDate }}"
-        data-text="{{ post.data.title | searchText(post.data.summary, post.templateContent) }}">
-      <a class="row-link" href="{{ post.url }}">
-        {%- set who = post.data.author if post.data.author else site.author %}
-        {%- set face = who | avatar %}
-        {%- if face %}
-        <img class="row-avatar" alt="" src="{{ face }}" width="52" height="52" loading="lazy">
-        {%- else %}
-        <svg class="row-avatar avatar-other" viewBox="0 0 32 32" role="img" aria-label="{{ who }}">
-          <circle cx="16" cy="16" r="16" fill="currentColor" opacity=".22"/>
-          <circle cx="16" cy="12.6" r="5" fill="currentColor" opacity=".75"/>
-          <path d="M5.6 28.2a10.8 10.8 0 0 1 20.8 0A16 16 0 0 1 5.6 28.2Z" fill="currentColor" opacity=".75"/>
-        </svg>
-        {%- endif %}
-        <span class="row-body">
-          <span class="row-top">
-            <span class="row-title">{{ post.data.title }}</span>
-            <span class="row-date">{{ post.date | shortDate }}<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1.2 1 6 6l-4.8 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </span>
-          {# Prefer the hand-written summary when there is one; it says what the
-             post is about rather than just showing its opening words. #}
-          <span class="row-preview">{{ post.data.summary | preview if post.data.summary else post.templateContent | preview }}</span>
-        </span>
-      </a>
-    </li>
+    {% include "row.njk" %}
     {% endfor %}
   </ul>
 

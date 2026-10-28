@@ -1,0 +1,31 @@
+---
+layout: base.njk
+bodyClass: inbox
+eleventyExcludeFromCollections: true
+pagination:
+  data: collections.tagList
+  size: 1
+  alias: entry
+permalink: "/tags/{{ entry.tag | slugify }}/"
+eleventyComputed:
+  title: "Tagged {{ entry.tag }}"
+  summary: "Every post tagged {{ entry.tag }}."
+---
+<main class="screen screen-list">
+  <header class="list-head">
+    <div class="list-head-text">
+      <p class="crumb"><a href="/">&larr; All posts</a></p>
+      <h1>{{ entry.tag }}</h1>
+      <p class="list-sub">{{ entry.count }} post{{ "" if entry.count == 1 else "s" }}</p>
+    </div>
+    {% include "controls.njk" %}
+  </header>
+
+  <ul class="rows">
+    {%- for post in collections[entry.tag] | reverse %}
+    {% include "row.njk" %}
+    {%- endfor %}
+  </ul>
+
+  <p class="tags-all"><a href="/tags/">All tags &rarr;</a></p>
+</main>

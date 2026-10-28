@@ -4,6 +4,7 @@ date: 2026-07-07
 time: 2:50 PM
 author: "Ingrid Solberg"
 summary: "A fortnight away, and what it took to leave."
+tags: [work, travel]
 ---
 Two weeks off starting Friday. The work to make that possible took most of a fortnight on its own, which is worth noticing. 📋
 

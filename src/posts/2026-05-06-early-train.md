@@ -4,6 +4,7 @@ date: 2026-05-06
 time: 7:50 AM
 author: "Mei Lin Chow"
 summary: "A note from the 6:42."
+tags: [travel, work]
 ---
 Took the early train for the first time in months. It is a completely different service: half full, silent, everyone reading something on paper. 📰
 

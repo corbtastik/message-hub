@@ -4,6 +4,7 @@ date: 2026-04-15
 time: 9:30 AM
 author: "Ada Okafor"
 summary: "On drafts, and when to stop."
+tags: [writing, work]
 ---
 I have rewritten the opening of this thing five times now. The fifth is not obviously better than the second. ✍️
 

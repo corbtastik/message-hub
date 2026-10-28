@@ -4,6 +4,7 @@ date: 2026-06-03
 time: 8:45 PM
 author: "Jonas Brandt"
 summary: "Midsummer creeping up."
+tags: [seasons]
 ---
 Ate dinner at half eight with the door open and it was still fully light when we cleared the table. 🍽️
 

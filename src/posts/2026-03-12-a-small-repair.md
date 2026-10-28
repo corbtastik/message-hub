@@ -4,6 +4,7 @@ date: 2026-03-12
 time: 4:40 PM
 author: "Felix Moreau"
 summary: "Fixing the chair instead of replacing it."
+tags: [making]
 ---
 The kitchen chair has wobbled for two years. Yesterday I turned it over, found one loose dowel, and spent forty minutes with glue and a clamp. 🪑
 

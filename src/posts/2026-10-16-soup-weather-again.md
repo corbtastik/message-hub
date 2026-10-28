@@ -4,6 +4,7 @@ date: 2026-10-16
 time: 5:30 PM
 author: "Jonas Brandt"
 summary: "Back where we started the year."
+tags: [cooking, winter]
 ---
 Made the white bean soup again tonight, nine months after the last one. 🔁
 

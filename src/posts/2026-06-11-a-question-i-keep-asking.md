@@ -4,6 +4,7 @@ date: 2026-06-11
 time: 10:40 AM
 author: "Nadia Haddad"
 summary: "On a habit that has been useful."
+tags: [work, habits]
 ---
 I have started asking, before anything gets added to a plan: what would have to be true for this to be the wrong thing to do?
 
