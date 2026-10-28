@@ -8,6 +8,7 @@ How the pieces fit together. For getting started, see the
 ```
 src/
   index.njk            conversation list (home)
+  index.11tydata.js    pagination settings for it
   _data/activity.js    builds the calendar grid for the activity graph
   _data/palettes.json  the colour palettes, seven source colours each
   _data/site.json      title, author, description, url
@@ -63,8 +64,46 @@ returns to the box, Enter opens the post, Escape clears the search.
 Each row carries its searchable text in a `data-text` attribute, so the index
 is the page itself -- no extra request, and the list still renders unfiltered
 with JavaScript off. Across the 50 samples that index is about 23 KB of a
-97 KB page -- roughly 450 bytes a post; longer posts cost proportionally more, and past roughly 300 posts
-it would be worth moving it to a separate fetched `search.json`.
+97 KB page, roughly 450 bytes a post; longer posts cost proportionally more.
+
+**Searching and sorting only see the current page.** They work on the rows in
+the document, and pagination is what decides which rows those are. With the
+default 50 a post at 51 is on page two and a search from page one will not
+find it. At the shipped 50 posts there is exactly one page, so this does not
+bite yet -- it starts the day the archive outgrows a page.
+
+## Pagination
+
+The conversation list is paginated at `site.perPage`, 50 by default. Page one
+keeps the bare `/` so the front door never becomes `/page/1/`; the rest are
+`/page/2/`, `/page/3/` and so on. Below a full page the navigation does not
+render at all, which is the state the shipped samples are in.
+
+The settings live in `src/index.11tydata.js` rather than index.njk's front
+matter, because front matter is static YAML and cannot read `site.perPage`
+from the site data.
+
+The byline counts the whole archive, not the page -- `collections.posts`
+rather than the paginated slice -- so "50 posts from ..." stays true on every
+page.
+
+### What pagination had to be told about
+
+**The activity graph spans the whole archive** while a page holds one slice of
+it, so a day cell has to know where its posts went. The `pageForDate` filter
+works that out at build time and each cell carries a `data-page`; clicking a
+day on another page is a navigation to `/page/N/#d<date>` rather than a
+scroll, and the arriving page flashes the row from the hash. Without that,
+clicking an older date would scroll to a row that is not in the document and
+nothing would happen.
+
+**The back-to-top button is fixed to the bottom-right corner**, which is
+exactly where "Older" lands. They overlap at phone widths at the end of the
+page, so `.pagenav` carries a bottom margin to clear it. That margin is
+load-bearing, not decoration.
+
+**The result count says "on this page"** once there is more than one, since
+"Showing 3 of 50" would otherwise read as 3 of the archive.
 
 ## Authors and avatars
 

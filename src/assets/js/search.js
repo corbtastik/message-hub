@@ -34,6 +34,13 @@
   var total = rows.length;
   var newestFirst = true;
 
+  /* Which slice of the archive this page holds. Filtering and sorting only
+     ever see these rows -- the rest of the archive is on other pages and not
+     in this document. */
+  var thisPage = Number(list.getAttribute("data-page")) || 1;
+  var pages = Number(list.getAttribute("data-pages")) || 1;
+  var pageHref = function (n) { return n <= 1 ? "/" : "/page/" + n + "/"; };
+
   /* ---------- date parsing ---------- */
 
   var D = "(\\d{1,2})/(\\d{1,2})/(\\d{2,4})";
@@ -135,7 +142,8 @@
     if (!filtering) {
       count.textContent = "";
     } else {
-      var msg = shown === 0 ? "No matches" : "Showing " + shown + " of " + total;
+      var msg = shown === 0 ? "No matches"
+        : "Showing " + shown + " of " + total + (pages > 1 ? " on this page" : "");
       count.textContent = p.note ? msg + " · " + p.note : msg;
     }
   }
@@ -234,6 +242,27 @@
 
   /* ---------- activity graph ---------- */
 
+  /* The graph covers the whole archive while this page holds one slice of it,
+     so a day may belong to another page. Each cell carries the page its posts
+     landed on; a different one is a navigation, not a scroll. */
+  function jumpTo(day) {
+    var row = list.querySelector('.row[data-date="' + day + '"]');
+    if (!row) return false;
+    // A filter could be hiding the day being jumped to, so clear it first.
+    if (q.value) {
+      q.value = "";
+      apply();
+    }
+    row.scrollIntoView({ block: "center", behavior: "smooth" });
+    rows.forEach(function (r) { r.classList.remove("row-jumped"); });
+    // Restart the flash even if the same day is chosen twice.
+    void row.offsetWidth;
+    row.classList.add("row-jumped");
+    var link = row.querySelector(".row-link");
+    if (link) link.focus({ preventScroll: true });
+    return true;
+  }
+
   var activity = document.getElementById("activity");
   if (activity) {
     activity.hidden = false;
@@ -242,21 +271,17 @@
       var cell = e.target.closest ? e.target.closest(".day[data-day]") : null;
       if (!cell) return;
       var day = cell.getAttribute("data-day");
-      var row = list.querySelector('.row[data-date="' + day + '"]');
-      if (!row) return;
-
-      // A filter could be hiding the day being jumped to, so clear it first.
-      if (q.value) {
-        q.value = "";
-        apply();
+      var want = Number(cell.getAttribute("data-page")) || 1;
+      if (want !== thisPage) {
+        window.location.href = pageHref(want) + "#d" + day;
+        return;
       }
-      row.scrollIntoView({ block: "center", behavior: "smooth" });
-      rows.forEach(function (r) { r.classList.remove("row-jumped"); });
-      // Restart the flash even if the same day is clicked twice.
-      void row.offsetWidth;
-      row.classList.add("row-jumped");
-      var link = row.querySelector(".row-link");
-      if (link) link.focus({ preventScroll: true });
+      jumpTo(day);
     });
+  }
+
+  // Arriving from a day picked on another page.
+  if (/^#d\d{4}-\d{2}-\d{2}$/.test(window.location.hash)) {
+    jumpTo(window.location.hash.slice(2));
   }
 })();

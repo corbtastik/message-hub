@@ -151,6 +151,15 @@ export default function (eleventyConfig) {
     plain(parts.filter(Boolean).join(" ")).toLowerCase()
   );
 
+  /* Which paginated page a day's posts land on. The activity graph spans the
+   * whole archive while a list page holds only one slice of it, so a day cell
+   * has to know where to send the reader -- otherwise clicking an older date
+   * scrolls to a row that is not in the document and nothing happens. */
+  eleventyConfig.addFilter("pageForDate", (posts, iso, perPage) => {
+    const i = posts.findIndex((p) => p.date.toISOString().slice(0, 10) === iso);
+    return i === -1 ? 1 : Math.floor(i / (perPage > 0 ? perPage : 50)) + 1;
+  });
+
   /* ---------- author avatars ----------
    *
    * Every name resolves the same way, the site author included: the drawn

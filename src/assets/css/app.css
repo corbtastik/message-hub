@@ -249,6 +249,23 @@ a{color:inherit;text-decoration:none}
 .list-head h1{margin:0;font-size:34px;line-height:41px;font-weight:700;letter-spacing:-.9px}
 .list-sub{margin:3px 0 0;font-size:15px;line-height:20px;color:var(--meta)}
 
+/* ---------- page navigation (list) ---------- */
+/* Horizontal, so there is no up/down ambiguity: newer on the left, older on
+   the right, matching the direction the list already reads. The empty end
+   keeps the label centred when only one of the two links renders.
+
+   The bottom margin is not decoration: .to-top is fixed to the bottom-right
+   corner, which is where "Older" lands, and at phone widths they overlap at
+   the end of the page without it. */
+.pagenav{display:flex;align-items:center;gap:10px;margin:26px 4px 46px}
+.pagenav-link{flex:none;font-size:13px;line-height:18px;color:var(--meta);
+  padding:9px 13px;border-radius:14px;border:1px solid var(--glass-edge);
+  background:var(--control)}
+.pagenav-link:hover{color:var(--text);background:var(--control-hover)}
+.pagenav-end{flex:none;width:84px}
+.pagenav-at{flex:1;text-align:center;font-size:13px;line-height:18px;
+  color:var(--meta);font-variant-numeric:tabular-nums}
+
 /* ---------- back to top ---------- */
 .to-top{position:fixed;z-index:6;right:max(16px,env(safe-area-inset-right,0px));
   bottom:max(16px,calc(env(safe-area-inset-bottom,0px) + 8px));
@@ -382,7 +399,7 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   overflow:hidden;margin-top:1px;font-size:15px;line-height:20px;letter-spacing:-.2px;color:var(--meta)}
 
 @media (prefers-reduced-motion:no-preference){
-  .row-link,.pager-link,.sort-btn,.icon-btn,.swatch{transition:background-color .12s ease,color .12s ease}
+  .row-link,.pager-link,.pagenav-link,.sort-btn,.icon-btn,.swatch{transition:background-color .12s ease,color .12s ease}
 }
 /* Set while the appearance switches, so the whole page changes at once. */
 :root.theme-switching *{transition:none!important}

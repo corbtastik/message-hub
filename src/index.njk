@@ -25,6 +25,7 @@ eleventyExcludeFromCollections: true
           {%- for d in m.days %}
           {%- if d.count %}
           <button type="button" class="day day-on" data-day="{{ d.iso }}"
+                  data-page="{{ collections.posts | pageForDate(d.iso, site.perPage) }}"
                   title="{{ d.label }}" aria-label="{{ d.label }}"></button>
           {%- else %}
           <span class="day" title="{{ d.label }}"></span>
@@ -65,8 +66,8 @@ eleventyExcludeFromCollections: true
     <p class="result-count" id="result-count" role="status" aria-live="polite"></p>
   </div>
 
-  <ul class="rows" id="post-list">
-    {% for post in collections.posts %}
+  <ul class="rows" id="post-list" data-page="{{ pagination.pageNumber + 1 }}" data-pages="{{ pagination.pages | length }}">
+    {% for post in pagePosts %}
     <li class="row"
         data-date="{{ post.date | isoDate }}"
         data-text="{{ post.data.title | searchText(post.data.summary, post.templateContent) }}">
@@ -97,6 +98,21 @@ eleventyExcludeFromCollections: true
   </ul>
 
   <p class="no-match" id="no-match" hidden>No posts match.</p>
+
+  {#- Horizontal, unlike the pager on a post: left is newer, right is older,
+      which is the order the list already reads in. Only rendered when there
+      is more than one page. #}
+  {%- if pagination.pages | length > 1 %}
+  <nav class="pagenav" aria-label="Pages">
+    {%- if pagination.href.previous %}
+    <a class="pagenav-link" href="{{ pagination.href.previous }}" rel="prev">&larr; Newer</a>
+    {%- else %}<span class="pagenav-end"></span>{% endif %}
+    <span class="pagenav-at">Page {{ pagination.pageNumber + 1 }} of {{ pagination.pages | length }}</span>
+    {%- if pagination.href.next %}
+    <a class="pagenav-link" href="{{ pagination.href.next }}" rel="next">Older &rarr;</a>
+    {%- else %}<span class="pagenav-end"></span>{% endif %}
+  </nav>
+  {%- endif %}
 </main>
 
 {# Appears once the reader has scrolled; hidden by default so no-JS visitors
