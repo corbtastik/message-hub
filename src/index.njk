@@ -37,6 +37,21 @@ eleventyExcludeFromCollections: true
     </div>
   </div>
 
+  {#- Not hidden like the graph and the tools: it is a plain link, so it works
+      with JavaScript off. Only shown once something is actually tagged. #}
+  {%- if collections.tagList | length %}
+  <a class="index-link" href="/tags/">
+    {# SF Symbols tag #}
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M13.8 2.2H9.4a1.3 1.3 0 0 0-.92.38l-6.1 6.1a1.3 1.3 0 0 0 0 1.84l3.1 3.1a1.3 1.3 0 0 0 1.84 0l6.1-6.1a1.3 1.3 0 0 0 .38-.92V2.2Z"
+            stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="11.1" cy="4.9" r="1.05" fill="currentColor"/>
+    </svg>
+    Tags index
+    <span class="index-link-sub">{{ collections.tagList | length }} tags</span>
+  </a>
+  {%- endif %}
+
   {# Hidden until the script takes over: without JS none of it would do anything. #}
   <div class="tools" id="tools" hidden>
     <div class="tools-row">

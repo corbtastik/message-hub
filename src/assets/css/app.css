@@ -365,6 +365,16 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .swatch:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .swatch[aria-selected="true"]{outline:2px solid var(--accent);outline-offset:2px}
 
+/* ---------- index link ----------
+   A single row between the activity graph and the toolbar: icon, label, and
+   a count pushed to the right. */
+.index-link{display:flex;align-items:center;gap:8px;margin:0 4px 6px;padding:11px 12px;
+  border-radius:12px;border:1px solid var(--glass-edge);background:var(--control);
+  font-size:15px;line-height:20px;letter-spacing:-.2px}
+.index-link:hover{background:var(--control-hover)}
+.index-link svg{flex:none;color:var(--meta)}
+.index-link .index-link-sub{margin-left:auto;color:var(--meta);font-size:13px}
+
 /* ---------- search / sort toolbar ---------- */
 .tools{display:flex;flex-direction:column;gap:7px;padding:2px 4px 12px}
 .tools-row{display:flex;align-items:center;gap:8px}
@@ -416,7 +426,7 @@ button.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   overflow:hidden;margin-top:1px;font-size:15px;line-height:20px;letter-spacing:-.2px;color:var(--meta)}
 
 @media (prefers-reduced-motion:no-preference){
-  .row-link,.pager-link,.pagenav-link,.sort-btn,.icon-btn,.swatch,.tag{transition:background-color .12s ease,color .12s ease}
+  .row-link,.pager-link,.pagenav-link,.sort-btn,.icon-btn,.swatch,.tag,.index-link{transition:background-color .12s ease,color .12s ease}
 }
 /* Set while the appearance switches, so the whole page changes at once. */
 :root.theme-switching *{transition:none!important}

@@ -117,7 +117,13 @@ tags: [cooking, winter]
 ```
 
 They render as chips under the last bubble, each linking to `/tags/<tag>/`,
-and `/tags/` lists every tag with its count, commonest first. They also join
+and `/tags/` lists every tag with its count, commonest first. A single-row
+card between the activity graph and the search toolbar links to that index
+and shows how many tags there are -- `.index-link`, carried over from the
+project this was ported from, where it pointed at a scripture index. Unlike
+the graph and the toolbar it is not hidden until the scripts run, because it
+is a plain link and works without them; it renders only when something is
+actually tagged. They also join
 the row's searchable text, so typing a tag in the list box filters by it even
 though the rows themselves do not show tags -- a chip on every row would
 crowd out the preview.
