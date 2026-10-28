@@ -37,8 +37,9 @@ audio and attachments.
 
 ## Sample content
 
-50 sample posts ship in `src/posts/`, all invented, along with the placeholder
-images, media and author portraits they use. Delete them and write your own.
+78 sample posts ship in `src/posts/`, all invented, spanning 2025 and 2026,
+along with the placeholder images, media and author portraits they use.
+Delete them and write your own.
 
 ## More
 

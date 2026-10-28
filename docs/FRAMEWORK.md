@@ -30,7 +30,7 @@ src/
   assets/files/        sample attachment (PDF)
   posts/
     posts.json         layout, tag and permalink for every post
-    *.md               one file per post (50 samples ship with it)
+    *.md               one file per post (78 samples ship with it)
 docs/TEMPLATE.md       starting point for a new post
 docs/FRAMEWORK.md      this file
 lib/palette.js         palette colours -> CSS tokens; used by the build
@@ -66,14 +66,16 @@ returns to the box, Enter opens the post, Escape clears the search.
 
 Each row carries its searchable text in a `data-text` attribute, so the index
 is the page itself -- no extra request, and the list still renders unfiltered
-with JavaScript off. Across the 50 samples that index is about 23 KB of a
-97 KB page, roughly 450 bytes a post; longer posts cost proportionally more.
+with JavaScript off. For the 50 rows on a page that index is about 23 KB of
+an 81 KB page, roughly 450 bytes a post; longer posts cost proportionally
+more.
 
 **Searching and sorting only see the current page.** They work on the rows in
 the document, and pagination is what decides which rows those are. With the
-default 50 a post at 51 is on page two and a search from page one will not
-find it. At the shipped 50 posts there is exactly one page, so this does not
-bite yet -- it starts the day the archive outgrows a page.
+default 50 a post at 51 is on page two, and a search from page one will not
+find it. The 78 shipped samples are past that line, so it bites today: the
+2025 posts are on page two and invisible to a search run from page one.
+Making search whole-archive means the separate `search.json` floated above.
 
 ## Pagination
 
