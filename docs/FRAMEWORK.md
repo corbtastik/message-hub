@@ -23,6 +23,7 @@ src/
   assets/js/search.js  list filtering, typed dates, sort, arrow keys
   assets/js/theme.js   the appearance toggle
   assets/js/palette.js the palette picker
+  assets/js/prefs.js   stored choices + transition suppression, shared
   assets/img/          site icon and sample photo
   assets/img/people/   author portraits, one SVG per name
   assets/video/        sample clip and its poster frame
@@ -33,7 +34,15 @@ src/
     *.md               one file per post (78 samples ship with it)
 docs/TEMPLATE.md       starting point for a new post
 docs/FRAMEWORK.md      this file
-lib/palette.js         palette colours -> CSS tokens; used by the build
+lib/                   the build's logic, one concern per file:
+  guards.js              the two build-time checks
+  tokens.js              reads app.css's theme blocks, shared by both guards
+  palette.js             palette colours -> CSS tokens
+  dates.js               UTC date formatting
+  text.js                plain/bubbles/preview/searchText
+  tags.js                userTags + the tagList collection
+  avatars.js             name -> portrait path
+  attachment.js          the attachment shortcode
 tools/make-avatar.js   draws an author portrait; not part of the build
 firebase.json          hosting config (no site pinned - see Deploying)
 ```
@@ -146,7 +155,7 @@ list.
 
 The cost is that `posts` rides along in every post's tag list, so anything a
 reader sees has to filter it out. That is the `userTags` filter, and
-`STRUCTURAL_TAGS` in `eleventy.config.js` is the list it strips. Add another
+`STRUCTURAL_TAGS` in `lib/tags.js` is the list it strips. Add another
 directory-level tag and it belongs in that list too, or it will show up as a
 chip and get a page of its own.
 
@@ -186,8 +195,8 @@ page goes back to following the system.
 Every colour is a token, defined on `:root` for light and repeated in two
 dark blocks -- one under `@media (prefers-color-scheme: dark)` and one under
 `:root[data-theme="dark"]`. `assertDarkThemesMatch()` in
-`eleventy.config.js` fails the build when they fall out of step, naming the
-offending tokens. It checks two things, because both have already happened
+`assertDarkThemesMatch()` in `lib/guards.js` fails the build when they fall
+out of step, naming the offending tokens. It checks two things, because both have already happened
 while building the activity graph:
 
 - the two dark blocks must match each other -- the graph's colours once
@@ -262,8 +271,8 @@ and the hard-coded `--meta` in app.css -- both, or they will disagree.
 
 ### The guard
 
-`assertPaletteCoversTokens()` fails the build when `lib/palette.js` and
-`:root` disagree in either direction, or when a token is mapped twice. A
+`assertPaletteCoversTokens()` in `lib/guards.js` fails the build when
+`lib/palette.js` and `:root` disagree in either direction, or when a token is mapped twice. A
 palette overrides every colour at once; one it misses stays at the default --
 a white bubble on a dark palette -- and nothing errors, it just looks broken
 on every page. Same reasoning as `assertDarkThemesMatch()`, which is why they
@@ -512,6 +521,23 @@ project, and that url. `_site/` is a plain static directory, so any static
 host will serve it -- Netlify, Cloudflare Pages and GitHub Pages all work the
 same way, minus the `firebase.json` cache headers, which would need
 re-expressing in whatever that host uses.
+
+## How the build is arranged
+
+`eleventy.config.js` registers and nothing else -- collections, filters, the
+shortcode, the transform, the generated stylesheet. Every piece of logic it
+names lives in `lib/`, one concern per file, as a plain ES module with no
+Eleventy import. That split is what lets any of it be exercised directly:
+
+```sh
+node --input-type=module -e 'import("./lib/text.js").then(t => console.log(t.preview("...")))'
+```
+
+The two guards share `lib/tokens.js` rather than carrying a regex each -- two
+patterns that had to agree about what a token declaration looks like, with
+nothing connecting them, is how they would drift. `tokens.js` throws when the
+stylesheet stops matching instead of returning an empty set, so a reformat
+fails loudly rather than making a guard pass by finding nothing to check.
 
 ## Things worth knowing
 

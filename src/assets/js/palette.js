@@ -31,20 +31,15 @@
   }
 
   function apply(id) {
-    // Suppress colour transitions for this frame, the way the appearance
-    // toggle does, so the whole page changes at once rather than in pieces.
-    root.classList.add("theme-switching");
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { root.classList.remove("theme-switching"); });
+    Prefs.withoutTransitions(function () {
+      if (id) {
+        root.setAttribute("data-palette", id);
+        Prefs.store.set(Prefs.PALETTE, id);
+      } else {
+        root.removeAttribute("data-palette");
+        Prefs.store.clear(Prefs.PALETTE);
+      }
     });
-
-    if (id) {
-      root.setAttribute("data-palette", id);
-      try { localStorage.setItem("palette", id); } catch (e) {}
-    } else {
-      root.removeAttribute("data-palette");
-      try { localStorage.removeItem("palette"); } catch (e) {}
-    }
     mark();
   }
 

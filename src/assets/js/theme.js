@@ -39,21 +39,17 @@
   }
 
   btn.addEventListener("click", function () {
-    // Suppress colour transitions for this frame so the page switches as one.
-    root.classList.add("theme-switching");
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { root.classList.remove("theme-switching"); });
+    Prefs.withoutTransitions(function () {
+      var next = isDark() ? "light" : "dark";
+      if ((next === "dark") === mq.matches) {
+        // Back in step with the system, so stop overriding it.
+        root.removeAttribute("data-theme");
+        Prefs.store.clear(Prefs.THEME);
+      } else {
+        root.setAttribute("data-theme", next);
+        Prefs.store.set(Prefs.THEME, next);
+      }
     });
-
-    var next = isDark() ? "light" : "dark";
-    if ((next === "dark") === mq.matches) {
-      // Back in step with the system, so stop overriding it.
-      root.removeAttribute("data-theme");
-      try { localStorage.removeItem("theme"); } catch (e) {}
-    } else {
-      root.setAttribute("data-theme", next);
-      try { localStorage.setItem("theme", next); } catch (e) {}
-    }
     paint();
   });
 

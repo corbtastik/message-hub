@@ -1,19 +1,11 @@
+{% from "avatar.njk" import portrait %}
 {#- One conversation-list row. Shared by the index and the tag pages. -#}
 <li class="row"
     data-date="{{ post.date | isoDate }}"
     data-text="{{ post.data.title | searchText(post.data.summary, post.data.tags | userTags | join(' '), post.templateContent) }}">
   <a class="row-link" href="{{ post.url }}">
     {%- set who = post.data.author if post.data.author else site.author %}
-    {%- set face = who | avatar %}
-    {%- if face %}
-    <img class="row-avatar" alt="" src="{{ face }}" width="52" height="52" loading="lazy">
-    {%- else %}
-    <svg class="row-avatar avatar-other" viewBox="0 0 32 32" role="img" aria-label="{{ who }}">
-      <circle cx="16" cy="16" r="16" fill="currentColor" opacity=".22"/>
-      <circle cx="16" cy="12.6" r="5" fill="currentColor" opacity=".75"/>
-      <path d="M5.6 28.2a10.8 10.8 0 0 1 20.8 0A16 16 0 0 1 5.6 28.2Z" fill="currentColor" opacity=".75"/>
-    </svg>
-    {%- endif %}
+    {{ portrait(who, "row-avatar", 52, lazy=true) }}
     <span class="row-body">
       <span class="row-top">
         <span class="row-title">{{ post.data.title }}</span>

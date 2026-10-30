@@ -68,37 +68,6 @@ export default function () {
     });
   }
 
-  /* The same months padded out to whole calendar years, so a year chart has
-   * twelve bars whatever the archive covers and January does not move as the
-   * year fills in. The calendar keeps the unpadded list -- there, an empty
-   * month is a wasted row rather than a meaningful gap. */
-  const yearMonths = [];
-  for (let y = fy; y <= ly; y++) {
-    for (let mo = 1; mo <= 12; mo++) {
-      const found = months.find((m) => m.year === y && m.monthNo === mo);
-      yearMonths.push(
-        found || {
-          name: fmtMonth.format(new Date(Date.UTC(y, mo - 1, 1))),
-          year: y,
-          monthNo: mo,
-          days: [],
-          count: 0,
-          firstIso: "",
-          label: `${fmtLong.format(new Date(Date.UTC(y, mo - 1, 1)))} — no posts`,
-        }
-      );
-    }
-  }
-
-  /* Grouped into years, which is what a chart with a row per year needs. The
-   * number of columns is then always twelve however long the archive runs --
-   * the same reasoning that made the calendar months-as-rows: a layout that
-   * fits by construction instead of one that needs scrolling. */
-  const years = [];
-  for (let y = fy; y <= ly; y++) {
-    years.push({ year: y, months: yearMonths.filter((m) => m.year === y) });
-  }
-
   /* Newest-first, running from THIS month back to the first post -- anchored
    * to the calendar rather than to the last post, so a quiet stretch shows as
    * empty rows at the top instead of the chart ending early. A row per month
@@ -132,8 +101,6 @@ export default function () {
 
   return {
     months,
-    yearMonths,
-    years,
     recent,
     busiest: months.reduce((m, x) => Math.max(m, x.count), 0),
     total: [...counts.values()].reduce((a, b) => a + b, 0),

@@ -1,0 +1,25 @@
+{#- One author's portrait, at whichever size the caller needs.
+
+    A macro rather than a plain include: Nunjucks includes share the caller's
+    context, so parameters would have to be {% set %} beforehand and would
+    leak afterwards. A macro takes them properly.
+
+    The `avatar` filter returns a path when a portrait exists for that name
+    and null when it does not, so the fallback figure lives here once instead
+    of in every template that shows a person. Named `portrait` so it does not
+    read as a collision with that filter.
+
+    `alt` is empty in the list, where the name sits in the row beside it, and
+    set on a thread, where this is the only place the sender appears. -#}
+{% macro portrait(who, klass, size, lazy=false, alt="") -%}
+{%- set face = who | avatar -%}
+{%- if face -%}
+<img class="{{ klass }}" alt="{{ alt }}" src="{{ face }}" width="{{ size }}" height="{{ size }}"{% if lazy %} loading="lazy"{% endif %}>
+{%- else -%}
+<svg class="{{ klass }} avatar-other" viewBox="0 0 32 32" role="img" aria-label="{{ who }}">
+  <circle cx="16" cy="16" r="16" fill="currentColor" opacity=".22"/>
+  <circle cx="16" cy="12.6" r="5" fill="currentColor" opacity=".75"/>
+  <path d="M5.6 28.2a10.8 10.8 0 0 1 20.8 0A16 16 0 0 1 5.6 28.2Z" fill="currentColor" opacity=".75"/>
+</svg>
+{%- endif -%}
+{%- endmacro %}
